@@ -9,7 +9,7 @@ public class Constants {
     // MapStage2XPos 0 : Normal Stage; 1 : die.
     final public static double PlayingStageMapXPos = -180d;
     final public static double NormalZombineSpeed = 15d;
-    final public static double NormalZombineFPS = 15;
+    final public static double NormalZombineFPS = 25;
 
     public static URL getImagesPath() {
         // System.out.println("QAQ" + Constants.class.getClassLoader().getResource("").getPath());
