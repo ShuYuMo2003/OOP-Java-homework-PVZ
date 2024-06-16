@@ -23,7 +23,7 @@ public class App extends Application {
     private static ImageView backgroundImageView;
 
     private static void initializeBackgroudImage() {
-        Image backgroundImage = new Image(Constants.getBackgroudImage());
+        Image backgroundImage = new Image(Constants.getBackgroudImage().toString());
         backgroundImageView = new ImageView(backgroundImage);
         backgroundImageView.setFitHeight(Constants.WindowHeight);
         backgroundImageView.setPreserveRatio(true);

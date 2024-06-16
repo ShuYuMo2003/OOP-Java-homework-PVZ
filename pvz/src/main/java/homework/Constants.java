@@ -1,5 +1,7 @@
 package homework;
 
+import java.net.URL;
+
 public class Constants {
     final public static int WindowWidth = 1300;
     final public static int WindowHeight = 640;
@@ -9,12 +11,20 @@ public class Constants {
     final public static double NormalZombineSpeed = 15d;
     final public static double NormalZombineFPS = 15;
 
-    public static String getImagesPath() {
-        return Constants.class.getResource("/images/").toString();
+    public static URL getImagesPath() {
+        // System.out.println("QAQ" + Constants.class.getClassLoader().getResource("").getPath());
+
+        // String directoryPath = Constants.class.getClassLoader().getResource("images/").getPath();
+        // System.out.println("directoryPath = " + directoryPath);
+        // java.io.File directory = new java.io.File(directoryPath);
+        // java.io.File[] files = directory.listFiles();
+
+        // System.out.println(directoryPath);
+        return Constants.class.getResource("/images/");
     }
 
-    public static String getBackgroudImage() {
-        return Constants.class.getResource("/images/Items/Background/Background_1.jpg").toString();
+    public static URL getBackgroudImage() {
+        return Constants.class.getResource("/images/Items/Background/Background_1.jpg");
     }
 
 
