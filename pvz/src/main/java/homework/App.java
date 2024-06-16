@@ -27,14 +27,14 @@ public class App extends Application {
         backgroundImageView = new ImageView(backgroundImage);
         backgroundImageView.setFitHeight(Constants.WindowHeight);
         backgroundImageView.setPreserveRatio(true);
-        backgroundImageView.setX(Constants.MapStage2XPos.get(Constants.MapStage.PLAY));
+        backgroundImageView.setX(Constants.PlayingStageMapXPos);
         rootPane.getChildren().add(backgroundImageView);
     }
 
-    private static void moveBackgroundImage(Constants.MapStage stage, int seconds) {
+    private static void MoveMapToDie(int seconds) {
         TranslateTransition tt = new TranslateTransition(Duration.seconds(seconds), backgroundImageView);
         double currentX = backgroundImageView.getX();
-        tt.setToX(Constants.MapStage2XPos.get(stage) - currentX);
+        tt.setToX(0 - currentX);
         tt.play();
     }
 
@@ -43,6 +43,9 @@ public class App extends Application {
 
         initializeBackgroudImage();
 
+        // MoveMapToDie(2);
+
+        NormalZombine zombine = new NormalZombine(100, 100, rootPane);
 
 
         Scene scene = new Scene(rootPane, Constants.WindowWidth, Constants.WindowHeight);
