@@ -45,7 +45,11 @@ public class App extends Application {
 
         // MoveMapToDie(2);
 
-        NormalZombine zombine = new NormalZombine(100, 100, rootPane);
+        for(int i = 0; i < 5; i++) {
+            GlobalControl.addZombine(new NormalZombine(500, Constants.RowYPos[i], rootPane));
+        }
+        GlobalControl.initializeMoveStep();
+        GlobalControl.startMoveStep();
 
 
         Scene scene = new Scene(rootPane, Constants.WindowWidth, Constants.WindowHeight);

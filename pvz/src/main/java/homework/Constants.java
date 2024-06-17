@@ -8,8 +8,10 @@ public class Constants {
     final public static String MainStageTitle = "Plants Vs. Zombies";
     // MapStage2XPos 0 : Normal Stage; 1 : die.
     final public static double PlayingStageMapXPos = -180d;
-    final public static double NormalZombineSpeed = 15d;
-    final public static double NormalZombineFPS = 25;
+    final public static double NormalZombineSpeed = 0.8;
+    final public static double NormalZombineFPS = 11;
+    final public static double GlobalFPS = 30;
+    final public static double[] RowYPos = { 20, 130, 230, 340, 450 };
 
     public static URL getImagesPath() {
         // System.out.println("QAQ" + Constants.class.getClassLoader().getResource("").getPath());

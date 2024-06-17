@@ -6,20 +6,20 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 public abstract class MoveableElement {
-    protected DoubleProperty x = new SimpleDoubleProperty();
-    protected DoubleProperty y = new SimpleDoubleProperty();
+    protected double x;
+    protected double y;
     protected double dx, dy;
     public ImageView imageview;
 
     MoveableElement() { }
 
     MoveableElement(double x, double y, double dx, double dy, Pane rootPane) {
-        this.x.set(x);
-        this.y.set(y);
+        this.x = x;
+        this.y = y;
         this.setSpeed(dx, dy);
         this.imageview = new ImageView();
-        imageview.xProperty().bind(this.x);
-        imageview.yProperty().bind(this.y);
+        this.imageview.setX(x);
+        this.imageview.setY(y);
         rootPane.getChildren().add(this.imageview);
     }
 
@@ -29,7 +29,10 @@ public abstract class MoveableElement {
     }
 
     public void nextStep() {
-        this.x.add(dx);
-        this.y.add(dy);
+        this.x += this.dx;
+        this.y += this.dy;
+        this.imageview.setX(this.x);
+        this.imageview.setY(this.y);
+        System.err.println("add x = " + this.x + "add y = " + this.y);
     }
 }
