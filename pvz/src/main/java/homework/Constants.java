@@ -8,10 +8,17 @@ public class Constants {
     final public static String MainStageTitle = "Plants Vs. Zombies";
     // MapStage2XPos 0 : Normal Stage; 1 : die.
     final public static double PlayingStageMapXPos = -180d;
-    final public static double NormalZombineSpeed = 0.8;
+    final public static double NormalZombineSpeed = 0;
     final public static double NormalZombineFPS = 11;
+    final public static double PeashooterFPS = 11;
     final public static double GlobalFPS = 30;
-    final public static double[] RowYPos = { 20, 130, 230, 340, 450 };
+    final public static double[] RowYPos    = { 195, 365, 521, 695, 833 };
+    final public static double[] ColumnXPos = { 203, 330, 450, 600, 720, 855, 970, 1101, 1240 };
+
+    public static double[] getPos(int row, int column) {
+        double[] res = {ColumnXPos[column], RowYPos[row]};
+        return res;
+    }
 
     public static URL getImagesPath() {
         // System.out.println("QAQ" + Constants.class.getClassLoader().getResource("").getPath());

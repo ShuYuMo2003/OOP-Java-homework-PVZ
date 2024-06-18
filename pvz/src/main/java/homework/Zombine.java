@@ -37,7 +37,6 @@ public abstract class Zombine extends MoveableElement {
         timeline = new Timeline(
             new KeyFrame(Duration.millis(1000 / fps), e -> {
                 String curFramePath = getFramePath();
-                System.out.println("playing " + curFramePath);
                 imageview.setImage(new Image(curFramePath));
             })
         );

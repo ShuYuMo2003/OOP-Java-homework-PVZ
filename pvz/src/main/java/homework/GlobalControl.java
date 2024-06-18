@@ -14,6 +14,10 @@ public class GlobalControl {
         AllZombines.add(z);
     }
 
+    public static void addPlants(Plants p) {
+        AllPlants.add(p);
+    }
+
     GlobalControl() { }
 
     public static void initializeMoveStep() {
@@ -22,7 +26,7 @@ public class GlobalControl {
         moveStep.getKeyFrames().add(new KeyFrame(Duration.millis(1000 / Constants.GlobalFPS), e -> {
             for(MoveableElement z : AllZombines) {
                 z.nextStep();
-                System.err.println("Zombine: next step.");
+                // System.err.println("Zombine: next step.");
             }
             for(MoveableElement p : AllPlants) {
                 p.nextStep();

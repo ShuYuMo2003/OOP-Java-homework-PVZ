@@ -9,7 +9,7 @@ public abstract class MoveableElement {
     protected double x;
     protected double y;
     protected double dx, dy;
-    public ImageView imageview;
+    protected ImageView imageview;
 
     MoveableElement() { }
 
@@ -33,6 +33,5 @@ public abstract class MoveableElement {
         this.y += this.dy;
         this.imageview.setX(this.x);
         this.imageview.setY(this.y);
-        System.err.println("add x = " + this.x + "add y = " + this.y);
     }
 }

@@ -46,7 +46,10 @@ public class App extends Application {
         // MoveMapToDie(2);
 
         for(int i = 0; i < 5; i++) {
-            GlobalControl.addZombine(new NormalZombine(500, Constants.RowYPos[i], rootPane));
+            GlobalControl.addZombine(new NormalZombine(i, i, rootPane));
+        }
+        for(int i = 0; i < 5; i++) {
+            GlobalControl.addPlants(new Peashooter(200, Constants.RowYPos[i], rootPane));
         }
         GlobalControl.initializeMoveStep();
         GlobalControl.startMoveStep();
