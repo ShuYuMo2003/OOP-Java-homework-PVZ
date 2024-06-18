@@ -34,4 +34,8 @@ public abstract class MoveableElement {
         this.imageview.setX(this.x);
         this.imageview.setY(this.y);
     }
+
+    public void removeImageView(Pane rootPane) {
+        rootPane.getChildren().remove(this.imageview);
+    }
 }

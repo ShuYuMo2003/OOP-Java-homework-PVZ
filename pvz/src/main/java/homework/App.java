@@ -43,16 +43,16 @@ public class App extends Application {
 
         initializeBackgroudImage();
 
-        // MoveMapToDie(2);
+        // 第一列 5 个豌豆射手
+        for(int i = 0; i < 5; i++) {
+            GlobalControl.addPlants(new Peashooter(i, 0, rootPane));
+        }
 
         for(int i = 0; i < 5; i++) {
-            GlobalControl.addZombine(new NormalZombine(i, i, rootPane));
+            GlobalControl.addZombine(new NormalZombine(i, 1, rootPane));
         }
-        for(int i = 0; i < 5; i++) {
-            GlobalControl.addPlants(new Peashooter(200, Constants.RowYPos[i], rootPane));
-        }
-        GlobalControl.initializeMoveStep();
-        GlobalControl.startMoveStep();
+
+        GlobalControl.initializeEverything(rootPane);
 
 
         Scene scene = new Scene(rootPane, Constants.WindowWidth, Constants.WindowHeight);

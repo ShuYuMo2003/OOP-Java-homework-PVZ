@@ -8,16 +8,21 @@ import javafx.util.Duration;
 import javafx.scene.image.Image;
 
 public abstract class Zombine extends MoveableElement {
-    protected int attackValue;
+    protected double attackValue;
     protected boolean isAttacking;
     protected ArrayList<ZombineStage> stageStatus = new ArrayList<>();
     protected Timeline timeline;
+    protected boolean die;
+
+    static private double xOffset = -150;
+    static private double yOffset = -130;
 
     Zombine() { }
 
-    Zombine(double x, double y, double speed, Pane rootPane) {
-        super(x, y, -speed, 0, rootPane);
+    Zombine(double x, double y, double speed, double attackValue, Pane rootPane) {
+        super(x + xOffset, y + yOffset, -speed, 0, rootPane);
         this.clearStage();
+        this.attackValue = attackValue;
     }
 
     protected void clearStage() { stageStatus.clear(); }
@@ -43,6 +48,26 @@ public abstract class Zombine extends MoveableElement {
         timeline.setCycleCount(Timeline.INDEFINITE);
     }
 
+    public MapPosition getMapPosition() {
+        // System.err.println("x = " + this.x + " y = " + this.y);
+        MapPosition mapPosition = new MapPosition(0, 0);
+        double minDistance2 = Constants.INF;
+        for(int i = 0; i < Constants.MaxColumn; i++) {
+            for(int j = 0; j < Constants.MaxRow; j++) {
+                double x = Constants.ZombineColumnXPos[i] + xOffset;
+                double y = Constants.ZombineRowYPos[j] + yOffset;
+                double distance2 = Math.pow(x - this.x, 2) + Math.pow(y - this.y, 2);
+                // System.err.println("checkingx = " + x + " y = " + y + " dis=" + distance2);
+                if(distance2 < minDistance2) {
+                    minDistance2 = distance2;
+                    mapPosition = new MapPosition(j, i);
+                    // System.err.println("Update to " + mapPosition.toString());
+                }
+            }
+        }
+        return mapPosition;
+    }
+
     public void play() {
         timeline.play();
     }
@@ -51,6 +76,21 @@ public abstract class Zombine extends MoveableElement {
         timeline.pause();
     }
 
-    protected void attack() { isAttacking = true;}
-    protected void die() {}
+    public double getAttackValue() {
+        return attackValue;
+    }
+
+    public void setAttack(boolean isAttacking) {
+        this.isAttacking = isAttacking;
+        // System.err.println("set zombines attacking!");
+    }
+    public boolean canMove() {
+        return !isAttacking && !die;
+    }
+    public boolean isDie() {
+        return die;
+    }
+    public void setDie() {
+        die = true;
+    }
 }
