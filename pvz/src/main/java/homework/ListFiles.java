@@ -15,7 +15,7 @@ public class ListFiles {
         // System.err.println("files = " + files);
         String[] result = new String[files.length];
         for(int i = 0; i < result.length; i++)
-            result[i] = "file:/" + files[i].getAbsolutePath();
+            result[i] = "file:" + files[i].getAbsolutePath();
 
         java.util.Arrays.sort(result, new Comparator<String>() {
             @Override

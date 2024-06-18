@@ -12,6 +12,8 @@ import javafx.util.Duration;
 public abstract class Plants extends MoveableElement{
     protected double health;
     protected Timeline timeline;
+    protected Timeline shooter;
+    protected double attackFPS;
     protected String[] frames;
     protected int currentFrameId;
     protected boolean die = false;
@@ -19,11 +21,12 @@ public abstract class Plants extends MoveableElement{
     protected static double yOffset = -70;
 
     Plants() {}
-    Plants(double x, double y, String[] framesPaths, double health, Pane rootPane) {
-        super(x + xOffset, y + yOffset, 0, 0, rootPane);
+    Plants(double x, double y, String[] framesPaths, double health, double attackFPS) {
+        super(x + xOffset, y + yOffset, 0, 0);
         this.health = health;
         currentFrameId = 0;
         this.frames = framesPaths;
+        this.attackFPS = attackFPS;
     }
 
     protected void initialTimeline(double fps, boolean infinte) {
@@ -56,14 +59,30 @@ public abstract class Plants extends MoveableElement{
 
     public void getDamage(double damage) {
         health -= damage;
-        System.err.println("Got damage = " + damage + " health = " + health);
+        // System.err.println("Got damage = " + damage + " health = " + health);
         if(health <= Constants.EPS) {
             setDie();
         }
     }
 
+    protected abstract Bullets getNewBullets();
+
+    public void initializeShooter() {
+        shooter = new Timeline(
+            new KeyFrame(Duration.millis(1000 / this.attackFPS), e -> {
+                System.err.println("Add new bullets!");
+                GlobalControl.addBullets(getNewBullets());
+            })
+        );
+        shooter.setCycleCount(Timeline.INDEFINITE);
+    }
+
     public void setDie() {
         die = true;
+        shooter.stop();
+        timeline.stop();
+        GlobalControl.rootPane.getChildren().remove(this.imageview);
+        // GlobalControl.AllPlants.remove(this);
     }
 
     public boolean isDie() {
@@ -72,6 +91,7 @@ public abstract class Plants extends MoveableElement{
 
     public void play() {
         this.timeline.play();
+        this.shooter.play();
     }
 
     public void pause() {

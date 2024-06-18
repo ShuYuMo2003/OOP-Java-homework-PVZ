@@ -5,12 +5,11 @@ import java.nio.file.Paths;
 import javafx.scene.layout.Pane;
 
 public class NormalZombine extends Zombine{
-    public NormalZombine(int row, int column, Pane rootPane) throws UnsupportedEncodingException {
+    public NormalZombine(int row, int column) throws UnsupportedEncodingException {
         super(Constants.getZombinePos(row, column)[0],
               Constants.getZombinePos(row, column)[1],
               Constants.NormalZombineSpeed,
-              Constants.NormalZombineAttackValue,
-              rootPane);
+              Constants.NormalZombineAttackValue);
 
         addStage(new ZombineStage(
             "Initial Stage",

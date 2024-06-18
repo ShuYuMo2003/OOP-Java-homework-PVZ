@@ -13,14 +13,14 @@ public abstract class MoveableElement {
 
     MoveableElement() { }
 
-    MoveableElement(double x, double y, double dx, double dy, Pane rootPane) {
+    MoveableElement(double x, double y, double dx, double dy) {
         this.x = x;
         this.y = y;
         this.setSpeed(dx, dy);
         this.imageview = new ImageView();
         this.imageview.setX(x);
         this.imageview.setY(y);
-        rootPane.getChildren().add(this.imageview);
+        GlobalControl.rootPane.getChildren().add(this.imageview);
     }
 
     public void setSpeed(double dx, double dy) {
@@ -28,14 +28,17 @@ public abstract class MoveableElement {
         this.dy = dy;
     }
 
+    protected void rangeCheck() {}
+
     public void nextStep() {
         this.x += this.dx;
         this.y += this.dy;
         this.imageview.setX(this.x);
         this.imageview.setY(this.y);
+        rangeCheck();
     }
 
-    public void removeImageView(Pane rootPane) {
-        rootPane.getChildren().remove(this.imageview);
+    public void removeImageView() {
+        GlobalControl.rootPane.getChildren().remove(this.imageview);
     }
 }

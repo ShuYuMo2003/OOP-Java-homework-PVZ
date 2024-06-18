@@ -19,7 +19,6 @@ import java.io.IOException;
  * JavaFX App
  */
 public class App extends Application {
-    private static Pane rootPane = new Pane();
     private static ImageView backgroundImageView;
 
     private static void initializeBackgroudImage() {
@@ -28,7 +27,7 @@ public class App extends Application {
         backgroundImageView.setFitHeight(Constants.WindowHeight);
         backgroundImageView.setPreserveRatio(true);
         backgroundImageView.setX(Constants.PlayingStageMapXPos);
-        rootPane.getChildren().add(backgroundImageView);
+        GlobalControl.rootPane.getChildren().add(backgroundImageView);
     }
 
     private static void MoveMapToDie(int seconds) {
@@ -40,22 +39,39 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-
+        // Constants.preCacheImages();
         initializeBackgroudImage();
 
+
         // 第一列 5 个豌豆射手
-        for(int i = 0; i < 5; i++) {
-            GlobalControl.addPlants(new Peashooter(i, 0, rootPane));
-        }
+        // for(int i = 0; i < 5; i++) {
+        GlobalControl.addPlants(new Peashooter(3, 0));
+        // }
 
-        for(int i = 0; i < 5; i++) {
-            GlobalControl.addZombine(new NormalZombine(i, 1, rootPane));
-        }
+        // for(int i = 0; i < 5; i++) {
+        //     GlobalControl.addZombine(new NormalZombine(i, 3, rootPane));
+        // }
 
-        GlobalControl.initializeEverything(rootPane);
+        // GlobalControl.addBullets(new NormalPea(200, 200));
+
+        // Image img = new Image("file:/D:/Codes_and_Projects/PlantsVsZombines/pvz/target/classes/images/Zombies/NormalZombie/Zombie/Zombie_0.png");
+        // //                         file:/D:/Codes_and_Projects/PlantsVsZombines/pvz/target/classes/images/Items/Background/Background_1.jpg
+        // // System.err.println(Constants.getBackgroudImage().toString());
+        // // Image img = new Image(Constants.getBackgroudImage().toString());
+        // ImageView imgv = new ImageView(img);
+        // imgv.setX(300);
+        // imgv.setY(300);
+        // imgv.setFitHeight(300);
+        // imgv.setFitWidth(300);
+        // GlobalControl.rootPane.getChildren().add(imgv);
 
 
-        Scene scene = new Scene(rootPane, Constants.WindowWidth, Constants.WindowHeight);
+        GlobalControl.initializeEverything();
+
+
+        Scene scene = new Scene(GlobalControl.rootPane,
+                Constants.WindowWidth,
+                Constants.WindowHeight);
         stage.setScene(scene);
         stage.show();
         stage.setTitle(Constants.MainStageTitle);

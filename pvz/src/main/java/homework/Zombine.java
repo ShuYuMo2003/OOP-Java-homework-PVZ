@@ -19,8 +19,8 @@ public abstract class Zombine extends MoveableElement {
 
     Zombine() { }
 
-    Zombine(double x, double y, double speed, double attackValue, Pane rootPane) {
-        super(x + xOffset, y + yOffset, -speed, 0, rootPane);
+    Zombine(double x, double y, double speed, double attackValue) {
+        super(x + xOffset, y + yOffset, -speed, 0);
         this.clearStage();
         this.attackValue = attackValue;
     }
