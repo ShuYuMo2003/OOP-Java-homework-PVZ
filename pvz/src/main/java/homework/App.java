@@ -44,13 +44,13 @@ public class App extends Application {
 
 
         // 第一列 5 个豌豆射手
-        // for(int i = 0; i < 5; i++) {
-        GlobalControl.addPlants(new Peashooter(3, 0));
-        // }
+         for(int i = 0; i < 5; i++) {
+            GlobalControl.addPlants(new Peashooter(i, 0));
+         }
 
-        // for(int i = 0; i < 5; i++) {
-        //     GlobalControl.addZombine(new NormalZombine(i, 3, rootPane));
-        // }
+        for(int i = 0; i < 5; i++) {
+            GlobalControl.addZombine(new NormalZombine(i, 3));
+        }
 
         // GlobalControl.addBullets(new NormalPea(200, 200));
 

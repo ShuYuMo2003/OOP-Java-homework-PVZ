@@ -52,9 +52,6 @@ public class GlobalControl {
                 p.nextStep();
             }
             for(Bullets b : AllBullets) {
-                System.err.println("bullets x = " + b.x + " y = " + b.y);
-
-                // GlobalControl.rootPane.getChildren().add(b.imageview);
                 b.nextStep();
             }
             lock.unlock();
@@ -89,21 +86,21 @@ public class GlobalControl {
         attackListerner.getKeyFrames().add(new KeyFrame(Duration.millis(1000 / Constants.ZombineAttackingFPS), e -> {
             lock.lock();
             ArrayList<MapPosition> zombinesPos = new ArrayList<>();
-            // System.err.println("Checking for attacking!");
             for(Zombine z : AllZombines) {
                 zombinesPos.add(z.getMapPosition());
-                // System.err.println("Zombine at " + z.getMapPosition().toString());
             }
             ArrayList<MapPosition> plantsPos = new ArrayList<>();
             for(Plants p : AllPlants) {
                 plantsPos.add(p.getMapPosition());
-                // System.err.println("Plants at " + p.getMapPosition().toString());
+            }
+            ArrayList<MapPosition> bulletPos = new ArrayList<>();
+            for(Bullets b : AllBullets) {
+                bulletPos.add(b.getMapPosition());
             }
             boolean[] attackingHappend = new boolean[AllZombines.size()];
             for(int pid = 0; pid < plantsPos.size(); pid++) {
                 for(int zid = 0; zid < zombinesPos.size(); zid++) {
                     if(zombinesPos.get(zid).equals(plantsPos.get(pid))) {
-                        // System.err.println("Attacking between " + pid + ", " + zid);
                         AllZombines.get(zid).setAttack(true);
                         attackingHappend[zid] = true;
                         AllPlants.get(pid).getDamage(AllZombines.get(zid).getAttackValue());
