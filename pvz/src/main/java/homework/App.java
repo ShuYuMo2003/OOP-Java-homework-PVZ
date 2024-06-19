@@ -76,7 +76,6 @@ public class App extends Application {
 
         GlobalControl.initializeEverything();
 
-
         Scene scene = new Scene(GlobalControl.rootPane,
                 Constants.WindowWidth,
                 Constants.WindowHeight);

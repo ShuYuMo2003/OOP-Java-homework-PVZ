@@ -1,6 +1,5 @@
 package homework;
 
-import javafx.scene.layout.Pane;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -34,9 +33,9 @@ public class sunflower extends Plants {
     }
     @Override
     protected Bullets getNewBullets() {
-        
+
         return null;
-        
+
     }
-    
+
 }

@@ -8,7 +8,7 @@ import javafx.util.Duration;
 import javafx.scene.image.Image;
 
 public abstract class Zombine extends MoveableElement {
-    protected double attackValue;
+    protected double damage;
     protected boolean isAttacking;
     protected ArrayList<ZombineStage> stageStatus = new ArrayList<>();
     protected Timeline timeline;
@@ -19,10 +19,10 @@ public abstract class Zombine extends MoveableElement {
 
     Zombine() { }
 
-    Zombine(double x, double y, double speed, double attackValue) {
+    Zombine(double x, double y, double speed, double damage) {
         super(x + xOffset, y + yOffset, -speed, 0);
         this.clearStage();
-        this.attackValue = attackValue;
+        this.damage = damage;
     }
 
     protected void clearStage() { stageStatus.clear(); }
@@ -76,8 +76,16 @@ public abstract class Zombine extends MoveableElement {
         timeline.pause();
     }
 
-    public double getAttackValue() {
-        return attackValue;
+    public double getDamage() {
+        return damage;
+    }
+
+    /*
+     * @description: apply attack of the bullet to this zombine.
+     * @param damage: the damage of the bullet
+     */
+    public void applyAttack(double damage) {
+        System.err.println("Zombine get damage: " + damage);
     }
 
     public void setAttack(boolean isAttacking) {

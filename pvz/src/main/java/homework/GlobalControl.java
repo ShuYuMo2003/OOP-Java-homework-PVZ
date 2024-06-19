@@ -107,7 +107,7 @@ public class GlobalControl {
                     if(zombinesPos.get(zid).equals(plantsPos.get(pid))) {
                         AllZombines.get(zid).setAttack(true);
                         attackingHappend[zid] = true;
-                        AllPlants.get(pid).getDamage(AllZombines.get(zid).getAttackValue());
+                        AllPlants.get(pid).getDamage(AllZombines.get(zid).getDamage());
                     }
                 }
             }
@@ -125,7 +125,7 @@ public class GlobalControl {
     public static void initializeBulletsAttackListerner() {
         bulletsListerner = new Timeline();
         bulletsListerner.setCycleCount(Timeline.INDEFINITE);
-        bulletsListerner.getKeyFrames().add(new KeyFrame(new Duration().millis(1000 / Constants.BulletFPS), e->{
+        bulletsListerner.getKeyFrames().add(new KeyFrame(Duration.millis(1000 / Constants.BulletFPS), e->{
             lock.lock();
             bulletPos.clear();
             for(Bullets b : AllBullets) {
@@ -135,12 +135,13 @@ public class GlobalControl {
                 for(int bid = 0; bid <= bulletPos.size(); bid++) {
                     if(bulletPos.get(bid).equals(zombinesPos.get(zid))) {
                         AllBullets.get(bid).boom();
-                        AllZombines.get(zid).getAttack(AllBullets.get(bid).getAttackValue());
+                        AllZombines.get(zid).applyAttack(AllBullets.get(bid).getDamage());
                     }
                 }
             }
             lock.unlock();
         }));
+        bulletsListerner.play();
     }
 
     public static void startMoveStep() {
@@ -151,6 +152,7 @@ public class GlobalControl {
         initializeMoveStep();
         initializeDieObjectCleanUp();
         initializeAttackingListening();
+        initializeBulletsAttackListerner();
         startMoveStep();
     }
 

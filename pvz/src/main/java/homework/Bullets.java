@@ -62,6 +62,10 @@ public abstract class Bullets extends MoveableElement {
         return mapPosition;
     }
 
+    public double getDamage() {
+        return this.damage;
+    }
+
 
     @Override
     protected void rangeCheck() {
