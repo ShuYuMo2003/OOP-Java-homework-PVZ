@@ -84,6 +84,13 @@ public abstract class Zombine extends MoveableElement {
         this.isAttacking = isAttacking;
         // System.err.println("set zombines attacking!");
     }
+    protected void handleStageTransition() {
+        for (int i = stageStatus.size() - 1; i >= 0; i--) {
+            if (stageStatus.get(i).isDie() && stageStatus.size() > 1) {
+                stageStatus.remove(i);
+            }
+        }
+    }
     public boolean canMove() {
         return !isAttacking && !die;
     }

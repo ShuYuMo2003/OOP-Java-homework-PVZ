@@ -27,7 +27,7 @@ public class ZombineStage {
         this.attackImagesPaths = new ImagesAndFrameId(attackImagesPaths);
         this.health = health;
     }
-    public void minusHealth(int damage) { health -= damage; }
+    public void minusHealth(int damage) { this.health -= damage; }
     public boolean isDie() { return health <= 0; }
     public String getFramePath(boolean isNormal) {
         if (isNormal) {
@@ -38,4 +38,6 @@ public class ZombineStage {
             return attackImagesPaths.currentFramePath();
         }
     }
+    
+    
 }

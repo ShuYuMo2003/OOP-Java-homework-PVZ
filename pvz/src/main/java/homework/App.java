@@ -12,6 +12,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+
+
+
 
 import java.io.IOException;
 
@@ -46,6 +51,9 @@ public class App extends Application {
         // 第一列 5 个豌豆射手
          for(int i = 0; i < 5; i++) {
             GlobalControl.addPlants(new Peashooter(i, 0));
+         }
+         for(int i = 0; i < 5; i++) {
+            GlobalControl.addPlants(new sunflower(i, 2));
          }
 
         for(int i = 0; i < 5; i++) {

@@ -20,6 +20,13 @@ public class Constants {
     final public static double NormalZombineSpeed = 0.5;
     final public static double NormalZombineFPS = 11;
     final public static double NormalZombineAttackValue = 10;
+    //Conehead Zombine
+    final public static double ConeheadZombineSpeed = 1.0;
+    final public static double ConeheadZombineAttackValue = 10.0;
+    final public static double ConeheadZombineHealth = 200;
+    final public static double ConeheadZombineFPS = 11;
+
+
 
     // Plants
     // Peashooter
@@ -31,6 +38,11 @@ public class Constants {
     final public static double BulletFPS = 30;
     final public static double NormalPeaDamage = 5;
     final public static double NormalPeaSpeed = 8;
+
+    //SunFlower
+    final public static double SunflowerHealth = 200;
+    final public static double SunflowerSunProductionFPS = 5;
+    final public static double SunflowerFPS = 60;
 
 
     final public static double[] ZombineRowYPos    = { 170, 275, 384, 484, 590 };
