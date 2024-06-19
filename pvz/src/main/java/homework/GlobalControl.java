@@ -95,7 +95,7 @@ public class GlobalControl {
             }
             ArrayList<MapPosition> bulletPos = new ArrayList<>();
             for(Bullets b : AllBullets) {
-                bulletPos.add(b.getMapPosition());
+               // bulletPos.add(b.getMapPosition());
             }
             boolean[] attackingHappend = new boolean[AllZombines.size()];
             for(int pid = 0; pid < plantsPos.size(); pid++) {

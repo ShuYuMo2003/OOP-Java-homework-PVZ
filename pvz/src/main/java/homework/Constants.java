@@ -31,6 +31,11 @@ public class Constants {
     final public static double NormalPeaDamage = 5;
     final public static double NormalPeaSpeed = 8;
 
+    //SunFlower
+    final public static double SunflowerHealth = 200;
+    final public static double SunflowerSunProductionFPS = 5;
+    final public static double SunflowerFPS = 60;
+
 
     final public static double[] ZombineRowYPos    = { 170, 275, 384, 484, 590 };
     final public static double[] ZombineColumnXPos = { 170, 255, 350, 435, 520, 600, 690, 765, 870 };
