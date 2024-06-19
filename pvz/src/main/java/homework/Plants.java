@@ -70,7 +70,7 @@ public abstract class Plants extends MoveableElement{
     public void initializeShooter() {
         shooter = new Timeline(
             new KeyFrame(Duration.millis(1000 / this.attackFPS), e -> {
-                System.err.println("Add new bullets!");
+                // System.err.println("Add new bullets!");
                 GlobalControl.addBullets(getNewBullets());
             })
         );
@@ -83,7 +83,13 @@ public abstract class Plants extends MoveableElement{
             this.shooter.stop();
         timeline.stop();
         GlobalControl.rootPane.getChildren().remove(this.imageview);
-        // GlobalControl.AllPlants.remove(this);
+    }
+
+    public double getX() {
+        return this.x - xOffset;
+    }
+    public double getY() {
+        return this.y - yOffset;
     }
 
     public boolean isDie() {

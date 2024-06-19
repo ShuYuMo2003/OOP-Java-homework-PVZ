@@ -47,17 +47,25 @@ public class App extends Application {
         // Constants.preCacheImages();
         initializeBackgroudImage();
 
+        GlobalControl.initializeEverything();
+
 
         // 第一列 5 个豌豆射手
          for(int i = 0; i < 5; i++) {
             GlobalControl.addPlants(new Peashooter(i, 0));
          }
-         for(int i = 0; i < 5; i++) {
-            GlobalControl.addPlants(new Sunflower(i, 2));
-         }
+
 
         for(int i = 0; i < 5; i++) {
-            GlobalControl.addZombine(new NormalZombine(i, 3));
+            switch (i % 2) {
+                case 0:
+                    GlobalControl.addZombine(new NormalZombine(i, 3));
+                    break;
+
+                case 1:
+                    GlobalControl.addZombine(new ConeheadZomine(i, 3));
+                    break;
+            }
         }
 
         // GlobalControl.addBullets(new NormalPea(200, 200));
@@ -74,7 +82,7 @@ public class App extends Application {
         // GlobalControl.rootPane.getChildren().add(imgv);
 
 
-        GlobalControl.initializeEverything();
+
 
         Scene scene = new Scene(GlobalControl.rootPane,
                 Constants.WindowWidth,

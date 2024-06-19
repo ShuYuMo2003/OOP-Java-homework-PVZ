@@ -5,25 +5,29 @@ import java.util.HashMap;
 import javafx.scene.image.Image;
 
 public class Constants {
+    final public static boolean Debug = true;
     final public static int WindowWidth = 1300;
     final public static int WindowHeight = 640;
     final public static String MainStageTitle = "Plants Vs. Zombies";
     // MapStage2XPos 0 : Normal Stage; 1 : die.
     final public static double PlayingStageMapXPos = -180d;
-    final public static double cleanUpFPS = 10;
+    final public static double cleanUpFPS = 60;
     final public static double GlobalFPS = 30;
 
+    final public static double BulletNZombineCollisionDistance_2 = 17354.560000000012;
+
     // Zombines
-    final public static double ZombineAttackingFPS = 1;
+    final public static double ZombineAttackingFPS = 60;
+    final public static double ZombineDieFPS = 11;
 
     // Normal Zombine
     final public static double NormalZombineSpeed = 0.5;
     final public static double NormalZombineFPS = 11;
     final public static double NormalZombineAttackValue = 10;
+
     //Conehead Zombine
-    final public static double ConeheadZombineSpeed = 1.0;
+    final public static double ConeheadZombineSpeed = 0.8;
     final public static double ConeheadZombineAttackValue = 10.0;
-    final public static double ConeheadZombineHealth = 200;
     final public static double ConeheadZombineFPS = 11;
 
     // Plants
@@ -33,13 +37,15 @@ public class Constants {
     final public static double PeashooterHealth = 100;
 
     // Bullets
-    final public static double BulletFPS = 30;
-    final public static double NormalPeaDamage = 5;
+    final public static double BulletFPS = 60;
+
+    // Normal Pea
+    final public static double NormalPeaDamage = 20;
     final public static double NormalPeaSpeed = 8;
 
     //SunFlower
     final public static double SunflowerHealth = 200;
-    final public static double SunflowerSunProductionFPS = 5;
+    final public static double SunflowerSunProductionFPS = 0.1;
     final public static double SunflowerFPS = 11;
 
 

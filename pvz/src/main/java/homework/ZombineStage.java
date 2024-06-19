@@ -29,6 +29,11 @@ public class ZombineStage {
     }
     public void minusHealth(int damage) { this.health -= damage; }
     public boolean isDie() { return health <= 0; }
+    public void applyAttack(double damage) {
+        if(Constants.Debug)
+            System.err.println("On Stage: `" + stageName + "` get damage: " + damage + " health: " + health + " -> " + (health - damage));
+        health -= damage;
+    }
     public String getFramePath(boolean isNormal) {
         if (isNormal) {
             normalImagesPaths.setNextFrame();
@@ -38,6 +43,6 @@ public class ZombineStage {
             return attackImagesPaths.currentFramePath();
         }
     }
-    
-    
+
+
 }
