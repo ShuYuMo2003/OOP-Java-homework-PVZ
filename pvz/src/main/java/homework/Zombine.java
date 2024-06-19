@@ -19,8 +19,12 @@ public abstract class Zombine extends MoveableElement {
     protected int dieCurrentFrameId = 0;
     protected Timeline dieTimeline;
 
+    protected boolean hadShowHeadAnimation = true;
+
     static private double xOffset = -150;
     static private double yOffset = -130;
+
+
 
     Zombine() { }
 
@@ -70,11 +74,9 @@ public abstract class Zombine extends MoveableElement {
                 double x = Constants.ZombineColumnXPos[i] + xOffset;
                 double y = Constants.ZombineRowYPos[j] + yOffset;
                 double distance2 = Math.pow(x - this.x, 2) + Math.pow(y - this.y, 2);
-                // System.err.println("checkingx = " + x + " y = " + y + " dis=" + distance2);
                 if(distance2 < minDistance2) {
                     minDistance2 = distance2;
                     mapPosition = new MapPosition(j, i);
-                    // System.err.println("Update to " + mapPosition.toString());
                 }
             }
         }

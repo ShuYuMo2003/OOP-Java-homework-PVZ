@@ -1,7 +1,15 @@
+
 package homework;
 
+import java.lang.reflect.Array;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+
+import java.util.Map.Entry;
+import java.util.AbstractMap.SimpleEntry;
+
 import javafx.scene.image.Image;
 
 public class Constants {
@@ -103,6 +111,41 @@ public class Constants {
 
     public static URL getBackgroudImage() {
         return Constants.class.getResource("/images/Items/Background/Background_1.jpg");
+    }
+
+    public static URL getPlantsChooserImage() {
+        return Constants.class.getResource("/images/Screen/PlantsChooserBackground.png");
+    }
+
+    public static URL getZombineChooserImage() {
+        return Constants.class.getResource("/images/Screen/ZombineChooserBackground.png");
+    }
+
+    // Cards
+    final public static double CardWidth = 60;
+    final public static double CardHeight = 80;
+    final public static double CardGap = 1.65;
+
+    final public static int PlantsCardCount = 8;
+    final public static double PlantsCardXPos = 94;
+    final public static double PlantsCardYPos = 18;
+    final public static ArrayList<Entry<String, URL>> PlantsCardImage = new ArrayList<>() {{
+        add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
+        add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
+        add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
+        add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
+        add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
+        add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
+        add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
+        add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
+    }};
+
+    public static URL getPeaShooterCardImage() {
+        return Constants.class.getResource("/images/Cards/card_peashooter.png");
+    }
+
+    public static URL getNormalZombineCardImage() {
+        return Constants.class.getResource("/images/Cards/card_NormalZombie.png");
     }
 
 

@@ -18,10 +18,11 @@ public class NormalZombine extends Zombine{
             ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/NormalZombie/Zombie"),
             ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/NormalZombie/ZombieAttack"),
             100));
+
         addStage(new ZombineStage("Lost Head Stage",
             ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/NormalZombie/ZombieLostHead"),
             ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/NormalZombie/ZombieLostHeadAttack"),
-        10));
+            10));
         initialTimeline(Constants.NormalZombineFPS);
         play();
     }

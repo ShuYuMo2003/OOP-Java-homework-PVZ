@@ -1,6 +1,8 @@
 package homework;
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -8,6 +10,8 @@ import javafx.util.Duration;
 import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
 import javafx.animation.KeyFrame;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
 public class GlobalControl {
     static Lock lock = new ReentrantLock();
@@ -18,11 +22,30 @@ public class GlobalControl {
     static ArrayList<MapPosition> zombinesPos = new ArrayList<>();
     static ArrayList<MapPosition> plantsPos = new ArrayList<>();
 
+    static ImageView[] plantsCardImageView = new ImageView[Constants.PlantsCardCount];
+
     static Timeline moveStep;
     static Timeline attackListerner;
     static Timeline dieObjectCleanUper;
     static Timeline bulletsListerner;
     static Pane rootPane = new Pane();
+
+    public static void initializePlantsCardImageView() {
+        int nowId = 0;
+        double currentPosX = Constants.PlantsCardXPos;
+        double currentPosY = Constants.PlantsCardYPos;
+        for(Map.Entry<String, URL> card : Constants.PlantsCardImage) {
+            plantsCardImageView[nowId] = new ImageView(new Image(card.getValue().toString()));
+            plantsCardImageView[nowId].setFitWidth(Constants.CardWidth);
+            plantsCardImageView[nowId].setFitHeight(Constants.CardHeight);
+            plantsCardImageView[nowId].setX(currentPosX);
+            plantsCardImageView[nowId].setY(currentPosY);
+            currentPosX += Constants.CardWidth + Constants.CardGap;
+            rootPane.getChildren().add(plantsCardImageView[nowId]);
+            System.err.println("Added card " + card.getKey() + " at " + currentPosX + " " + currentPosY);
+            nowId += 1;
+        }
+    }
 
     public static void addBullets(Bullets b) {
         lock.lock();
@@ -151,6 +174,10 @@ public class GlobalControl {
                         z.applyAttack(b.getDamage());
                         b.boom();
                     }
+                    // else if (z.getMapPosition().row != b.getMapPosition().row) {
+                    //     System.err.println("row z = " + z.getMapPosition().row);
+                    //     System.err.println("row b = " + b.getMapPosition().row);
+                    // }
                 }
             }
 
@@ -168,6 +195,7 @@ public class GlobalControl {
         initializeDieObjectCleanUp();
         initializeAttackingListening();
         initializeBulletsAttackListerner();
+        initializePlantsCardImageView();
         startMoveStep();
     }
 

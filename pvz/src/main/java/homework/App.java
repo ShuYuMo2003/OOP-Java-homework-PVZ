@@ -25,6 +25,7 @@ import java.io.IOException;
  */
 public class App extends Application {
     private static ImageView backgroundImageView;
+    private static ImageView cardsChooserImageView;
 
     private static void initializeBackgroudImage() {
         Image backgroundImage = new Image(Constants.getBackgroudImage().toString());
@@ -34,6 +35,27 @@ public class App extends Application {
         backgroundImageView.setX(Constants.PlayingStageMapXPos);
         GlobalControl.rootPane.getChildren().add(backgroundImageView);
     }
+
+    private static void initializePlantCardsChooser() {
+        Image cardsChooserImage = new Image(Constants.getPlantsChooserImage().toString());
+        cardsChooserImageView = new ImageView(cardsChooserImage);
+        cardsChooserImageView.setFitWidth(Constants.WindowWidth * 0.45);
+        cardsChooserImageView.setPreserveRatio(true);
+        cardsChooserImageView.setX(10);
+        cardsChooserImageView.setY(10);
+        GlobalControl.rootPane.getChildren().add(cardsChooserImageView);
+    }
+
+    private static void initializeZombineCardsChooser() {
+        Image cardsChooserImage = new Image(Constants.getZombineChooserImage().toString());
+        cardsChooserImageView = new ImageView(cardsChooserImage);
+        cardsChooserImageView.setFitWidth(Constants.WindowWidth * 0.45);
+        cardsChooserImageView.setPreserveRatio(true);
+        cardsChooserImageView.setX(Constants.WindowWidth * 0.55 - 10);
+        cardsChooserImageView.setY(10);
+        GlobalControl.rootPane.getChildren().add(cardsChooserImageView);
+    }
+
 
     private static void MoveMapToDie(int seconds) {
         TranslateTransition tt = new TranslateTransition(Duration.seconds(seconds), backgroundImageView);
@@ -46,6 +68,8 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         // Constants.preCacheImages();
         initializeBackgroudImage();
+        initializePlantCardsChooser();
+        initializeZombineCardsChooser();
 
         GlobalControl.initializeEverything();
 
@@ -61,7 +85,6 @@ public class App extends Application {
                 case 0:
                     GlobalControl.addZombine(new NormalZombine(i, 3));
                     break;
-
                 case 1:
                     GlobalControl.addZombine(new ConeheadZomine(i, 3));
                     break;
