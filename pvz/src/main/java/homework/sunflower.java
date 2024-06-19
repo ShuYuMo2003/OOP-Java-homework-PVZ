@@ -4,9 +4,9 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
-public class sunflower extends Plants {
-    sunflower() {}
-    sunflower(int row, int column) {
+public class Sunflower extends Plants {
+    Sunflower() {}
+    Sunflower(int row, int column) {
         super(Constants.PlantsColumnXPos[column],
               Constants.PlantsRowYPos[row],
               ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/Sunflower"),
@@ -33,9 +33,7 @@ public class sunflower extends Plants {
     }
     @Override
     protected Bullets getNewBullets() {
-
         return null;
-
     }
 
 }

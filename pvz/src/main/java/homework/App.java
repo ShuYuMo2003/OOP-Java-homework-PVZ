@@ -53,7 +53,7 @@ public class App extends Application {
             GlobalControl.addPlants(new Peashooter(i, 0));
          }
          for(int i = 0; i < 5; i++) {
-            GlobalControl.addPlants(new sunflower(i, 2));
+            GlobalControl.addPlants(new Sunflower(i, 2));
          }
 
         for(int i = 0; i < 5; i++) {

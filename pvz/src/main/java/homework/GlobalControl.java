@@ -82,6 +82,12 @@ public class GlobalControl {
                     AllPlants.remove(i);
                 }
             }
+            for(int i = 0; i < AllBullets.size(); i++) {
+                if(AllBullets.get(i).isBoomed()) {
+                    AllBullets.get(i).removeImageView();
+                    AllBullets.remove(i);
+                }
+            }
             lock.unlock();
         }));
         dieObjectCleanUper.play();
@@ -131,8 +137,8 @@ public class GlobalControl {
             for(Bullets b : AllBullets) {
                 bulletPos.add(b.getMapPosition());
             }
-            for(int zid = 0; zid <= zombinesPos.size(); zid++) {
-                for(int bid = 0; bid <= bulletPos.size(); bid++) {
+            for(int zid = 0; zid < zombinesPos.size(); zid++) {
+                for(int bid = 0; bid < bulletPos.size(); bid++) {
                     if(bulletPos.get(bid).equals(zombinesPos.get(zid))) {
                         AllBullets.get(bid).boom();
                         AllZombines.get(zid).applyAttack(AllBullets.get(bid).getDamage());

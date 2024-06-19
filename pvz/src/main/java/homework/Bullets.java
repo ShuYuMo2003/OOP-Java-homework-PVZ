@@ -43,6 +43,7 @@ public abstract class Bullets extends MoveableElement {
             })
         );
         tt.setCycleCount(1);
+        setSpeed(0, 0);
     }
 
     public MapPosition getMapPosition() {
@@ -66,9 +67,14 @@ public abstract class Bullets extends MoveableElement {
         return this.damage;
     }
 
+    public boolean isBoomed() {
+        return this.boomed;
+    }
+
 
     @Override
     protected void rangeCheck() {
+        // boomed = true;
         if(this.x > Constants.WindowHeight) {
             GlobalControl.rootPane.getChildren().remove(this.imageview);
         }

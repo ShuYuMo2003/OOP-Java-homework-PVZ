@@ -79,7 +79,8 @@ public abstract class Plants extends MoveableElement{
 
     public void setDie() {
         die = true;
-        shooter.stop();
+        if(this.shooter != null)
+            this.shooter.stop();
         timeline.stop();
         GlobalControl.rootPane.getChildren().remove(this.imageview);
         // GlobalControl.AllPlants.remove(this);
@@ -91,7 +92,8 @@ public abstract class Plants extends MoveableElement{
 
     public void play() {
         this.timeline.play();
-        this.shooter.play();
+        if (this.shooter != null)
+            this.shooter.play();
     }
 
     public void pause() {

@@ -26,8 +26,6 @@ public class Constants {
     final public static double ConeheadZombineHealth = 200;
     final public static double ConeheadZombineFPS = 11;
 
-
-
     // Plants
     // Peashooter
     final public static double PeashooterFPS = 11;
@@ -42,7 +40,7 @@ public class Constants {
     //SunFlower
     final public static double SunflowerHealth = 200;
     final public static double SunflowerSunProductionFPS = 5;
-    final public static double SunflowerFPS = 60;
+    final public static double SunflowerFPS = 11;
 
 
     final public static double[] ZombineRowYPos    = { 170, 275, 384, 484, 590 };
