@@ -1,6 +1,8 @@
 package homework;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Paths;
+import javafx.scene.layout.Pane;
 
 public class ConeheadZombine extends NormalZombine {
     public ConeheadZombine(int row, int column) throws UnsupportedEncodingException {
@@ -12,8 +14,8 @@ public class ConeheadZombine extends NormalZombine {
         
         addStage(new ZombineStage(
             "Hat Stage",
-            ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/ConeheadZombie/Zombie"),
-            ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/ConeheadZombie/ZombieAttack"),
+            ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/ConeheadZombie/ConeZombie"),
+            ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/ConeheadZombie/ConeZombieAttack"),
             150)); 
         
         

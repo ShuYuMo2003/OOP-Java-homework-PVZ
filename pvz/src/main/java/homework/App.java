@@ -57,7 +57,7 @@ public class App extends Application {
          }
 
         for(int i = 0; i < 5; i++) {
-            GlobalControl.addZombine(new NormalZombine(i, 3));
+            GlobalControl.addZombine(new ConeheadZombine(i, 3));
         }
 
         // GlobalControl.addBullets(new NormalPea(200, 200));
