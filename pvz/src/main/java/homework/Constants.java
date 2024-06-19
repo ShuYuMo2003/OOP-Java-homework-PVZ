@@ -28,6 +28,7 @@ public class Constants {
     final public static double PeashooterHealth = 100;
 
     // Bullets
+    final public static double BulletFPS = 30;
     final public static double NormalPeaDamage = 5;
     final public static double NormalPeaSpeed = 8;
 
