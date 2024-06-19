@@ -52,6 +52,9 @@ public class App extends Application {
          for(int i = 0; i < 5; i++) {
             GlobalControl.addPlants(new Peashooter(i, 0));
          }
+         for(int i = 0; i < 5; i++) {
+            GlobalControl.addPlants(new sunflower(i, 2));
+         }
 
         for(int i = 0; i < 5; i++) {
             GlobalControl.addZombine(new NormalZombine(i, 3));

@@ -20,6 +20,13 @@ public class Constants {
     final public static double NormalZombineSpeed = 0.5;
     final public static double NormalZombineFPS = 11;
     final public static double NormalZombineAttackValue = 10;
+    //Conehead Zombine
+    final public static double ConeheadZombineSpeed = 1.0;
+    final public static double ConeheadZombineAttackValue = 10.0;
+    final public static double ConeheadZombineHealth = 200;
+    final public static double ConeheadZombineFPS = 11;
+
+
 
     // Plants
     // Peashooter

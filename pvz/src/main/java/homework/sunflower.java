@@ -34,10 +34,9 @@ public class sunflower extends Plants {
     }
     @Override
     protected Bullets getNewBullets() {
-        // Sunflower does not produce bullets, so we return null or throw an exception
+        
         return null;
-        // Alternatively, you can throw an UnsupportedOperationException
-        // throw new UnsupportedOperationException("Sunflowers do not shoot bullets");
+        
     }
     
 }
