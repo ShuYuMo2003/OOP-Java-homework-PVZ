@@ -35,15 +35,17 @@ public abstract class Bullets extends MoveableElement {
     }
 
     public void boom() {
+        setSpeed(0, 0);
         imageview.setImage(this.boomedFrame);
-        boomed = true;
+        // Once boomed, the damage of bullet will be zeroed.
+        damage = 0;
         Timeline tt = new Timeline(
-            new KeyFrame(Duration.millis(500), e -> {
-                GlobalControl.rootPane.getChildren().remove(imageview);
+            new KeyFrame(Duration.millis(100), e -> {
+                boomed = true;
             })
         );
         tt.setCycleCount(1);
-        setSpeed(0, 0);
+        tt.play();
     }
 
     public MapPosition getMapPosition() {
@@ -71,11 +73,20 @@ public abstract class Bullets extends MoveableElement {
         return this.boomed;
     }
 
+    @Override
+    public double getX() {
+        return this.x - xOffset;
+    }
+    @Override
+    public double getY() {
+        return this.y - yOffset;
+    }
+
 
     @Override
     protected void rangeCheck() {
         // boomed = true;
-        if(this.x > Constants.WindowHeight) {
+        if(this.x > Constants.WindowWidth) {
             GlobalControl.rootPane.getChildren().remove(this.imageview);
         }
     }

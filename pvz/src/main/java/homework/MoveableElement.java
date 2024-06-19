@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 public abstract class MoveableElement {
+    protected boolean deprecated = false;
     protected double x;
     protected double y;
     protected double dx, dy;
@@ -29,6 +30,13 @@ public abstract class MoveableElement {
     }
 
     protected void rangeCheck() {}
+
+    public double getX() {
+        return this.x;
+    }
+    public double getY() {
+        return this.y;
+    }
 
     public void nextStep() {
         this.x += this.dx;

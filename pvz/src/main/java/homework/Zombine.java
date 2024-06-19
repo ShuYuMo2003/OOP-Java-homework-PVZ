@@ -14,15 +14,22 @@ public abstract class Zombine extends MoveableElement {
     protected Timeline timeline;
     protected boolean die;
 
+    protected String[] dieFramesPath;
+    protected double dieFramesFPS;
+    protected int dieCurrentFrameId = 0;
+    protected Timeline dieTimeline;
+
     static private double xOffset = -150;
     static private double yOffset = -130;
 
     Zombine() { }
 
-    Zombine(double x, double y, double speed, double damage) {
+    Zombine(double x, double y, double speed, double damage, String[] dieFramesPath, double dieFramesFPS) {
         super(x + xOffset, y + yOffset, -speed, 0);
         this.clearStage();
         this.damage = damage;
+        this.dieFramesPath = dieFramesPath;
+        this.dieFramesFPS = dieFramesFPS;
     }
 
     protected void clearStage() { stageStatus.clear(); }
@@ -30,18 +37,24 @@ public abstract class Zombine extends MoveableElement {
     protected void addStage(ZombineStage NewStage) { stageStatus.add(NewStage); }
 
     protected String getFramePath() {
-        for(int i = stageStatus.size() - 1; i >= 0; i--) {
+        for(int i = 0; i < stageStatus.size(); i++) {
             if(!stageStatus.get(i).isDie()) {
                 return stageStatus.get(i).getFramePath(!isAttacking);
             }
         }
-        throw new RuntimeException("This zombine is dead.");
+        setDie();
+        return null;
+        // throw new RuntimeException("This zombine is dead.");
     }
 
     public void initialTimeline(double fps) {
         timeline = new Timeline(
             new KeyFrame(Duration.millis(1000 / fps), e -> {
                 String curFramePath = getFramePath();
+                if(curFramePath == null) {
+                    timeline.stop();
+                    return;
+                }
                 imageview.setImage(new Image(curFramePath));
             })
         );
@@ -68,6 +81,15 @@ public abstract class Zombine extends MoveableElement {
         return mapPosition;
     }
 
+    @Override
+    public double getX() {
+        return this.x - xOffset;
+    }
+    @Override
+    public double getY() {
+        return this.y - yOffset;
+    }
+
     public void play() {
         timeline.play();
     }
@@ -85,6 +107,14 @@ public abstract class Zombine extends MoveableElement {
      * @param damage: the damage of the bullet
      */
     public void applyAttack(double damage) {
+        if(damage < Constants.EPS) return;
+
+        for(int i = 0; i < stageStatus.size(); i++) {
+            if(!stageStatus.get(i).isDie()) {
+                stageStatus.get(i).applyAttack(damage);
+                break;
+            }
+        }
         System.err.println("Zombine get damage: " + damage);
     }
 
@@ -107,5 +137,22 @@ public abstract class Zombine extends MoveableElement {
     }
     public void setDie() {
         die = true;
+        dieTimeline = new Timeline(
+            new KeyFrame(Duration.millis(1000 / this.dieFramesFPS), e -> {
+                this.imageview.setImage(new Image(dieFramesPath[dieCurrentFrameId]));
+                if (dieCurrentFrameId == dieFramesPath.length - 1) {
+                    deprecated = true;
+                    dieTimeline.stop();
+                } else {
+                    dieCurrentFrameId++;
+                }
+            })
+        );
+        dieTimeline.setCycleCount(Timeline.INDEFINITE);
+        dieTimeline.play();
+    }
+
+    public boolean getDeprecated() {
+        return deprecated;
     }
 }

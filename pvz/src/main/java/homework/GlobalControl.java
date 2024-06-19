@@ -17,7 +17,6 @@ public class GlobalControl {
 
     static ArrayList<MapPosition> zombinesPos = new ArrayList<>();
     static ArrayList<MapPosition> plantsPos = new ArrayList<>();
-    static ArrayList<MapPosition> bulletPos = new ArrayList<>();
 
     static Timeline moveStep;
     static Timeline attackListerner;
@@ -45,6 +44,11 @@ public class GlobalControl {
 
     GlobalControl() { }
 
+    public static void zombineWin() {
+        System.err.println("Zombine win!");
+        System.exit(0);
+    }
+
     public static void initializeMoveStep() {
         moveStep = new Timeline();
         moveStep.setCycleCount(Timeline.INDEFINITE);
@@ -61,6 +65,12 @@ public class GlobalControl {
             for(Bullets b : AllBullets) {
                 b.nextStep();
             }
+            for(Zombine z : AllZombines) {
+                if(z.getX() < 0) {
+                    zombineWin();
+                }
+            }
+
             lock.unlock();
         }));
     }
@@ -71,7 +81,7 @@ public class GlobalControl {
         dieObjectCleanUper.getKeyFrames().add(new KeyFrame(Duration.millis(1000 / Constants.cleanUpFPS), e -> {
             lock.lock();
             for(int i = 0; i < AllZombines.size(); i++) {
-                if(AllZombines.get(i).isDie()) {
+                if(AllZombines.get(i).getDeprecated()) {
                     AllZombines.get(i).removeImageView();
                     AllZombines.remove(i);
                 }
@@ -133,18 +143,17 @@ public class GlobalControl {
         bulletsListerner.setCycleCount(Timeline.INDEFINITE);
         bulletsListerner.getKeyFrames().add(new KeyFrame(Duration.millis(1000 / Constants.BulletFPS), e->{
             lock.lock();
-            bulletPos.clear();
-            for(Bullets b : AllBullets) {
-                bulletPos.add(b.getMapPosition());
-            }
-            for(int zid = 0; zid < zombinesPos.size(); zid++) {
-                for(int bid = 0; bid < bulletPos.size(); bid++) {
-                    if(bulletPos.get(bid).equals(zombinesPos.get(zid))) {
-                        AllBullets.get(bid).boom();
-                        AllZombines.get(zid).applyAttack(AllBullets.get(bid).getDamage());
+            for(Zombine z : AllZombines) {
+                for(Bullets b : AllBullets) {
+                    double distance2 = Math.pow(z.getX() - b.getX(), 2) + Math.pow(z.getY() - b.getY(), 2);
+                    // System.err.println("distance2 = " + distance2 + " " + Constants.BulletNZombineCollisionDistance_2);
+                    if(distance2 < Constants.BulletNZombineCollisionDistance_2) {
+                        z.applyAttack(b.getDamage());
+                        b.boom();
                     }
                 }
             }
+
             lock.unlock();
         }));
         bulletsListerner.play();

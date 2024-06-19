@@ -16,7 +16,6 @@ public class Peashooter extends Plants {
         play();
     }
     protected Bullets getNewBullets() {
-        System.err.println("call getNewBullets");
         return new NormalPea(this.x, this.y);
     }
 }
