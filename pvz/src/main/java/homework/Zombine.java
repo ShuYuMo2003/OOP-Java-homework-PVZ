@@ -117,7 +117,7 @@ public abstract class Zombine extends MoveableElement {
                 break;
             }
         }
-        System.err.println("Zombine get damage: " + damage);
+        // System.err.println("Zombine get damage: " + damage);
     }
 
     public void setAttack(boolean isAttacking) {

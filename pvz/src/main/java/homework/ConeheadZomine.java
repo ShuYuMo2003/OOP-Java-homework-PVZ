@@ -16,11 +16,13 @@ public class ConeheadZomine extends Zombine{
             ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/ConeheadZombie/ConeheadZombie"),
             ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/ConeheadZombie/ConeheadZombieAttack"),
             50));
-        addStage(new ZombineStage("Without Stage",
+        addStage(new ZombineStage(
+            "Without Cone Stage",
             ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/NormalZombie/Zombie"),
             ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/NormalZombie/ZombieAttack"),
         100));
-        addStage(new ZombineStage("Lost Head Stage",
+        addStage(new ZombineStage(
+            "Lost Head Stage",
             ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/NormalZombie/ZombieLostHead"),
             ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/NormalZombie/ZombieLostHeadAttack"),
         10));

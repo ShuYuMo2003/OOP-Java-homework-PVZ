@@ -49,4 +49,8 @@ public abstract class MoveableElement {
     public void removeImageView() {
         GlobalControl.rootPane.getChildren().remove(this.imageview);
     }
+
+    public ImageView getImageView() {
+        return this.imageview;
+    }
 }

@@ -1,8 +1,12 @@
 package homework;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.image.Image;
 
 public class Peashooter extends Plants {
+    public static Image staticImage = new Image(
+        ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/Peashooter")[0]
+    );
     Peashooter() {}
     Peashooter(int row, int column) {
         super(Constants.PlantsColumnXPos[column],

@@ -22,7 +22,43 @@ public class GlobalControl {
     static ArrayList<MapPosition> zombinesPos = new ArrayList<>();
     static ArrayList<MapPosition> plantsPos = new ArrayList<>();
 
-    static ImageView[] plantsCardImageView = new ImageView[Constants.PlantsCardCount];
+    static String selectedPlantsType = null;
+    static ImageView selectedPlantsImageView = null;
+
+    static PlantsCard[] plantsCards = new PlantsCard[Constants.PlantsCardCount];
+
+    private static ImageView backgroundImageView;
+
+    private static ImageView cardsChooserImageView;
+
+    private static void initializeBackgroudImage() {
+        Image backgroundImage = new Image(Constants.getBackgroudImage().toString());
+        backgroundImageView = new ImageView(backgroundImage);
+        backgroundImageView.setFitHeight(Constants.WindowHeight);
+        backgroundImageView.setPreserveRatio(true);
+        backgroundImageView.setX(Constants.PlayingStageMapXPos);
+        GlobalControl.rootPane.getChildren().add(backgroundImageView);
+    }
+
+    private static void initializePlantCardsChooser() {
+        Image cardsChooserImage = new Image(Constants.getPlantsChooserImage().toString());
+        cardsChooserImageView = new ImageView(cardsChooserImage);
+        cardsChooserImageView.setFitWidth(Constants.WindowWidth * 0.45);
+        cardsChooserImageView.setPreserveRatio(true);
+        cardsChooserImageView.setX(10);
+        cardsChooserImageView.setY(10);
+        GlobalControl.rootPane.getChildren().add(cardsChooserImageView);
+    }
+
+    private static void initializeZombineCardsChooser() {
+        Image cardsChooserImage = new Image(Constants.getZombineChooserImage().toString());
+        cardsChooserImageView = new ImageView(cardsChooserImage);
+        cardsChooserImageView.setFitWidth(Constants.WindowWidth * 0.45);
+        cardsChooserImageView.setPreserveRatio(true);
+        cardsChooserImageView.setX(Constants.WindowWidth * 0.55 - 10);
+        cardsChooserImageView.setY(10);
+        GlobalControl.rootPane.getChildren().add(cardsChooserImageView);
+    }
 
     static Timeline moveStep;
     static Timeline attackListerner;
@@ -30,21 +66,64 @@ public class GlobalControl {
     static Timeline bulletsListerner;
     static Pane rootPane = new Pane();
 
+
+    public static void setSelectedPlants(String type, ImageView imageView) {
+        selectedPlantsType = type;
+        selectedPlantsImageView = imageView;
+
+        GlobalControl.rootPane.getChildren().add(selectedPlantsImageView);
+        GlobalControl.rootPane.setOnMouseMoved(event -> {
+            if (imageView != null) {
+                imageView.setLayoutX(event.getX() - imageView.getFitWidth() / 2 - 50);
+                imageView.setLayoutY(event.getY() - imageView.getFitHeight() / 2 - 50);
+            }
+        });
+    }
+
+    public static void initializeCardSelectedApply() {
+        GlobalControl.rootPane.setOnMouseClicked(event -> {
+            System.err.println("selectedPlantsType = " + selectedPlantsType);
+            if(selectedPlantsType != null) {
+                MapPosition mpos = Plants.getMapPosition(event.getX(), event.getY());
+                switch(selectedPlantsType) {
+                    case "Peashooter":
+                        GlobalControl.addPlants(new Peashooter(mpos.row, mpos.column));
+                        break;
+                }
+            }
+
+            selectedPlantsType = null;
+            try {
+                rootPane.getChildren().remove(selectedPlantsImageView);
+                selectedPlantsImageView = null;
+            } catch (Exception e) {
+                System.err.println("Error: " + e);
+            }
+            rootPane.setOnMouseMoved(null);
+        });
+    }
+
     public static void initializePlantsCardImageView() {
         int nowId = 0;
         double currentPosX = Constants.PlantsCardXPos;
         double currentPosY = Constants.PlantsCardYPos;
         for(Map.Entry<String, URL> card : Constants.PlantsCardImage) {
-            plantsCardImageView[nowId] = new ImageView(new Image(card.getValue().toString()));
-            plantsCardImageView[nowId].setFitWidth(Constants.CardWidth);
-            plantsCardImageView[nowId].setFitHeight(Constants.CardHeight);
-            plantsCardImageView[nowId].setX(currentPosX);
-            plantsCardImageView[nowId].setY(currentPosY);
+            plantsCards[nowId] = new PlantsCard(
+                new Image(card.getValue().toString()),
+                card.getKey(),
+                currentPosX,
+                currentPosY,
+                Constants.CardWidth,
+                Constants.CardHeight
+            );
             currentPosX += Constants.CardWidth + Constants.CardGap;
-            rootPane.getChildren().add(plantsCardImageView[nowId]);
             System.err.println("Added card " + card.getKey() + " at " + currentPosX + " " + currentPosY);
             nowId += 1;
         }
+    }
+
+    public static void setSelectedCard(Plants img) {
+
     }
 
     public static void addBullets(Bullets b) {
@@ -192,10 +271,14 @@ public class GlobalControl {
 
     public static void initializeEverything() {
         initializeMoveStep();
+        initializeBackgroudImage();
+        initializePlantCardsChooser();
+        initializeZombineCardsChooser();
         initializeDieObjectCleanUp();
         initializeAttackingListening();
         initializeBulletsAttackListerner();
         initializePlantsCardImageView();
+        initializeCardSelectedApply();
         startMoveStep();
     }
 
