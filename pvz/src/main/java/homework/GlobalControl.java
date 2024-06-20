@@ -2,6 +2,7 @@ package homework;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -58,12 +59,14 @@ public class GlobalControl {
         AllZombines.add(z);
         lock.unlock();
     }
+    
 
     public static void addPlants(Plants p) {
         lock.lock();
         AllPlants.add(p);
         lock.unlock();
     }
+
 
     GlobalControl() { }
 
@@ -197,6 +200,11 @@ public class GlobalControl {
         initializeBulletsAttackListerner();
         initializePlantsCardImageView();
         startMoveStep();
+    }
+
+    public static Zombine[] getZombines() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getZombines'");
     }
 
 }

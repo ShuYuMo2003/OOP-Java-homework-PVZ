@@ -18,6 +18,7 @@ import javafx.animation.Timeline;
 
 
 
+
 import java.io.IOException;
 
 /**
@@ -76,7 +77,7 @@ public class App extends Application {
 
         // 第一列 5 个豌豆射手
          for(int i = 0; i < 5; i++) {
-            GlobalControl.addPlants(new Peashooter(i, 0));
+            GlobalControl.addPlants(new Chomper(i, 0));
          }
 
 
@@ -86,7 +87,7 @@ public class App extends Application {
                     GlobalControl.addZombine(new NormalZombine(i, 3));
                     break;
                 case 1:
-                    GlobalControl.addZombine(new ConeheadZomine(i, 3));
+                    GlobalControl.addZombine(new NewspaperZombine(i, 3));
                     break;
             }
         }

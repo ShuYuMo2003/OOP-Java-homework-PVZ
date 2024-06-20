@@ -22,7 +22,7 @@ public class NormalZombine extends Zombine{
         addStage(new ZombineStage("Lost Head Stage",
             ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/NormalZombie/ZombieLostHead"),
             ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/NormalZombie/ZombieLostHeadAttack"),
-            10));
+            45));
         initialTimeline(Constants.NormalZombineFPS);
         play();
     }
