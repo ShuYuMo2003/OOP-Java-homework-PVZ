@@ -34,9 +34,22 @@ public class Constants {
     final public static double NormalZombineAttackValue = 1;
 
     //Conehead Zombine
-    final public static double ConeheadZombineSpeed = 0.8;
-    final public static double ConeheadZombineAttackValue = 1.0;
-    final public static double ConeheadZombineFPS = 15;
+    final public static double ConeheadZombineSpeed = 0.5;
+    final public static double ConeheadZombineAttackValue = 10;
+    final public static double ConeheadZombineFPS = 11;
+    // Buckethead Zombine constants
+    final public static double BucketheadZombineSpeed = 0.5;
+    final public static double BucketheadZombineAttackValue = 10;
+    final public static double BucketheadZombineFPS = 11;
+    // Flag Zombine constants
+    final public static double FlagZombineSpeed =0.6;
+    final public static double FlagZombineAttackValue = 10;
+    final public static double FlagZombineFPS = 11;
+    // Newspaper Zombine constants
+    final public static double NewspaperZombineSpeed = 0.5;
+    final public static double NewspaperZombineAttackValue = 10;
+    final public static double NewspaperZombineFPS = 11;
+
 
     // Plants
     // Peashooter
@@ -55,6 +68,13 @@ public class Constants {
     final public static double SunflowerHealth = 200;
     final public static double SunflowerSunProductionFPS = 0.1;
     final public static double SunflowerFPS = 11;
+
+    // Chomper
+    public static final double ChomperHealth = 300;
+    public static final double ChomperFPS = 10;
+    public static final double ChomperAttackFPS = 0.5;
+    public static final double ChomperRange = 100; // The range within which the Chomper can eat zombies
+    public static final double ChomperDigestionTime = 5000;
 
 
     final public static double[] ZombineRowYPos    = { 170, 275, 384, 484, 590 };

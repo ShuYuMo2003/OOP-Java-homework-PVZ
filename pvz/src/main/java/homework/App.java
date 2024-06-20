@@ -39,8 +39,11 @@ public class App extends Application {
 
 
         // 第一列 5 个豌豆射手
+         for(int i = 0; i < 5; i++) {
+            GlobalControl.addPlants(new Chomper(i, 0));
+         }
         //  for(int i = 0; i < 5; i++) {
-            GlobalControl.addPlants(new Peashooter(2, 0));
+           // GlobalControl.addPlants(new Peashooter(2, 0));
         //  }
 
 
@@ -50,6 +53,7 @@ public class App extends Application {
                     GlobalControl.addZombine(new NormalZombine(i, 4));
                     break;
                 case 1:
+                    GlobalControl.addZombine(new NewspaperZombine(i, 3));
                     GlobalControl.addZombine(new ConeheadZomine(i, 4));
                     break;
             }
