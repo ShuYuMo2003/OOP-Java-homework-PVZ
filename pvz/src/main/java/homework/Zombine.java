@@ -83,6 +83,23 @@ public abstract class Zombine extends MoveableElement {
         return mapPosition;
     }
 
+    public static MapPosition getMapPosition(double xx, double yy) {
+        MapPosition mapPosition = new MapPosition(0, 0);
+        double minDistance2 = Constants.INF;
+        for(int i = 0; i < Constants.MaxColumn; i++) {
+            for(int j = 0; j < Constants.MaxRow; j++) {
+                double x = Constants.ZombineColumnXPos[i] - 80;
+                double y = Constants.ZombineRowYPos[j] - 60;
+                double distance2 = Math.pow(x - xx, 2) + Math.pow(y - yy, 2);
+                if(distance2 < minDistance2) {
+                    minDistance2 = distance2;
+                    mapPosition = new MapPosition(j, i);
+                }
+            }
+        }
+        return mapPosition;
+    }
+
     @Override
     public double getX() {
         return this.x - xOffset;
@@ -117,7 +134,7 @@ public abstract class Zombine extends MoveableElement {
                 break;
             }
         }
-        System.err.println("Zombine get damage: " + damage);
+        // System.err.println("Zombine get damage: " + damage);
     }
 
     public void setAttack(boolean isAttacking) {

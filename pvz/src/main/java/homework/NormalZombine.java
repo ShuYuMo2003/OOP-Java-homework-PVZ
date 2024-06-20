@@ -2,10 +2,15 @@ package homework;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Paths;
+
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
 public class NormalZombine extends Zombine{
-    public NormalZombine(int row, int column) throws UnsupportedEncodingException {
+    public static Image staticImage = new Image(
+        ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/NormalZombie/Zombie")[0]
+    );
+    public NormalZombine(int row, int column) {
         super(Constants.getZombinePos(row, column)[0],
               Constants.getZombinePos(row, column)[1],
               Constants.NormalZombineSpeed,

@@ -16,61 +16,24 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 
 
-
-
-
 import java.io.IOException;
 
 /**
  * JavaFX App
  */
 public class App extends Application {
-    private static ImageView backgroundImageView;
-    private static ImageView cardsChooserImageView;
 
-    private static void initializeBackgroudImage() {
-        Image backgroundImage = new Image(Constants.getBackgroudImage().toString());
-        backgroundImageView = new ImageView(backgroundImage);
-        backgroundImageView.setFitHeight(Constants.WindowHeight);
-        backgroundImageView.setPreserveRatio(true);
-        backgroundImageView.setX(Constants.PlayingStageMapXPos);
-        GlobalControl.rootPane.getChildren().add(backgroundImageView);
-    }
-
-    private static void initializePlantCardsChooser() {
-        Image cardsChooserImage = new Image(Constants.getPlantsChooserImage().toString());
-        cardsChooserImageView = new ImageView(cardsChooserImage);
-        cardsChooserImageView.setFitWidth(Constants.WindowWidth * 0.45);
-        cardsChooserImageView.setPreserveRatio(true);
-        cardsChooserImageView.setX(10);
-        cardsChooserImageView.setY(10);
-        GlobalControl.rootPane.getChildren().add(cardsChooserImageView);
-    }
-
-    private static void initializeZombineCardsChooser() {
-        Image cardsChooserImage = new Image(Constants.getZombineChooserImage().toString());
-        cardsChooserImageView = new ImageView(cardsChooserImage);
-        cardsChooserImageView.setFitWidth(Constants.WindowWidth * 0.45);
-        cardsChooserImageView.setPreserveRatio(true);
-        cardsChooserImageView.setX(Constants.WindowWidth * 0.55 - 10);
-        cardsChooserImageView.setY(10);
-        GlobalControl.rootPane.getChildren().add(cardsChooserImageView);
-    }
-
-
-    private static void MoveMapToDie(int seconds) {
-        TranslateTransition tt = new TranslateTransition(Duration.seconds(seconds), backgroundImageView);
-        double currentX = backgroundImageView.getX();
-        tt.setToX(0 - currentX);
-        tt.play();
-    }
+    // private static void MoveMapToDie(int seconds) {
+    //     TranslateTransition tt = new TranslateTransition(Duration.seconds(seconds), backgroundImageView);
+    //     double currentX = backgroundImageView.getX();
+    //     tt.setToX(0 - currentX);
+    //     tt.play();
+    // }
 
     @Override
     public void start(Stage stage) throws IOException {
         // Constants.preCacheImages();
-        initializeBackgroudImage();
-        initializePlantCardsChooser();
-        initializeZombineCardsChooser();
+
 
         GlobalControl.initializeEverything();
 
@@ -79,15 +42,19 @@ public class App extends Application {
          for(int i = 0; i < 5; i++) {
             GlobalControl.addPlants(new Chomper(i, 0));
          }
+        //  for(int i = 0; i < 5; i++) {
+           // GlobalControl.addPlants(new Peashooter(2, 0));
+        //  }
 
 
         for(int i = 0; i < 5; i++) {
             switch (i % 2) {
                 case 0:
-                    GlobalControl.addZombine(new NormalZombine(i, 3));
+                    GlobalControl.addZombine(new NormalZombine(i, 4));
                     break;
                 case 1:
                     GlobalControl.addZombine(new NewspaperZombine(i, 3));
+                    GlobalControl.addZombine(new ConeheadZomine(i, 4));
                     break;
             }
         }
