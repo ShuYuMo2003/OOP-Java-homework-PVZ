@@ -30,12 +30,22 @@ public class GlobalControl {
     static String selectedZombineType = null;
     static ImageView selectedZombineImageView = null;
 
+    static int sunCount = 0;
+    static int brainCount = 0;
+
     static PlantsCard[] plantsCards = new PlantsCard[Constants.PlantsCardCount];
     static ZombineCard[] zombineCards = new ZombineCard[Constants.ZombineCardCount];
 
     private static ImageView backgroundImageView;
     private static ImageView cardsChooserImageView;
     private static Zombine winZombine = null;
+
+    public static void setSunCount(int count) {
+        sunCount = count;
+    }
+    public static void modifySunCount(int count) {
+        sunCount -= count;
+    }
 
     private static void initializeBackgroudImage() {
         Image backgroundImage = new Image(Constants.getBackgroudImage().toString());
