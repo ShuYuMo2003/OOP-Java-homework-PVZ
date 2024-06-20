@@ -3,7 +3,7 @@ package homework;
 import java.io.UnsupportedEncodingException;
 
 public class ConeheadZomine extends Zombine{
-    public ConeheadZomine(int row, int column) throws UnsupportedEncodingException {
+    public ConeheadZomine(int row, int column) {
         super(Constants.getZombinePos(row, column)[0],
               Constants.getZombinePos(row, column)[1],
               Constants.ConeheadZombineSpeed,

@@ -22,21 +22,21 @@ public class Constants {
     final public static double cleanUpFPS = 60;
     final public static double GlobalFPS = 30;
 
-    final public static double BulletNZombineCollisionDistance_2 = 17354.560000000012;
+    final public static double BulletNZombineCollisionDistance_2 = Math.pow(100, 2);
 
     // Zombines
-    final public static double ZombineAttackingFPS = 60;
+    final public static double ZombineAttackingFPS = 10;
     final public static double ZombineDieFPS = 11;
 
     // Normal Zombine
     final public static double NormalZombineSpeed = 0.5;
     final public static double NormalZombineFPS = 11;
-    final public static double NormalZombineAttackValue = 10;
+    final public static double NormalZombineAttackValue = 1;
 
     //Conehead Zombine
     final public static double ConeheadZombineSpeed = 0.8;
-    final public static double ConeheadZombineAttackValue = 10.0;
-    final public static double ConeheadZombineFPS = 11;
+    final public static double ConeheadZombineAttackValue = 1.0;
+    final public static double ConeheadZombineFPS = 15;
 
     // Plants
     // Peashooter
@@ -45,7 +45,7 @@ public class Constants {
     final public static double PeashooterHealth = 100;
 
     // Bullets
-    final public static double BulletFPS = 60;
+    final public static double BulletFPS = 5;
 
     // Normal Pea
     final public static double NormalPeaDamage = 20;
@@ -122,16 +122,19 @@ public class Constants {
     }
 
     // Cards
-    final public static double CardWidth = 60;
-    final public static double CardHeight = 80;
-    final public static double CardGap = 1.65;
 
+
+
+    // Plants Cards
+    final public static double PlantCardGap = 1.65;
+    final public static double PlantCardWidth = 60;
+    final public static double PlantCardHeight = 80;
     final public static int PlantsCardCount = 8;
     final public static double PlantsCardXPos = 94;
     final public static double PlantsCardYPos = 18;
     final public static ArrayList<Entry<String, URL>> PlantsCardImage = new ArrayList<>() {{
         add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
-        add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
+        add(new SimpleEntry<String, URL>("Sunflower",  getSunflowerCardImage()));
         add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
         add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
         add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
@@ -143,6 +146,27 @@ public class Constants {
     public static URL getPeaShooterCardImage() {
         return Constants.class.getResource("/images/Cards/card_peashooter.png");
     }
+    public static URL getSunflowerCardImage() {
+        return Constants.class.getResource("/images/Cards/card_sunflower.png");
+    }
+
+    // zombine Cards
+    final public static double ZombineCardGap = 3;
+    final public static double ZombineCardWidth = 58;
+    final public static double ZombineCardHeight = 79;
+    final public static int ZombineCardCount = 8;
+    final public static double ZombineCardXPos = 717;
+    final public static double ZombineCardYPos = 18;
+    final public static ArrayList<Entry<String, URL>> ZombineCardImage = new ArrayList<>() {{
+        add(new SimpleEntry<String, URL>("NormalZombine", getNormalZombineCardImage()));
+        add(new SimpleEntry<String, URL>("NormalZombine", getNormalZombineCardImage()));
+        add(new SimpleEntry<String, URL>("NormalZombine", getNormalZombineCardImage()));
+        add(new SimpleEntry<String, URL>("NormalZombine", getNormalZombineCardImage()));
+        add(new SimpleEntry<String, URL>("NormalZombine", getNormalZombineCardImage()));
+        add(new SimpleEntry<String, URL>("NormalZombine", getNormalZombineCardImage()));
+        add(new SimpleEntry<String, URL>("NormalZombine", getNormalZombineCardImage()));
+        add(new SimpleEntry<String, URL>("NormalZombine", getNormalZombineCardImage()));
+    }};
 
     public static URL getNormalZombineCardImage() {
         return Constants.class.getResource("/images/Cards/card_NormalZombie.png");

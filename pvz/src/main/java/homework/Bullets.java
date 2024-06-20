@@ -81,6 +81,9 @@ public abstract class Bullets extends MoveableElement {
     public double getY() {
         return this.y - yOffset;
     }
+    void pause() {
+        boom();
+    }
 
 
     @Override

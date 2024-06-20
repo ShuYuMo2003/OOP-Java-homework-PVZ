@@ -17,7 +17,10 @@ public class PlantsCard extends Card{
         System.err.println("Processing Cilick on " + name);
         switch (name) {
             case "Peashooter":
-                GlobalControl.setSelectedPlants(name, new ImageView(Peashooter.staticImage));
+                GlobalControl.setSelectedPlants(name, new ImageView(Peashooter.staticImage){{setX(e.getSceneX()); setY(e.getSceneY());}});
+                break;
+            case "Sunflower":
+                GlobalControl.setSelectedPlants(name, new ImageView(Sunflower.staticImage){{setX(e.getSceneX()); setY(e.getSceneY());}});
                 break;
         }
 

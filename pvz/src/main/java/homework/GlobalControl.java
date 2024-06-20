@@ -11,7 +11,9 @@ import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
 import javafx.animation.KeyFrame;
 import javafx.scene.image.ImageView;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
+import javafx.animation.TranslateTransition;
 
 public class GlobalControl {
     static Lock lock = new ReentrantLock();
@@ -25,11 +27,15 @@ public class GlobalControl {
     static String selectedPlantsType = null;
     static ImageView selectedPlantsImageView = null;
 
+    static String selectedZombineType = null;
+    static ImageView selectedZombineImageView = null;
+
     static PlantsCard[] plantsCards = new PlantsCard[Constants.PlantsCardCount];
+    static ZombineCard[] zombineCards = new ZombineCard[Constants.ZombineCardCount];
 
     private static ImageView backgroundImageView;
-
     private static ImageView cardsChooserImageView;
+    private static Zombine winZombine = null;
 
     private static void initializeBackgroudImage() {
         Image backgroundImage = new Image(Constants.getBackgroudImage().toString());
@@ -74,8 +80,23 @@ public class GlobalControl {
         GlobalControl.rootPane.getChildren().add(selectedPlantsImageView);
         GlobalControl.rootPane.setOnMouseMoved(event -> {
             if (imageView != null) {
-                imageView.setLayoutX(event.getX() - imageView.getFitWidth() / 2 - 50);
-                imageView.setLayoutY(event.getY() - imageView.getFitHeight() / 2 - 50);
+                imageView.setX(event.getX() - imageView.getFitWidth() / 2 - 50);
+                imageView.setY(event.getY() - imageView.getFitHeight() / 2 - 50);
+            }
+        });
+    }
+
+    public static void setSelectedZombine(String type, ImageView imageView) {
+        selectedZombineType = type;
+        selectedZombineImageView = imageView;
+
+        GlobalControl.rootPane.getChildren().add(selectedZombineImageView);
+        GlobalControl.rootPane.setOnMouseMoved(event -> {
+            if (imageView != null) {
+                imageView.setX(event.getX() - imageView.getFitWidth() / 2 - 70);
+                imageView.setY(event.getY() - imageView.getFitHeight() / 2 - 70);
+                MapPosition mpos = Zombine.getMapPosition(event.getX(), event.getY());
+                System.err.println("mpos = " + mpos.row + " " + mpos.column);
             }
         });
     }
@@ -89,6 +110,21 @@ public class GlobalControl {
                     case "Peashooter":
                         GlobalControl.addPlants(new Peashooter(mpos.row, mpos.column));
                         break;
+                    case "Sunflower":
+                        GlobalControl.addPlants(new Sunflower(mpos.row, mpos.column));
+                        break;
+                }
+            }
+
+            if(selectedZombineImageView != null) {
+                MapPosition mpos = Zombine.getMapPosition(event.getX(), event.getY());
+                switch(selectedZombineType) {
+                    case "NormalZombine":
+                        GlobalControl.addZombine(new NormalZombine(mpos.row, mpos.column));
+                        break;
+                    case "ConeheadZombine":
+                        GlobalControl.addZombine(new ConeheadZomine(mpos.row, mpos.column));
+                        break;
                 }
             }
 
@@ -96,6 +132,14 @@ public class GlobalControl {
             try {
                 rootPane.getChildren().remove(selectedPlantsImageView);
                 selectedPlantsImageView = null;
+            } catch (Exception e) {
+                System.err.println("Error: " + e);
+            }
+
+            selectedZombineType = null;
+            try {
+                rootPane.getChildren().remove(selectedZombineImageView);
+                selectedZombineImageView = null;
             } catch (Exception e) {
                 System.err.println("Error: " + e);
             }
@@ -113,10 +157,29 @@ public class GlobalControl {
                 card.getKey(),
                 currentPosX,
                 currentPosY,
-                Constants.CardWidth,
-                Constants.CardHeight
+                Constants.PlantCardWidth,
+                Constants.PlantCardHeight
             );
-            currentPosX += Constants.CardWidth + Constants.CardGap;
+            currentPosX += Constants.PlantCardWidth + Constants.PlantCardGap;
+            System.err.println("Added card " + card.getKey() + " at " + currentPosX + " " + currentPosY);
+            nowId += 1;
+        }
+    }
+
+    public static void initializeZombineCardImageView() {
+        int nowId = 0;
+        double currentPosX = Constants.ZombineCardXPos;
+        double currentPosY = Constants.ZombineCardYPos;
+        for(Map.Entry<String, URL> card : Constants.ZombineCardImage) {
+            zombineCards[nowId] = new ZombineCard(
+                new Image(card.getValue().toString()),
+                card.getKey(),
+                currentPosX,
+                currentPosY,
+                Constants.ZombineCardWidth,
+                Constants.ZombineCardHeight
+            );
+            currentPosX += Constants.ZombineCardWidth + Constants.ZombineCardGap;
             System.err.println("Added card " + card.getKey() + " at " + currentPosX + " " + currentPosY);
             nowId += 1;
         }
@@ -146,9 +209,32 @@ public class GlobalControl {
 
     GlobalControl() { }
 
+    private static void MoveMapToDie() {
+        TranslateTransition tt = new TranslateTransition(Duration.seconds(1), backgroundImageView);
+        double currentX = backgroundImageView.getX();
+        tt.setToX(0 - currentX);
+        tt.play();
+    }
+
     public static void zombineWin() {
         System.err.println("Zombine win!");
-        System.exit(0);
+        for(Plants p : AllPlants) {
+            p.setDie();
+        }
+        try{
+            for(Node nd : rootPane.getChildren()) {
+                if(nd == backgroundImageView) continue;
+                if(nd == winZombine.getImageView()) continue;
+                rootPane.getChildren().remove(nd);
+            }
+        } catch (Exception e) {
+            System.err.println("Error: " + e);
+        }
+        AllBullets.clear();
+        AllPlants.clear();
+        AllZombines.clear();
+        MoveMapToDie();
+
     }
 
     public static void initializeMoveStep() {
@@ -169,6 +255,7 @@ public class GlobalControl {
             }
             for(Zombine z : AllZombines) {
                 if(z.getX() < 0) {
+                    winZombine = z;
                     zombineWin();
                 }
             }
@@ -240,6 +327,24 @@ public class GlobalControl {
         attackListerner.play();
     }
 
+    public static boolean isCollision(ImageView zombine, ImageView bullet) {
+        double x1 = zombine.getX();
+        double y1 = zombine.getY();
+        double w1 = zombine.getBoundsInParent().getWidth();
+        double h1 = zombine.getBoundsInParent().getHeight();
+
+        x1 = x1 + w1 / 2; w1 /= 2;
+        // System.err.println("x1 = " + x1 + " y1 = " + y1 + " w1 = " + w1 + " h1 = " + h1);
+
+        double x2 = bullet.getX();
+        double y2 = bullet.getY();
+        double w2 = bullet.getBoundsInParent().getWidth();
+        double h2 = bullet.getBoundsInParent().getHeight();
+        x2 = x2 + w2 / 2; w2 /= 2;
+
+        return x1 < x2 + w2 && x1 + w1 > x2 && y1 < y2 + h2 && y1 + h1 > y2;
+    }
+
     public static void initializeBulletsAttackListerner() {
         bulletsListerner = new Timeline();
         bulletsListerner.setCycleCount(Timeline.INDEFINITE);
@@ -247,9 +352,12 @@ public class GlobalControl {
             lock.lock();
             for(Zombine z : AllZombines) {
                 for(Bullets b : AllBullets) {
-                    double distance2 = Math.pow(z.getX() - b.getX(), 2) + Math.pow(z.getY() - b.getY(), 2);
+                    // double distance2 = Math.pow(z.getX() - b.getX(), 2) + Math.pow(z.getY() - b.getY(), 2);
+                    // double distance2 = Math.pow(z.getCenterX() - b.getCenterX(), 2)
+                                    //  + Math.pow(z.getCenterY() - b.getCenterY(), 2);
                     // System.err.println("distance2 = " + distance2 + " " + Constants.BulletNZombineCollisionDistance_2);
-                    if(distance2 < Constants.BulletNZombineCollisionDistance_2) {
+                    // if(distance2 < Constants.BulletNZombineCollisionDistance_2 && z.getMapPosition().row == b.getMapPosition().row) {
+                    if(isCollision(z.getImageView(), b.getImageView())) {
                         z.applyAttack(b.getDamage());
                         b.boom();
                     }
@@ -278,6 +386,7 @@ public class GlobalControl {
         initializeAttackingListening();
         initializeBulletsAttackListerner();
         initializePlantsCardImageView();
+        initializeZombineCardImageView();
         initializeCardSelectedApply();
         startMoveStep();
     }

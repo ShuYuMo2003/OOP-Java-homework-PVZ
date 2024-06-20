@@ -1,9 +1,6 @@
 package homework;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 
 public abstract class MoveableElement {
     protected boolean deprecated = false;
@@ -36,6 +33,13 @@ public abstract class MoveableElement {
     }
     public double getY() {
         return this.y;
+    }
+
+    public double getCenterX() {
+        return this.x + this.imageview.getFitWidth() / 2;
+    }
+    public double getCenterY() {
+        return this.y + this.imageview.getFitHeight() / 2;
     }
 
     public void nextStep() {
