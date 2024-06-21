@@ -142,6 +142,10 @@ public class GlobalControl {
                     case "Sunflower":
                         GlobalControl.addPlants(new Sunflower(mpos.row, mpos.column));
                         break;
+                    case "PepPeaShooter":
+                        GlobalControl.addPlants(new PepPeaShooter(mpos.row, mpos.column));
+                        break;
+
                 }
             }
 
@@ -151,8 +155,17 @@ public class GlobalControl {
                     case "NormalZombine":
                         GlobalControl.addZombine(new NormalZombine(mpos.row, mpos.column));
                         break;
-                    case "ConeheadZombine":
+                    case "ConeheadZomine":
                         GlobalControl.addZombine(new ConeheadZomine(mpos.row, mpos.column));
+                        break;
+                    case "FlagZombine":
+                        GlobalControl.addZombine(new FlagZombine(mpos.row, mpos.column));
+                        break;
+                    case "NewspaperZombine":
+                        GlobalControl.addZombine(new NewspaperZombine(mpos.row, mpos.column));
+                        break;
+                    case "BucketHeadZombine":
+                        GlobalControl.addZombine(new BucketHeadZombine(mpos.row, mpos.column));
                         break;
                 }
             }
@@ -200,6 +213,7 @@ public class GlobalControl {
         double currentPosX = Constants.ZombineCardXPos;
         double currentPosY = Constants.ZombineCardYPos;
         for(Map.Entry<String, URL> card : Constants.ZombineCardImage) {
+            System.err.println("Adding card " + card.getKey() + " at " + currentPosX + " " + currentPosY);
             zombineCards[nowId] = new ZombinesCard(
                 new Image(card.getValue().toString()),
                 card.getKey(),

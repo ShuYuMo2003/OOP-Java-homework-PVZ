@@ -2,8 +2,13 @@ package homework;
 
 import java.io.UnsupportedEncodingException;
 
-public class BucketheadZombine extends Zombine {
-    public BucketheadZombine(int row, int column) throws UnsupportedEncodingException {
+import javafx.scene.image.Image;
+
+public class BucketHeadZombine extends Zombine {
+    public static Image staticImage = new Image(
+        ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/BucketheadZombie/BucketheadZombie")[0]
+    );
+    public BucketHeadZombine(int row, int column) {
         super(Constants.getZombinePos(row, column)[0],
               Constants.getZombinePos(row, column)[1],
               Constants.BucketheadZombineSpeed,

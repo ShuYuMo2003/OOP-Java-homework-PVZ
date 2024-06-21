@@ -2,8 +2,13 @@ package homework;
 
 import java.io.UnsupportedEncodingException;
 
+import javafx.scene.image.Image;
+
 public class FlagZombine extends Zombine {
-    public FlagZombine(int row, int column) throws UnsupportedEncodingException {
+    public static Image staticImage = new Image(
+        ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/FlagZombie/FlagZombie")[0]
+    );
+    public FlagZombine(int row, int column) {
         super(Constants.getZombinePos(row, column)[0],
               Constants.getZombinePos(row, column)[1],
               Constants.FlagZombineSpeed,

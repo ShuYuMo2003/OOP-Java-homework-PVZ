@@ -2,7 +2,12 @@ package homework;
 
 import java.io.UnsupportedEncodingException;
 
+import javafx.scene.image.Image;
+
 public class ConeheadZomine extends Zombine{
+    public static Image staticImage = new Image(
+        ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/ConeheadZombie/ConeheadZombie")[0]
+    );
     public ConeheadZomine(int row, int column) {
         super(Constants.getZombinePos(row, column)[0],
               Constants.getZombinePos(row, column)[1],
