@@ -55,7 +55,11 @@ public class Constants {
     // Peashooter
     final public static double PeashooterFPS = 11;
     final public static double PeashooterShootFPS = 1;
-    final public static double PeashooterHealth = 100;
+    final public static double PeashooterHealth = 400;
+    // PepPeaShooter
+    final public static double PepPeaShooterFPS = 20;
+    final public static double PepPeaShooterShootFPS = 3;
+    final public static double PepPeaShooterHealth = 500;
 
     //SonwPeashooter
     final public static int SnowPeashooterFPS = 11;
@@ -170,7 +174,7 @@ public class Constants {
     final public static ArrayList<Entry<String, URL>> PlantsCardImage = new ArrayList<>() {{
         add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
         add(new SimpleEntry<String, URL>("Sunflower",  getSunflowerCardImage()));
-        add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
+        add(new SimpleEntry<String, URL>("PepPeaShooter", getPepPeaShooterCardImage()));
         add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
         add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
         add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
@@ -181,6 +185,7 @@ public class Constants {
     final public static HashMap<String, Integer> PlantsSunCost = new HashMap<>() {{
         put("Peashooter", 100);
         put("Sunflower", 50);
+        put("PepPeaShooter", 200);
     }};
 
 
@@ -189,6 +194,9 @@ public class Constants {
     }
     public static URL getSunflowerCardImage() {
         return Constants.class.getResource("/images/Cards/card_sunflower.png");
+    }
+    public static URL getPepPeaShooterCardImage() {
+        return Constants.class.getResource("/images/Cards/card_repeaterpea.png");
     }
 
     // zombine Cards
@@ -200,23 +208,36 @@ public class Constants {
     final public static double ZombineCardYPos = 18;
     final public static ArrayList<Entry<String, URL>> ZombineCardImage = new ArrayList<>() {{
         add(new SimpleEntry<String, URL>("NormalZombine", getNormalZombineCardImage()));
-        add(new SimpleEntry<String, URL>("NormalZombine", getNormalZombineCardImage()));
-        add(new SimpleEntry<String, URL>("NormalZombine", getNormalZombineCardImage()));
-        add(new SimpleEntry<String, URL>("NormalZombine", getNormalZombineCardImage()));
-        add(new SimpleEntry<String, URL>("NormalZombine", getNormalZombineCardImage()));
+        add(new SimpleEntry<String, URL>("BucketHeadZombine", getBucketHeadZombineCardImage()));
+        add(new SimpleEntry<String, URL>("FlagZombine", getFlagZombineCardImage()));
+        add(new SimpleEntry<String, URL>("ConeheadZomine", getConeheadZomineCardImage()));
+        add(new SimpleEntry<String, URL>("NewspaperZombine", getNewspaperZombineCardImage()));
         add(new SimpleEntry<String, URL>("NormalZombine", getNormalZombineCardImage()));
         add(new SimpleEntry<String, URL>("NormalZombine", getNormalZombineCardImage()));
         add(new SimpleEntry<String, URL>("NormalZombine", getNormalZombineCardImage()));
     }};
     final public static HashMap<String, Integer> ZombineBrainCost = new HashMap<>() {{
         put("NormalZombine", 25);
+        put("BucketHeadZombine", 100);
     }};
-
-
 
     public static URL getNormalZombineCardImage() {
         return Constants.class.getResource("/images/Cards/card_NormalZombie.png");
     }
+
+    public static URL getBucketHeadZombineCardImage() {
+        return Constants.class.getResource("/images/Cards/card_BucketheadZombie.png");
+    }
+    public static URL getFlagZombineCardImage() {
+        return Constants.class.getResource("/images/Cards/card_FlagZombie.png");
+    }
+    public static URL getConeheadZomineCardImage() {
+        return Constants.class.getResource("/images/Cards/card_ConHeadZombie.png");
+    }
+    public static URL getNewspaperZombineCardImage() {
+        return Constants.class.getResource("/images/Cards/card_NewspaperZombie.png");
+    }
+
 
 
 }

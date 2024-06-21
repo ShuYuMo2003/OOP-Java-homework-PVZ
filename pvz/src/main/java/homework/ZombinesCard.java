@@ -18,6 +18,20 @@ public class ZombinesCard extends Card{
             case "NormalZombine":
                 GlobalControl.setSelectedZombine(name, new ImageView(NormalZombine.staticImage) {{setX(e.getSceneX()); setY(e.getSceneY());}});
                 break;
+            case "ConeheadZomine":
+                GlobalControl.setSelectedZombine(name, new ImageView(ConeheadZomine.staticImage) {{setX(e.getSceneX()); setY(e.getSceneY());}});
+                break;
+            case "FlagZombine":
+                GlobalControl.setSelectedZombine(name, new ImageView(FlagZombine.staticImage) {{setX(e.getSceneX()); setY(e.getSceneY());}});
+                break;
+            case "NewspaperZombine":
+                GlobalControl.setSelectedZombine(name, new ImageView(NewspaperZombine.staticImage) {{setX(e.getSceneX()); setY(e.getSceneY());}});
+                break;
+            case "BucketHeadZombine":
+                GlobalControl.setSelectedZombine(name, new ImageView(BucketHeadZombine.staticImage) {{setX(e.getSceneX()); setY(e.getSceneY());}});
+                break;
+            default:
+                throw new RuntimeException("Unknown Zombine name: " + name);
         }
 
     }
