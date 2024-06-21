@@ -37,7 +37,7 @@ public class Chomper extends Plants {
                     }
                 }}
                 )
-           
+
             );
         shooter.setCycleCount(Timeline.INDEFINITE);
     }
@@ -60,11 +60,11 @@ public class Chomper extends Plants {
         isEating = true;
         zombie.setDie();
         ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/Chomper/ChomperDigest");
-        
+
         Timeline digestionTimeline = new Timeline(new KeyFrame(
             Duration.millis(Constants.ChomperDigestionTime), event -> {
                 isEating = false;
-                this.imageview.setImage(new Image(frames[currentFrameId])); 
+                this.imageview.setImage(new Image(frames[currentFrameId]));
             }
         ));
         digestionTimeline.setCycleCount(1);

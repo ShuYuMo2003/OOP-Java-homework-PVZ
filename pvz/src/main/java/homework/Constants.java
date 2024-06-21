@@ -163,6 +163,12 @@ public class Constants {
         add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
     }};
 
+    final public static HashMap<String, Integer> PlantsSunCost = new HashMap<>() {{
+        put("Peashooter", 100);
+        put("Sunflower", 50);
+    }};
+
+
     public static URL getPeaShooterCardImage() {
         return Constants.class.getResource("/images/Cards/card_peashooter.png");
     }
@@ -187,6 +193,11 @@ public class Constants {
         add(new SimpleEntry<String, URL>("NormalZombine", getNormalZombineCardImage()));
         add(new SimpleEntry<String, URL>("NormalZombine", getNormalZombineCardImage()));
     }};
+    final public static HashMap<String, Integer> ZombineBrainCost = new HashMap<>() {{
+        put("NormalZombine", 25);
+    }};
+
+
 
     public static URL getNormalZombineCardImage() {
         return Constants.class.getResource("/images/Cards/card_NormalZombie.png");

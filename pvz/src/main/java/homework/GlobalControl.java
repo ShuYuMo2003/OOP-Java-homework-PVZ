@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.animation.KeyFrame;
 import javafx.scene.image.ImageView;
 import javafx.scene.Node;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.animation.TranslateTransition;
 
@@ -35,7 +36,7 @@ public class GlobalControl {
     static int brainCount = 0;
 
     static PlantsCard[] plantsCards = new PlantsCard[Constants.PlantsCardCount];
-    static ZombineCard[] zombineCards = new ZombineCard[Constants.ZombineCardCount];
+    static ZombinesCard[] zombineCards = new ZombinesCard[Constants.ZombineCardCount];
 
     private static ImageView backgroundImageView;
     private static ImageView cardsChooserImageView;
@@ -44,8 +45,25 @@ public class GlobalControl {
     public static void setSunCount(int count) {
         sunCount = count;
     }
-    public static void modifySunCount(int count) {
-        sunCount -= count;
+    public static void modifySunCount(int delta) {
+        sunCount += delta;
+    }
+
+    public static void setBrainCount(int count) {
+        brainCount = count;
+        modifyBrainCount(0);
+    }
+    public static void modifyBrainCount(int delta) {
+        brainCount += delta;
+        int nowId = 0;
+        for(Map.Entry<String, URL> card : Constants.ZombineCardImage) {
+            if(Constants.ZombineBrainCost.get(card.getKey()) <= brainCount) {
+                zombineCards[nowId].getCardImageView().setEffect(new ColorAdjust(){{
+                    setBrightness(0.5);
+                }});;
+            }
+            nowId += 1;
+        }
     }
 
     private static void initializeBackgroudImage() {
@@ -182,7 +200,7 @@ public class GlobalControl {
         double currentPosX = Constants.ZombineCardXPos;
         double currentPosY = Constants.ZombineCardYPos;
         for(Map.Entry<String, URL> card : Constants.ZombineCardImage) {
-            zombineCards[nowId] = new ZombineCard(
+            zombineCards[nowId] = new ZombinesCard(
                 new Image(card.getValue().toString()),
                 card.getKey(),
                 currentPosX,
@@ -211,7 +229,7 @@ public class GlobalControl {
         AllZombines.add(z);
         lock.unlock();
     }
-    
+
 
     public static void addPlants(Plants p) {
         lock.lock();

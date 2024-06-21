@@ -19,6 +19,10 @@ public abstract class Card {
     }};
     ScaleTransition scaleTransition;
 
+    public ImageView getCardImageView() {
+        return cardImageView;
+    }
+
     Card() {}
 
     Card(Image img, double x, double y, double width, double height) {

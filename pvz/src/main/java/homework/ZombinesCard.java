@@ -4,10 +4,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-public class ZombineCard extends Card{
+public class ZombinesCard extends Card{
     String name;
-    ZombineCard() {}
-    ZombineCard(Image img, String name, double x, double y, double width, double height) {
+    ZombinesCard() {}
+    ZombinesCard(Image img, String name, double x, double y, double width, double height) {
         super(img, x, y, width, height);
         this.name = name;
     }
