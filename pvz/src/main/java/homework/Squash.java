@@ -6,6 +6,9 @@ import javafx.scene.image.Image;
 import javafx.util.Duration;
 
 public class Squash extends Plants {
+    public static Image staticImage = new Image(
+        ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/Squash/Squash")[0]
+    );
     private static final String[] squashFrames = ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/Squash/Squash");
     private static final String[] squashAimFrames = ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/Squash/SquashAim");
     private static final String[] squashAttackFrames = ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/Squash/SquashAttack");
@@ -29,7 +32,7 @@ public class Squash extends Plants {
 
     @Override
     protected Bullets getNewBullets() {
-        
+
         return null;
     }
 
@@ -53,8 +56,8 @@ public class Squash extends Plants {
             this.currentFrameId = 0;
             initialTimeline(Constants.SquashAttackFPS, false);
             this.timeline.setOnFinished(e -> {
-                
-                setDie();  
+
+                setDie();
             });
             this.timeline.play();
         }

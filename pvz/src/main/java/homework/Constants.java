@@ -176,8 +176,8 @@ public class Constants {
         add(new SimpleEntry<String, URL>("Sunflower",  getSunflowerCardImage()));
         add(new SimpleEntry<String, URL>("PepPeaShooter", getPepPeaShooterCardImage()));
         add(new SimpleEntry<String, URL>("SnowPeashooter", getSnowPeashooterCardImage()));
-        add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
-        add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
+        add(new SimpleEntry<String, URL>("Chomper", getChomperCardImage()));
+        add(new SimpleEntry<String, URL>("Squash", getSquashCardImage()));
         add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
         add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
     }};
@@ -187,6 +187,8 @@ public class Constants {
         put("Sunflower", 50);
         put("PepPeaShooter", 200);
         put("SnowPeashooter", 175);
+        put("Chomper", 150);
+        put("Squash", 50);
     }};
 
 
@@ -201,6 +203,12 @@ public class Constants {
     }
     public static URL getSnowPeashooterCardImage() {
         return Constants.class.getResource("/images/Cards/card_snowpea.png");
+    }
+    public static URL getChomperCardImage() {
+        return Constants.class.getResource("/images/Cards/card_chomper.png");
+    }
+    public static URL getSquashCardImage() {
+        return Constants.class.getResource("/images/Cards/card_squash.png");
     }
 
     // zombine Cards
@@ -223,12 +231,14 @@ public class Constants {
     final public static HashMap<String, Integer> ZombineBrainCost = new HashMap<>() {{
         put("NormalZombine", 25);
         put("BucketHeadZombine", 100);
+        put("FlagZombine", 300);
+        put("ConeheadZomine", 75);
+        put("NewspaperZombine", 50);
     }};
 
     public static URL getNormalZombineCardImage() {
         return Constants.class.getResource("/images/Cards/card_NormalZombie.png");
     }
-
     public static URL getBucketHeadZombineCardImage() {
         return Constants.class.getResource("/images/Cards/card_BucketheadZombie.png");
     }

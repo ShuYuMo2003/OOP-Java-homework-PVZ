@@ -6,6 +6,9 @@ import javafx.util.Duration;
 import javafx.scene.image.Image;
 
 public class Chomper extends Plants {
+    public static Image staticImage = new Image(
+        ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/Chomper/Chomper")[0]
+    );
     private boolean isEating = false;
     Chomper() {}
 
