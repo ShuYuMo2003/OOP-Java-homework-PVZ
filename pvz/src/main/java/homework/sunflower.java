@@ -13,13 +13,14 @@ public class Sunflower extends Plants {
     Sunflower() {}
 
     Sunflower(int row, int column) {
-        super(Constants.PlantsColumnXPos[column],
+        super(row, column,
+              Constants.PlantsColumnXPos[column],
               Constants.PlantsRowYPos[row],
               ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/Sunflower"),
               Constants.SunflowerHealth,
               Constants.SunflowerSunProductionFPS
         );
-        initialTimeline(Constants.SunflowerFPS, true);
+        initialTimeline(Constants.SunflowerFPS, true, e->{});
         initializeSunProducer();
         play();
     }
@@ -34,7 +35,7 @@ public class Sunflower extends Plants {
     }
 
     private void produceSun() {
-        Sun sun = new Sun(this.getX(), this.getY());
+        Sun sun = new Sun(this.getX() - 70, this.getY() - 100);
         GlobalControl.addSun(sun);
     }
 

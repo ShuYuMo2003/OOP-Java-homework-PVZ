@@ -22,6 +22,9 @@ public class Constants {
     final public static double cleanUpFPS = 60;
     final public static double GlobalFPS = 30;
 
+    // Sun
+    final public static double SunFPS = 10;
+
     final public static double BulletNZombineCollisionDistance_2 = Math.pow(100, 2);
 
     // Zombines
@@ -79,7 +82,7 @@ public class Constants {
 
     //SunFlower
     final public static double SunflowerHealth = 200;
-    final public static double SunflowerSunProductionFPS = 0.1;
+    final public static double SunflowerSunProductionFPS = 1;
     final public static double SunflowerFPS = 11;
 
     // Chomper
@@ -91,8 +94,8 @@ public class Constants {
 
     //Squash
     final public static double SquashHealth = 100.0;
-    final public static double SquashAttackFPS = 300;
-    final public static double SquashAimFPS = 1;
+    final public static double SquashAttackFPS = 4;
+    final public static double SquashAimFPS = 2;
     final public static double SquashFPS = 11;
 
 

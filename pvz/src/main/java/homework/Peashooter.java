@@ -7,15 +7,18 @@ public class Peashooter extends Plants {
     public static Image staticImage = new Image(
         ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/Peashooter")[0]
     );
+
     Peashooter() {}
     Peashooter(int row, int column) {
-        super(Constants.PlantsColumnXPos[column],
+        super(row, column,
+              Constants.PlantsColumnXPos[column],
               Constants.PlantsRowYPos[row],
               ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/Peashooter"),
               Constants.PeashooterHealth,
               Constants.PeashooterShootFPS
         );
-        initialTimeline(Constants.PeashooterFPS, true);
+
+        initialTimeline(Constants.PeashooterFPS, true, e->{});
         initializeShooter();
         play();
     }

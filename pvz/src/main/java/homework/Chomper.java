@@ -1,5 +1,8 @@
 package homework;
 
+
+import java.util.Map;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -12,14 +15,19 @@ public class Chomper extends Plants {
     private boolean isEating = false;
     Chomper() {}
 
+    String[] eatFrames = ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/Chomper/ChomperAttack");
+    int eatCurrentFrameId = 0;
+    Timeline eatAction = null;
+
     Chomper(int row, int column) {
-        super(Constants.PlantsColumnXPos[column],
-              Constants.PlantsRowYPos[row],
+        super(row, column,
+              Constants.PlantsColumnXPos[column] - 10,
+              Constants.PlantsRowYPos[row] - 35,
               ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/Chomper/Chomper"),
               Constants.ChomperHealth,
               Constants.ChomperAttackFPS
         );
-        initialTimeline(Constants.ChomperFPS, true);
+        initialTimeline(Constants.ChomperFPS, true, e->{});
         initializeAttack();
         play();
     }
@@ -44,32 +52,40 @@ public class Chomper extends Plants {
         shooter.setCycleCount(Timeline.INDEFINITE);
     }
 
-    private Zombine findClosestZombie() {
-        double minDistance = Constants.ChomperRange;
-        Zombine closestZombie = null;
-        for (Zombine zombie : GlobalControl.getZombines()) {
-            double distance = Math.sqrt(Math.pow(zombie.getX() - this.getX(), 2) + Math.pow(zombie.getY() - this.getY(), 2));
-            if (distance < minDistance) {
-                minDistance = distance;
-                closestZombie = zombie;
-            }
-            ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/Chomper/ChomperAttack");
-        }
-        return closestZombie;
-    }
+
 
     private void eatZombine(Zombine zombie) {
         isEating = true;
-        zombie.setDie();
-        ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/Chomper/ChomperDigest");
+        timeline.stop();
 
-        Timeline digestionTimeline = new Timeline(new KeyFrame(
-            Duration.millis(Constants.ChomperDigestionTime), event -> {
-                isEating = false;
-                this.imageview.setImage(new Image(frames[currentFrameId]));
+        eatCurrentFrameId = 0;
+
+        eatAction = new Timeline(new KeyFrame(
+            Duration.millis(1000 / Constants.ChomperFPS), event -> {
+                if (eatCurrentFrameId < eatFrames.length) {
+                    this.getImageView().setImage(new Image(eatFrames[eatCurrentFrameId]));
+                    eatCurrentFrameId++;
+                    if(eatCurrentFrameId == eatFrames.length * 2 / 3) {
+                        zombie.setDie();
+                    }
+                } else {
+                    resetFrames(ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/Chomper/ChomperDigest"));
+                    timeline.play();
+
+                    Timeline digestionTimeline = new Timeline(new KeyFrame(
+                        Duration.millis(Constants.ChomperDigestionTime), ee -> {
+                            isEating = false;
+                            resetFrames(ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/Chomper/Chomper"));
+                        }
+                    ));
+                    digestionTimeline.setCycleCount(1);
+                    digestionTimeline.play();
+
+                    eatAction.stop();
+                }
             }
         ));
-        digestionTimeline.setCycleCount(1);
-        digestionTimeline.play();
+        eatAction.setCycleCount(Timeline.INDEFINITE);
+        eatAction.play();
     }
 }

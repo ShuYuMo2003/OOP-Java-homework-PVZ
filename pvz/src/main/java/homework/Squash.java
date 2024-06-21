@@ -19,46 +19,78 @@ public class Squash extends Plants {
     Squash() {}
 
     Squash(int row, int column) {
-        super(Constants.PlantsColumnXPos[column],
-              Constants.PlantsRowYPos[row],
+        super(row, column,
+              Constants.PlantsColumnXPos[column] - 20,
+              Constants.PlantsRowYPos[row] - 150,
               squashFrames,
               Constants.SquashHealth,
               Constants.SquashAttackFPS);
         this.aiming = false;
         this.attacking = false;
-        initialTimeline(Constants.SquashFPS, true);
+        initialTimeline(Constants.SquashFPS, true, e->{});
+        initializeAttack();
         play();
     }
 
     @Override
     protected Bullets getNewBullets() {
-
         return null;
     }
 
-    public void aim() {
+    private void initializeAttack() {
+        shooter = new Timeline(
+            new KeyFrame(Duration.millis(1000 / this.attackFPS), e -> {
+                    Zombine target = findClosestZombie();
+                    if (target != null) {
+                        aim(target);
+                    }
+                }
+                )
+
+            );
+        shooter.setCycleCount(Timeline.INDEFINITE);
+    }
+
+    public void aim(Zombine target) {
         if (!aiming && !attacking) {
             this.aiming = true;
             this.timeline.stop();
             this.frames = squashAimFrames;
-            this.currentFrameId = 0;
-            initialTimeline(Constants.SquashAimFPS, false);
-            this.timeline.setOnFinished(e -> attack());
+            initialTimeline(Constants.SquashAimFPS, false, e -> attack(target));
             this.timeline.play();
         }
     }
 
-    public void attack() {
+    public void attack(Zombine target) {
         if (aiming && !attacking) {
             this.aiming = false;
             this.attacking = true;
             this.frames = squashAttackFrames;
-            this.currentFrameId = 0;
-            initialTimeline(Constants.SquashAttackFPS, false);
-            this.timeline.setOnFinished(e -> {
 
-                setDie();
-            });
+            currentFrameId = 0;
+            if(this.timeline != null) this.timeline.stop();
+            this.timeline = new Timeline(
+                new KeyFrame(Duration.millis(1000 / Constants.SquashAttackFPS), e -> {
+                    this.imageview.setImage(new Image(this.frames[currentFrameId]));
+                    // System.err.println("set image as " + this.frames[currentFrameId]);
+                    if(currentFrameId == this.frames.length - 1) {
+                        this.timeline.stop();
+                        setDie();
+                    }
+                    if(currentFrameId == 2) {
+                        target.setDie();
+                    }
+                    if(1 <= currentFrameId && currentFrameId <= 1) {
+                        this.setSpeed(7, 0);
+                    } else {
+                        this.setSpeed(0, 0);
+                    }
+
+                    currentFrameId = (currentFrameId + 1) % this.frames.length;
+                })
+            );
+
+            this.timeline.setCycleCount(Timeline.INDEFINITE);
             this.timeline.play();
         }
     }
@@ -69,6 +101,6 @@ public class Squash extends Plants {
         if (this.shooter != null)
             this.shooter.stop();
         timeline.stop();
-        GlobalControl.rootPane.getChildren().remove(this.imageview);
+        removeImageView();
     }
 }

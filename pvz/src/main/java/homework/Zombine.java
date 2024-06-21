@@ -156,12 +156,14 @@ public abstract class Zombine extends MoveableElement {
     }
     public void setDie() {
         die = true;
+        timeline.stop();
         dieTimeline = new Timeline(
             new KeyFrame(Duration.millis(1000 / this.dieFramesFPS), e -> {
                 this.imageview.setImage(new Image(dieFramesPath[dieCurrentFrameId]));
                 if (dieCurrentFrameId == dieFramesPath.length - 1) {
-                    deprecated = true;
                     dieTimeline.stop();
+                    removeImageView();
+                    deprecated = true;
                 } else {
                     dieCurrentFrameId++;
                 }

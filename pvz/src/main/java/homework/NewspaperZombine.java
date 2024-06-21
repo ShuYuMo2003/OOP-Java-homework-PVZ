@@ -1,6 +1,5 @@
 package homework;
 
-import java.io.UnsupportedEncodingException;
 
 import javafx.scene.image.Image;
 

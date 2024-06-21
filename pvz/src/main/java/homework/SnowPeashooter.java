@@ -9,13 +9,14 @@ public class SnowPeashooter extends Plants {
     );
     SnowPeashooter() {}
     SnowPeashooter(int row, int column) {
-        super(Constants.PlantsColumnXPos[column],
+        super(row, column,
+              Constants.PlantsColumnXPos[column],
               Constants.PlantsRowYPos[row],
               ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/SnowPeashooter"),
               Constants.SnowPeashooterHealth,
               Constants.SnowPeashooterShootFPS
         );
-        initialTimeline(Constants.SnowPeashooterFPS, true);
+        initialTimeline(Constants.SnowPeashooterFPS, true, e->{});
         initializeShooter();
         play();
     }

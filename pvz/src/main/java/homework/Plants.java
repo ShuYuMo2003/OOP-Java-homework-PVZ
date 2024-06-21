@@ -4,9 +4,11 @@ import java.util.Map;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import javafx.event.EventHandler;
 
 
 public abstract class Plants extends MoveableElement{
@@ -20,41 +22,69 @@ public abstract class Plants extends MoveableElement{
     protected static double xOffset = -70;
     protected static double yOffset = -70;
 
+    private int row;
+    private int column;
+
     Plants() {}
-    Plants(double x, double y, String[] framesPaths, double health, double attackFPS) {
+    Plants(int row, int column, double x, double y, String[] framesPaths, double health, double attackFPS) {
         super(x + xOffset, y + yOffset, 0, 0);
         this.health = health;
         currentFrameId = 0;
         this.frames = framesPaths;
         this.attackFPS = attackFPS;
+        this.row = row;
+        this.column = column;
     }
 
+    protected void resetFrames(String[] frames) {
+        this.frames = frames;
+        currentFrameId = 0;
+    }
 
-    protected void initialTimeline(double fps, boolean infinte) {
+    protected int getRow() {
+        return row;
+    }
+    protected int getColumn() {
+        return column;
+    }
+
+    protected void initialTimeline(double fps, boolean infinte, EventHandler<ActionEvent> onFinished) {
+        currentFrameId = 0;
+        if(this.timeline != null) this.timeline.stop();
         this.timeline = new Timeline(
             new KeyFrame(Duration.millis(1000 / fps), e -> {
-                currentFrameId = (currentFrameId + 1) % frames.length;
                 this.imageview.setImage(new Image(frames[currentFrameId]));
+                // System.err.println("set image as " + frames[currentFrameId]);
+                if(!infinte) {
+                    if(currentFrameId == frames.length - 1) {
+                        // System.err.println("Stop!");
+                        this.timeline.stop();
+                        onFinished.handle(e);
+                    }
+                }
+                currentFrameId = (currentFrameId + 1) % frames.length;
             })
         );
-        if(infinte) this.timeline.setCycleCount(Timeline.INDEFINITE);
-        else this.timeline.setCycleCount(1);
+        this.timeline.setCycleCount(Timeline.INDEFINITE);
     }
 
     public MapPosition getMapPosition() {
-        MapPosition mapPosition = new MapPosition(0, 0);
-        double minDistance2 = Constants.INF;
-        for(int i = 0; i < Constants.MaxColumn; i++) {
-            for(int j = 0; j < Constants.MaxRow; j++) {
-                double x = Constants.PlantsColumnXPos[i] + xOffset;
-                double y = Constants.PlantsRowYPos[j] + yOffset;
-                double distance2 = Math.pow(x - this.x, 2) + Math.pow(y - this.y, 2);
-                if(distance2 < minDistance2) {
-                    minDistance2 = distance2;
-                    mapPosition = new MapPosition(j, i);
-                }
-            }
-        }
+        // MapPosition mapPosition = new MapPosition(0, 0);
+        // double minDistance2 = Constants.INF;
+        // for(int i = 0; i < Constants.MaxColumn; i++) {
+        //     for(int j = 0; j < Constants.MaxRow; j++) {
+        //         double x = Constants.PlantsColumnXPos[i] + xOffset;
+        //         double y = Constants.PlantsRowYPos[j] + yOffset;
+        //         double distance2 = Math.pow(x - this.x, 2) + Math.pow(y - this.y, 2);
+        //         if(distance2 < minDistance2) {
+        //             minDistance2 = distance2;
+        //             mapPosition = new MapPosition(j, i);
+        //         }
+        //     }
+        // }
+        // System.err.println("row = " + row + " column = " + column);
+        MapPosition mapPosition = new MapPosition(row, column);
+        // System.err.println("Position: = " + mapPosition);
         return mapPosition;
     }
 
@@ -73,6 +103,17 @@ public abstract class Plants extends MoveableElement{
             }
         }
         return mapPosition;
+    }
+
+    protected Zombine findClosestZombie() {
+        for (Zombine zombie : GlobalControl.getZombines()) {
+            MapPosition zombiePosition = zombie.getMapPosition();
+            if(zombiePosition.row == this.getRow()
+            && (Math.abs(zombiePosition.column - this.getColumn()) <= 1)) {
+                return zombie;
+            }
+        }
+        return null;
     }
 
     public void getDamage(double damage) {

@@ -9,13 +9,14 @@ public class PepPeaShooter extends Plants {
     );
     PepPeaShooter() {}
     PepPeaShooter(int row, int column) {
-        super(Constants.PlantsColumnXPos[column],
+        super(row, column,
+              Constants.PlantsColumnXPos[column],
               Constants.PlantsRowYPos[row],
               ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/RepeaterPea"),
               Constants.PepPeaShooterHealth,
               Constants.PepPeaShooterShootFPS
         );
-        initialTimeline(Constants.PepPeaShooterFPS, true);
+        initialTimeline(Constants.PepPeaShooterFPS, true, e->{});
         initializeShooter();
         play();
     }

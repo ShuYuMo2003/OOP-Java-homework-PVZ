@@ -30,22 +30,22 @@ public class App extends Application {
          //for(int i = 0; i < 5; i++) {
             //GlobalControl.addPlants(new Chomper(i, 0));
         // }
-        for(int i = 0; i < 5; i++) {
-         GlobalControl.addPlants(new Chomper(2, 0));
-        }
+        // for(int i = 0; i < 5; i++) {
+        //     GlobalControl.addPlants(new Chomper(2, 0));
+        // }
 
 
-        for(int i = 0; i < 5; i++) {
-            switch (i % 2) {
-                case 0:
-                    GlobalControl.addZombine(new NormalZombine(i, 4));
-                    break;
-                case 1:
-                    GlobalControl.addZombine(new NewspaperZombine(i, 3));
-                    GlobalControl.addZombine(new ConeheadZomine(i, 4));
-                    break;
-            }
-        }
+        // for(int i = 0; i < 5; i++) {
+        //     switch (i % 2) {
+        //         case 0:
+        //             GlobalControl.addZombine(new NormalZombine(i, 4));
+        //             break;
+        //         case 1:
+        //             GlobalControl.addZombine(new NewspaperZombine(i, 3));
+        //             GlobalControl.addZombine(new ConeheadZomine(i, 4));
+        //             break;
+        //     }
+        // }
 
 
         Scene scene = new Scene(GlobalControl.rootPane,

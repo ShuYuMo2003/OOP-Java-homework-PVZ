@@ -32,7 +32,7 @@ public class PlantsCard extends Card{
                 GlobalControl.setSelectedPlants(name, new ImageView(Chomper.staticImage){{setX(e.getSceneX()); setY(e.getSceneY());}});
                 break;
             case "Squash":
-                GlobalControl.setSelectedPlants(name, new ImageView(Squash.staticImage){{setX(e.getSceneX()); setY(e.getSceneY());}});
+                GlobalControl.setSelectedPlants(name, new ImageView(Squash.staticImage){{setX(e.getSceneX()) ; setY(e.getSceneY());}});
                 break;
 
         }

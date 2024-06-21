@@ -18,7 +18,7 @@ import javafx.scene.image.Image;
 import javafx.animation.TranslateTransition;
 
 public class GlobalControl {
-    
+
     static Lock lock = new ReentrantLock();
     static ArrayList<Zombine> AllZombines = new ArrayList<>();
     static ArrayList<Plants> AllPlants = new ArrayList<>();
@@ -74,6 +74,20 @@ public class GlobalControl {
         }
     }
 
+    private static void refreshBG() {
+        try {
+            rootPane.getChildren().remove(backgroundImageView);
+        } catch (Exception e) {
+            System.err.println("Error: " + e);
+        }
+        Image backgroundImage = new Image(Constants.getBackgroudImage().toString());
+        backgroundImageView = new ImageView(backgroundImage);
+        backgroundImageView.setFitHeight(Constants.WindowHeight);
+        backgroundImageView.setPreserveRatio(true);
+        backgroundImageView.setX(Constants.PlayingStageMapXPos);
+        GlobalControl.rootPane.getChildren().add(0, backgroundImageView);
+    }
+
     private static void initializeBackgroudImage() {
         Image backgroundImage = new Image(Constants.getBackgroudImage().toString());
         backgroundImageView = new ImageView(backgroundImage);
@@ -111,19 +125,41 @@ public class GlobalControl {
 
 
     public static void setSelectedPlants(String type, ImageView imageView) {
+        if (selectedPlantsImageView != null) {
+            try {
+                rootPane.getChildren().remove(selectedPlantsImageView);
+            } catch (Exception e) {
+                System.err.println("Error: " + e);
+            }
+        }
         selectedPlantsType = type;
         selectedPlantsImageView = imageView;
 
+
+
         GlobalControl.rootPane.getChildren().add(selectedPlantsImageView);
         GlobalControl.rootPane.setOnMouseMoved(event -> {
+            double xOffset = 0;
+            double yOffset = 0;
+            if(selectedPlantsType == "Squash") {
+                xOffset = 0;
+                yOffset = -100;
+            }
             if (imageView != null) {
-                imageView.setX(event.getX() - imageView.getFitWidth() / 2 - 50);
-                imageView.setY(event.getY() - imageView.getFitHeight() / 2 - 50);
+                imageView.setX(event.getX() - imageView.getFitWidth() / 2 - 50 + xOffset);
+                imageView.setY(event.getY() - imageView.getFitHeight() / 2 - 50 + yOffset);
             }
         });
     }
 
     public static void setSelectedZombine(String type, ImageView imageView) {
+        if(selectedZombineImageView != null) {
+            try {
+                rootPane.getChildren().remove(selectedZombineImageView);
+            } catch (Exception e) {
+                System.err.println("Error: " + e);
+            }
+        }
         selectedZombineType = type;
         selectedZombineImageView = imageView;
 
@@ -132,8 +168,8 @@ public class GlobalControl {
             if (imageView != null) {
                 imageView.setX(event.getX() - imageView.getFitWidth() / 2 - 70);
                 imageView.setY(event.getY() - imageView.getFitHeight() / 2 - 70);
-                MapPosition mpos = Zombine.getMapPosition(event.getX(), event.getY());
-                System.err.println("mpos = " + mpos.row + " " + mpos.column);
+                // MapPosition mpos = Zombine.getMapPosition(event.getX(), event.getY());
+                // System.err.println("mpos = " + mpos.row + " " + mpos.column);
             }
         });
     }
@@ -305,6 +341,8 @@ public class GlobalControl {
         moveStep.getKeyFrames().add(new KeyFrame(Duration.millis(1000 / Constants.GlobalFPS), e -> {
             lock.lock();
 
+            refreshBG();
+
             for(Zombine z : AllZombines) {
                 if(z.canMove())
                     z.nextStep();
@@ -453,9 +491,8 @@ public class GlobalControl {
         startMoveStep();
     }
 
-    public static Zombine[] getZombines() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getZombines'");
+    public static ArrayList<Zombine> getZombines() {
+        return AllZombines;
     }
 
 }
