@@ -18,10 +18,12 @@ import javafx.scene.image.Image;
 import javafx.animation.TranslateTransition;
 
 public class GlobalControl {
+    
     static Lock lock = new ReentrantLock();
     static ArrayList<Zombine> AllZombines = new ArrayList<>();
     static ArrayList<Plants> AllPlants = new ArrayList<>();
     static ArrayList<Bullets> AllBullets = new ArrayList<>();
+    static ArrayList<Sun> AllSuns = new ArrayList<>();
 
     static ArrayList<MapPosition> zombinesPos = new ArrayList<>();
     static ArrayList<MapPosition> plantsPos = new ArrayList<>();
@@ -47,6 +49,12 @@ public class GlobalControl {
     }
     public static void modifySunCount(int delta) {
         sunCount += delta;
+    }
+
+    public static void addSun(Sun sun) {
+        lock.lock();
+        AllSuns.add(sun);
+        lock.unlock();
     }
 
     public static void setBrainCount(int count) {
