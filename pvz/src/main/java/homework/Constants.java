@@ -63,8 +63,8 @@ public class Constants {
 
     //SonwPeashooter
     final public static int SnowPeashooterFPS = 11;
-    final public static int SnowPeashooterShootFPS = 1; 
-    final public static double SnowPeashooterHealth = 100; 
+    final public static int SnowPeashooterShootFPS = 1;
+    final public static double SnowPeashooterHealth = 100;
 
     // Bullets
     final public static double BulletFPS = 5;
@@ -90,9 +90,9 @@ public class Constants {
     final public static double ChomperDigestionTime = 5000;
 
     //Squash
-    final public static double SquashHealth = 100.0; 
-    final public static double SquashAttackFPS = 300; 
-    final public static double SquashAimFPS = 1; 
+    final public static double SquashHealth = 100.0;
+    final public static double SquashAttackFPS = 300;
+    final public static double SquashAimFPS = 1;
     final public static double SquashFPS = 11;
 
 
@@ -175,9 +175,9 @@ public class Constants {
         add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
         add(new SimpleEntry<String, URL>("Sunflower",  getSunflowerCardImage()));
         add(new SimpleEntry<String, URL>("PepPeaShooter", getPepPeaShooterCardImage()));
-        add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
-        add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
-        add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
+        add(new SimpleEntry<String, URL>("SnowPeashooter", getSnowPeashooterCardImage()));
+        add(new SimpleEntry<String, URL>("Chomper", getChomperCardImage()));
+        add(new SimpleEntry<String, URL>("Squash", getSquashCardImage()));
         add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
         add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
     }};
@@ -186,6 +186,9 @@ public class Constants {
         put("Peashooter", 100);
         put("Sunflower", 50);
         put("PepPeaShooter", 200);
+        put("SnowPeashooter", 175);
+        put("Chomper", 150);
+        put("Squash", 50);
     }};
 
 
@@ -197,6 +200,15 @@ public class Constants {
     }
     public static URL getPepPeaShooterCardImage() {
         return Constants.class.getResource("/images/Cards/card_repeaterpea.png");
+    }
+    public static URL getSnowPeashooterCardImage() {
+        return Constants.class.getResource("/images/Cards/card_snowpea.png");
+    }
+    public static URL getChomperCardImage() {
+        return Constants.class.getResource("/images/Cards/card_chomper.png");
+    }
+    public static URL getSquashCardImage() {
+        return Constants.class.getResource("/images/Cards/card_squash.png");
     }
 
     // zombine Cards
@@ -219,12 +231,14 @@ public class Constants {
     final public static HashMap<String, Integer> ZombineBrainCost = new HashMap<>() {{
         put("NormalZombine", 25);
         put("BucketHeadZombine", 100);
+        put("FlagZombine", 300);
+        put("ConeheadZomine", 75);
+        put("NewspaperZombine", 50);
     }};
 
     public static URL getNormalZombineCardImage() {
         return Constants.class.getResource("/images/Cards/card_NormalZombie.png");
     }
-
     public static URL getBucketHeadZombineCardImage() {
         return Constants.class.getResource("/images/Cards/card_BucketheadZombie.png");
     }
