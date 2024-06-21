@@ -145,6 +145,9 @@ public class GlobalControl {
                     case "PepPeaShooter":
                         GlobalControl.addPlants(new PepPeaShooter(mpos.row, mpos.column));
                         break;
+                    case "SnowPeashooter":
+                        GlobalControl.addPlants(new SnowPeashooter(mpos.row, mpos.column));
+                        break;
 
                 }
             }

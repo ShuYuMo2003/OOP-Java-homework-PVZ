@@ -7,7 +7,6 @@ import javafx.scene.image.Image;
 
 public class Chomper extends Plants {
     private boolean isEating = false;
-
     Chomper() {}
 
     Chomper(int row, int column) {

@@ -20,6 +20,6 @@ public class PepPeaShooter extends Plants {
         play();
     }
     protected Bullets getNewBullets() {
-        return new NormalPea(this.x, this.y);
+        return new NormalBullets(this.x, this.y);
     }
 }

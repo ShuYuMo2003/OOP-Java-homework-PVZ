@@ -25,6 +25,9 @@ public class PlantsCard extends Card{
             case "PepPeaShooter":
                 GlobalControl.setSelectedPlants(name, new ImageView(PepPeaShooter.staticImage){{setX(e.getSceneX()); setY(e.getSceneY());}});
                 break;
+            case "SnowPeashooter":
+                GlobalControl.setSelectedPlants(name, new ImageView(SnowPeashooter.staticImage){{setX(e.getSceneX()); setY(e.getSceneY());}});
+                break;
 
         }
 

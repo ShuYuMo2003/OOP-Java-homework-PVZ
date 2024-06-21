@@ -11,7 +11,7 @@ public class SnowPeashooter extends Plants {
     SnowPeashooter(int row, int column) {
         super(Constants.PlantsColumnXPos[column],
               Constants.PlantsRowYPos[row],
-              ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/SonwPeashooter"),
+              ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/SnowPeashooter"),
               Constants.SnowPeashooterHealth,
               Constants.SnowPeashooterShootFPS
         );
