@@ -57,12 +57,21 @@ public class Constants {
     final public static double PeashooterShootFPS = 1;
     final public static double PeashooterHealth = 100;
 
+    //SonwPeashooter
+    final public static int SnowPeashooterFPS = 11;
+    final public static int SnowPeashooterShootFPS = 1; 
+    final public static double SnowPeashooterHealth = 100; 
+
     // Bullets
     final public static double BulletFPS = 5;
 
     // Normal Pea
     final public static double NormalPeaDamage = 20;
     final public static double NormalPeaSpeed = 8;
+
+    //Sonw Pea
+    final public static double SnowPeaDamage = 40;
+    final public static double SnowPeaSpeed = 10;
 
     //SunFlower
     final public static double SunflowerHealth = 200;
