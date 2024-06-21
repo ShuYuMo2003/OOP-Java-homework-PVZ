@@ -31,7 +31,7 @@ public class App extends Application {
             //GlobalControl.addPlants(new Chomper(i, 0));
         // }
         for(int i = 0; i < 5; i++) {
-         GlobalControl.addPlants(new SnowPeashooter(2, 0));
+         GlobalControl.addPlants(new Squash(2, 0));
         }
 
 

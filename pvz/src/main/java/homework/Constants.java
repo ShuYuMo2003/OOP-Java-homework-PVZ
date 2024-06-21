@@ -79,11 +79,17 @@ public class Constants {
     final public static double SunflowerFPS = 11;
 
     // Chomper
-    public static final double ChomperHealth = 300;
-    public static final double ChomperFPS = 10;
-    public static final double ChomperAttackFPS = 0.5;
-    public static final double ChomperRange = 100; // The range within which the Chomper can eat zombies
-    public static final double ChomperDigestionTime = 5000;
+    final public static double ChomperHealth = 300;
+    final public static double ChomperFPS = 11;
+    final public static double ChomperAttackFPS = 0.5;
+    final public static double ChomperRange = 100;
+    final public static double ChomperDigestionTime = 5000;
+
+    //Squash
+    final public static double SquashHealth = 100.0; 
+    final public static double SquashAttackFPS = 300; 
+    final public static double SquashAimFPS = 1; 
+    final public static double SquashFPS = 11;
 
 
     final public static double[] ZombineRowYPos    = { 170, 275, 384, 484, 590 };
