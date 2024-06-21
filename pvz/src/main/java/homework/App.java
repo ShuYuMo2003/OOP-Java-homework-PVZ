@@ -47,21 +47,6 @@ public class App extends Application {
             }
         }
 
-        // GlobalControl.addBullets(new NormalPea(200, 200));
-
-        // Image img = new Image("file:/D:/Codes_and_Projects/PlantsVsZombines/pvz/target/classes/images/Zombies/NormalZombie/Zombie/Zombie_0.png");
-        // //                         file:/D:/Codes_and_Projects/PlantsVsZombines/pvz/target/classes/images/Items/Background/Background_1.jpg
-        // // System.err.println(Constants.getBackgroudImage().toString());
-        // // Image img = new Image(Constants.getBackgroudImage().toString());
-        // ImageView imgv = new ImageView(img);
-        // imgv.setX(300);
-        // imgv.setY(300);
-        // imgv.setFitHeight(300);
-        // imgv.setFitWidth(300);
-        // GlobalControl.rootPane.getChildren().add(imgv);
-
-
-
 
         Scene scene = new Scene(GlobalControl.rootPane,
                 Constants.WindowWidth,
