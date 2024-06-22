@@ -27,8 +27,15 @@ public class Sunflower extends Plants {
 
     private void initializeSunProducer() {
         Timeline sunProductionTimeline = new Timeline(new KeyFrame(
+
             Duration.millis(10000 / Constants.SunflowerSunProductionFPS),
-            event -> produceSun()
+            event -> {
+                if(isDie()) {
+
+                } else {
+                    produceSun();
+                }
+            }
         ));
         sunProductionTimeline.setCycleCount(Timeline.INDEFINITE);
         sunProductionTimeline.play();

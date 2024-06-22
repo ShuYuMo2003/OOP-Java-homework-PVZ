@@ -227,6 +227,30 @@ public class Constants {
         return Constants.class.getResource("/images/Screen/ZombineChooserBackground.png");
     }
 
+    // Music
+    public static URL getMainBgmMusic() {
+        return Constants.class.getResource("/voices/mainBgm.mp3");
+    }
+    public static URL getZombineHittedMusic() {
+        return Constants.class.getResource("/voices/zombineHitted.mp3");
+    }
+    public static URL getZombineVictoryMusic() {
+        return Constants.class.getResource("/voices/zombineVictory.mp3");
+    }
+    public static URL getZombineAttackMusic() {
+        return Constants.class.getResource("/voices/zombineAttack.mp3");
+    }
+    public static URL getCollectSunMusic() {
+        return Constants.class.getResource("/voices/collectSun.mp3");
+    }
+    public static URL getAddNewObjectMusic() {
+        return Constants.class.getResource("/voices/addNewObject.mp3");
+    }
+    public static URL getPlantVictoryMusic() {
+        return Constants.class.getResource("/voices/plantVictory.mp3");
+    }
+
+
     // Cards
 
 

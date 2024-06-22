@@ -42,6 +42,8 @@ public class GlobalControl {
     static int sunCount = 0;
     static int brainCount = 0;
 
+    static int haveResult = -1;
+
     static PlantsCard[] plantsCards = new PlantsCard[Constants.PlantsCardCount];
     static ZombinesCard[] zombineCards = new ZombinesCard[Constants.ZombineCardCount];
 
@@ -49,14 +51,7 @@ public class GlobalControl {
     private static ImageView cardsChooserImageView;
     private static Zombine winZombine = null;
 
-    private static MediaPlayer mediaPlayer;
-    public static void initializeAndPlayThemeMusic() {
-        String musicFile = "voices/ThemeSong.mp3";
-        Media sound = new Media(GlobalControl.class.getResource(musicFile).toString());
-        mediaPlayer = new MediaPlayer(sound);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.play();
-    }
+    private static MediaPlayer mainBgmPlayer = null;
 
     public static void setSunCount(int count) {
         sunCount = count;
@@ -85,7 +80,7 @@ public class GlobalControl {
             if(Constants.ZombineBrainCost.get(card.getKey()) <= brainCount) {
                 zombineCards[nowId].getCardImageView().setEffect(new ColorAdjust(){{
                     setBrightness(0.5);
-                }});;
+                }});
             }
             nowId += 1;
         }
@@ -199,8 +194,9 @@ public class GlobalControl {
     }
 
     public static void addNewPlant(String type, MapPosition mpos) {
-        if(Constants.isServerNPlants && !Constants.GameModeSingle)
+        if(Constants.isServerNPlants && !Constants.GameModeSingle) {
             SocketServer.send(type + "__" + mpos.row + "__" + mpos.column + "__Plant");
+        }
         switch(type) {
             case "Peashooter":
                 GlobalControl.addPlants(new Peashooter(mpos.row, mpos.column));
@@ -251,11 +247,13 @@ public class GlobalControl {
             System.err.println("selectedPlantsType = " + selectedPlantsType);
             if(selectedPlantsType != null) {
                 MapPosition mpos = Plants.getMapPosition(event.getX(), event.getY());
+                playOnce(Constants.getAddNewObjectMusic(), 0.9);
                 addNewPlant(selectedPlantsType, mpos);
             }
 
             if(selectedZombineImageView != null) {
                 MapPosition mpos = Zombine.getMapPosition(event.getX(), event.getY());
+                playOnce(Constants.getAddNewObjectMusic(), 0.9);
                 addNewZombine(selectedZombineType, mpos);
             }
 
@@ -343,38 +341,43 @@ public class GlobalControl {
 
     GlobalControl() { }
 
-    private static void MoveMapToDie() {
-        TranslateTransition tt = new TranslateTransition(Duration.seconds(1), backgroundImageView);
-        double currentX = backgroundImageView.getX();
-        tt.setToX(0 - currentX);
-        tt.play();
+    // private static void MoveMapToDie() {
+    //     TranslateTransition tt = new TranslateTransition(Duration.seconds(1), backgroundImageView);
+    //     double currentX = backgroundImageView.getX();
+    //     tt.setToX(0 - currentX);
+    //     tt.play();
+    // }
+
+    public static void plantsWin() {
+        haveResult = 0;
+        lock.unlock();
+        lock.lock();
+        System.err.println("Plants win!");
+        for(Zombine z : AllZombines) {
+            z.setDie();
+        }
+        playOnce(Constants.getPlantVictoryMusic(), 0.9);
+        moveStep.stop();
+        mainBgmPlayer.stop();
     }
 
     public static void zombineWin() {
+        haveResult = 1;
+
         System.err.println("Zombine win!");
         for(Plants p : AllPlants) {
             p.setDie();
         }
-        try{
-            for(Node nd : rootPane.getChildren()) {
-                if(nd == backgroundImageView) continue;
-                if(nd == winZombine.getImageView()) continue;
-                rootPane.getChildren().remove(nd);
-            }
-        } catch (Exception e) {
-            System.err.println("Error: " + e);
-        }
-        AllBullets.clear();
-        AllPlants.clear();
-        AllZombines.clear();
-        MoveMapToDie();
-
+        playOnce(Constants.getZombineVictoryMusic(), 0.9);
+        moveStep.stop();
+        mainBgmPlayer.stop();
     }
 
     public static void initializeMoveStep() {
         moveStep = new Timeline();
         moveStep.setCycleCount(Timeline.INDEFINITE);
         moveStep.getKeyFrames().add(new KeyFrame(Duration.millis(1000 / Constants.GlobalFPS), e -> {
+            if(haveResult != -1) return ;
             lock.lock();
 
             refreshBG();
@@ -393,6 +396,7 @@ public class GlobalControl {
                 if(z.getX() < 0) {
                     winZombine = z;
                     zombineWin();
+                    break;
                 }
             }
 
@@ -517,6 +521,7 @@ public class GlobalControl {
                     // if(distance2 < Constants.BulletNZombineCollisionDistance_2 && z.getMapPosition().row == b.getMapPosition().row) {
                     if(isCollision(z.getImageView(), b.getImageView())) {
                         z.applyAttack(b.getDamage());
+                        playOnce(Constants.getZombineHittedMusic(), 0.8);
                         b.boom();
                     }
                     // else if (z.getMapPosition().row != b.getMapPosition().row) {
@@ -535,6 +540,25 @@ public class GlobalControl {
         moveStep.play();
     }
 
+    // Music
+
+
+    public static void initializeMainBGM() {
+        Media sound = new Media(Constants.getMainBgmMusic().toString());
+        mainBgmPlayer = new MediaPlayer(sound);
+        System.err.println("Playing " + Constants.getMainBgmMusic().toString());
+        mainBgmPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mainBgmPlayer.play();
+    }
+
+    public static void playOnce(URL music, double volumn) {
+        Media sound = new Media(music.toString());
+        MediaPlayer player = new MediaPlayer(sound);
+        player.setVolume(volumn);
+        player.play();
+    }
+
+
     public static void initializeEverything() {
         initializeMoveStep();
         initializeBackgroudImage();
@@ -547,6 +571,7 @@ public class GlobalControl {
         initializeZombineCardImageView();
         initializeCardSelectedApply();
         initializeProcessMessageQueue();
+        initializeMainBGM();
         startMoveStep();
     }
 
