@@ -74,6 +74,7 @@ public class Constants {
     final public static int WindowWidth             = 1300;
     final public static int WindowHeight            = 640;
     final public static String MainStageTitle       = "Plants Vs. Zombies";
+    final public static int LongestTimeForZombine   = 10 * 60; // 10 min
     // MapStage2XPos 0 : Normal Stage; 1 : die.
     final public static double PlayingStageMapXPos  = -180d;
     final public static double cleanUpFPS           = 5;
@@ -86,8 +87,8 @@ public class Constants {
     final public static double BulletNZombineCollisionDistance_2 = Math.pow(100, 2);
 
     //Gravestone
-    final public static double GravestoneHealth = 100;
-    final public static double GravestoneBrainProductionFPS = 1;
+    final public static double GravestoneHealth = 1000000000;
+    final public static double GravestoneBrainProductionFPS = 0.1;
     final public static double GravestoneFPS = 10;
 
     final public static double BrainFPS = 30;
@@ -122,11 +123,11 @@ public class Constants {
     // Plants
     // Peashooter
     final public static double PeashooterFPS = 11;
-    final public static double PeashooterShootFPS = 1;
+    final public static double PeashooterShootFPS = 0.5;
     final public static double PeashooterHealth = 100;
     // PepPeaShooter
     final public static double PepPeaShooterFPS = 11;
-    final public static double PepPeaShooterShootFPS = 2;
+    final public static double PepPeaShooterShootFPS = 1;
     final public static double PepPeaShooterHealth = 100;
 
     //SonwPeashooter
@@ -135,15 +136,15 @@ public class Constants {
     final public static double SnowPeashooterHealth = 100;
 
     // Bullets
-    final public static double BulletFPS = 4;
+    final public static double BulletFPS = 2;
 
     // Normal Pea
     final public static double NormalPeaDamage = 10;
-    final public static double NormalPeaSpeed = 10;
+    final public static double NormalPeaSpeed = 7;
 
     // Sonw Pea
     final public static double SnowPeaDamage = 20;
-    final public static double SnowPeaSpeed = 7;
+    final public static double SnowPeaSpeed = 6;
 
     // SunFlower
     final public static double SunflowerHealth = 100;
@@ -227,6 +228,15 @@ public class Constants {
     public static URL getZombineChooserImage() {
         return Constants.class.getResource("/images/Screen/ZombineChooserBackground.png");
     }
+
+    public static URL getZombineWinImage() {
+        return Constants.class.getResource("/images/Screen/zombieswin.jpg");
+    }
+
+    public static URL getPlantWinImage() {
+        return Constants.class.getResource("/images/Screen/plantswin.jpg");
+    }
+
 
     // Music
     final static Media mainBgmMusic = new Media(Constants.class.getResource("/voices/mainBgm.mp3").toString());
@@ -331,7 +341,7 @@ public class Constants {
     final public static HashMap<String, Integer> ZombineBrainCost = new HashMap<>() {{
         put("NormalZombine", 25);
         put("BucketHeadZombine", 100);
-        put("FlagZombine", 300);
+        put("FlagZombine", 30);
         put("ConeheadZomine", 75);
         put("NewspaperZombine", 50);
     }};

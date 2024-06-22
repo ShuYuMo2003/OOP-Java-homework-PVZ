@@ -14,7 +14,7 @@ public class Gravestone extends Plants {
 
     Gravestone(int row, int column) {
         super(row, column,
-              Constants.PlantsColumnXPos[column],
+              Constants.PlantsColumnXPos[column] + 300,
               Constants.PlantsRowYPos[row],
               ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/Gravestone"),
               Constants.GravestoneHealth,
@@ -27,16 +27,24 @@ public class Gravestone extends Plants {
 
     private void initializeBrainProducer() {
         Timeline brainProductionTimeline = new Timeline(new KeyFrame(
-            Duration.millis(10000 / Constants.GravestoneBrainProductionFPS),
+            Duration.millis(1000 / (Constants.GravestoneBrainProductionFPS + 0.1 * Math.random())),
             event -> produceBrain()
         ));
         brainProductionTimeline.setCycleCount(Timeline.INDEFINITE);
         brainProductionTimeline.play();
     }
 
+    public MapPosition getMapPosition(){
+        // Not on the map do not interactive with others.
+        return new MapPosition(-1, -1);
+    }
+
     private void produceBrain() {
-        Brain brain = new Brain(this.getX() - 70, this.getY() - 100);
-        GlobalControl.addBrain(brain);
+        if(Constants.isServerNPlants && !Constants.GameModeSingle) {}
+        else {
+            Brain brain = new Brain(this.getX() - 70, this.getY() - 100);
+            GlobalControl.addBrain(brain);
+        }
     }
 
     @Override

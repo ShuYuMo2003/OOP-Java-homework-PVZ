@@ -37,6 +37,10 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         if (Constants.GameModeSingle) {
             GlobalControl.initializeEverything();
+
+            for(int i = 0; i < Constants.MaxRow; i++)
+                GlobalControl.addPlants(new Gravestone(i, Constants.MaxColumn - 1));
+
             Scene mainScene = new Scene(GlobalControl.rootPane,
                     Constants.WindowWidth,
                     Constants.WindowHeight);
@@ -94,6 +98,8 @@ public class App extends Application {
                     tempTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(500), e->{
                         if(SocketServer.receivedAccept){
                             GlobalControl.initializeEverything();
+                            for(int i = 0; i < Constants.MaxRow; i++)
+                                    GlobalControl.addPlants(new Gravestone(i, Constants.MaxColumn - 1));
                             Scene mainScene = new Scene(GlobalControl.rootPane,
                                 Constants.WindowWidth,
                                 Constants.WindowHeight);
@@ -143,10 +149,12 @@ public class App extends Application {
                     );
                     connectBtn.setOnMouseClicked(e -> {
                         String ip = serverName.getText();
-                        if(Constants.OnlineUser.containsKey(ip)){
+                        if(true || Constants.OnlineUser.containsKey(ip)){
                             Constants.ServerIP = ip;
                             if(SocketClient.initialize()){
                                 GlobalControl.initializeEverything();
+                                for(int i = 0; i < Constants.MaxRow; i++)
+                                    GlobalControl.addPlants(new Gravestone(i, Constants.MaxColumn - 1));
                                 Scene mainScene = new Scene(GlobalControl.rootPane,
                                     Constants.WindowWidth,
                                     Constants.WindowHeight);

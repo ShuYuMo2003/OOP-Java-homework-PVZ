@@ -10,6 +10,8 @@ public class NormalZombine extends Zombine{
     public static Image staticImage = Constants.getCachedImage(
         ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/NormalZombie/Zombie")[0]
     );
+    private int row;
+    public int getRow() { return row; }
     public NormalZombine(int row, int column) {
         super(Constants.getZombinePos(row, column)[0],
               Constants.getZombinePos(row, column)[1],
@@ -17,7 +19,7 @@ public class NormalZombine extends Zombine{
               Constants.NormalZombineAttackValue,
               ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/NormalZombie/ZombieDie"),
               Constants.ZombineDieFPS);
-
+        this.row = row;
         addStage(new ZombineStage(
             "Initial Stage",
             ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/NormalZombie/Zombie"),

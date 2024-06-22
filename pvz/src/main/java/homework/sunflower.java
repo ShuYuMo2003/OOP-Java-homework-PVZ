@@ -42,8 +42,11 @@ public class Sunflower extends Plants {
     }
 
     private void produceSun() {
-        Sun sun = new Sun(this.getX() - 70, this.getY() - 100);
-        GlobalControl.addSun(sun);
+        if(!Constants.isServerNPlants && !Constants.GameModeSingle) {}
+        else {
+            Sun sun = new Sun(this.getX() - 70, this.getY() - 100);
+            GlobalControl.addSun(sun);
+        }
     }
 
     @Override
