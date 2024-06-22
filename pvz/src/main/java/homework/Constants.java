@@ -75,9 +75,9 @@ public class Constants {
     final public static String MainStageTitle       = "Plants Vs. Zombies";
     // MapStage2XPos 0 : Normal Stage; 1 : die.
     final public static double PlayingStageMapXPos  = -180d;
-    final public static double cleanUpFPS           = 60;
-    final public static double GlobalFPS            = 30;
-    final public static double ProcessMessageFPS    = 60;
+    final public static double cleanUpFPS           = 5;
+    final public static double GlobalFPS            = 15;
+    final public static double ProcessMessageFPS    = 10;
 
     // Sun
     final public static double SunFPS = 50;
@@ -96,24 +96,24 @@ public class Constants {
     final public static double ZombineDieFPS = 11;
 
     // Normal Zombine
-    final public static double NormalZombineSpeed = 0.5;
+    final public static double NormalZombineSpeed = 2;
     final public static double NormalZombineFPS = 11;
     final public static double NormalZombineAttackValue = 1;
 
     //Conehead Zombine
-    final public static double ConeheadZombineSpeed = 0.5;
+    final public static double ConeheadZombineSpeed = 2;
     final public static double ConeheadZombineAttackValue = 10;
     final public static double ConeheadZombineFPS = 11;
     // Buckethead Zombine constants
-    final public static double BucketheadZombineSpeed = 0.5;
+    final public static double BucketheadZombineSpeed = 2;
     final public static double BucketheadZombineAttackValue = 10;
     final public static double BucketheadZombineFPS = 11;
     // Flag Zombine constants
-    final public static double FlagZombineSpeed =0.6;
+    final public static double FlagZombineSpeed = 2;
     final public static double FlagZombineAttackValue = 10;
     final public static double FlagZombineFPS = 11;
     // Newspaper Zombine constants
-    final public static double NewspaperZombineSpeed = 0.5;
+    final public static double NewspaperZombineSpeed = 2;
     final public static double NewspaperZombineAttackValue = 10;
     final public static double NewspaperZombineFPS = 11;
 
@@ -138,11 +138,11 @@ public class Constants {
 
     // Normal Pea
     final public static double NormalPeaDamage = 10;
-    final public static double NormalPeaSpeed = 8;
+    final public static double NormalPeaSpeed = 32;
 
     //Sonw Pea
     final public static double SnowPeaDamage = 40;
-    final public static double SnowPeaSpeed = 10;
+    final public static double SnowPeaSpeed = 40;
 
     //SunFlower
     final public static double SunflowerHealth = 200;
@@ -303,7 +303,7 @@ public class Constants {
     }
 
     // zombine Cards
-    
+
     final public static double ZombineCardGap = 3;
     final public static double ZombineCardWidth = 58;
     final public static double ZombineCardHeight = 79;

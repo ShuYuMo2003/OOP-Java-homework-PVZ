@@ -85,12 +85,9 @@ public abstract class Bullets extends MoveableElement {
         boom();
     }
 
-
-    @Override
     protected void rangeCheck() {
-        // boomed = true;
-        if(this.x > Constants.WindowWidth) {
-            GlobalControl.rootPane.getChildren().remove(this.imageview);
+        if(this.x > Constants.WindowWidth + 100 || this.y > Constants.WindowHeight + 100) {boomed = true;
+            boomed = true;
         }
     }
 }

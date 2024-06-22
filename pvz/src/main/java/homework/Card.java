@@ -1,5 +1,7 @@
 package homework;
 
+import javax.swing.undo.AbstractUndoableEdit;
+
 import javafx.animation.ScaleTransition;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
@@ -16,6 +18,9 @@ public abstract class Card {
     private double height;
     ColorAdjust brighten = new ColorAdjust() {{
         setBrightness(0.7);
+    }};
+    ColorAdjust darker = new ColorAdjust() {{
+        setBrightness(-0.7);
     }};
     ScaleTransition scaleTransition;
 
@@ -43,24 +48,30 @@ public abstract class Card {
         scaleTransition.setAutoReverse(false);
 
         cardImageView.setOnMouseEntered(e -> {
-            cardImageView.setEffect(brighten);
-            scaleTransition.playFromStart();
+            if(checkCanSelected()) {
+                cardImageView.setEffect(brighten);
+                scaleTransition.playFromStart();
+            }
         });
         cardImageView.setOnMouseExited(e -> {
-            cardImageView.setEffect(null);
-            scaleTransition.stop();
-            cardImageView.setScaleX(1.0);
-            cardImageView.setScaleY(1.0);
+            if(checkCanSelected()) {
+                cardImageView.setEffect(null);
+                scaleTransition.stop();
+                cardImageView.setScaleX(1.0);
+                cardImageView.setScaleY(1.0);
+            }
         });
 
         cardImageView.setOnMouseClicked(e -> {
-            processOnMouseClicked(e);
+            if(checkCanSelected()){
+                processOnMouseClicked(e);
+            }
             // 阻止冒泡
             e.consume();
         });
 
         GlobalControl.rootPane.getChildren().add(cardImageView);
     }
-
+    protected abstract boolean checkCanSelected();
     protected abstract void processOnMouseClicked(MouseEvent e);
 }
