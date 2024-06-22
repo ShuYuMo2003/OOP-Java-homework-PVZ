@@ -19,11 +19,11 @@ public class NewspaperZombine extends Zombine {
             "With Newspaper Stage",
             ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/NewspaperZombie/NewspaperZombie"),
             ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/NewspaperZombie/NewspaperZombieAttack"),
-            50));
+            130));
         addStage(new ZombineStage("Without Newspaper Stage",
             ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/NewspaperZombie/NewspaperZombieNoPaper"),
             ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/NewspaperZombie/NewspaperZombieNoPaperAttack"),
-            100));
+            55));
         addStage(new ZombineStage("Lost Head Stage",
             ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/NewspaperZombie/NewspaperZombieLostHead"),
             ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/NewspaperZombie/NewspaperZombieLostHeadAttack"),
