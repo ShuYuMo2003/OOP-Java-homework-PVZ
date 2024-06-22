@@ -25,6 +25,8 @@ public class GlobalControl {
     static ArrayList<Bullets> AllBullets = new ArrayList<>();
     static ArrayList<Sun> AllSuns = new ArrayList<>();
 
+    static ArrayList<String> MessageQueue = new ArrayList<>();
+
     static ArrayList<MapPosition> zombinesPos = new ArrayList<>();
     static ArrayList<MapPosition> plantsPos = new ArrayList<>();
 
@@ -121,6 +123,7 @@ public class GlobalControl {
     static Timeline attackListerner;
     static Timeline dieObjectCleanUper;
     static Timeline bulletsListerner;
+    static Timeline processMessageQueue;
     static Pane rootPane = new Pane();
 
 
@@ -174,53 +177,65 @@ public class GlobalControl {
         });
     }
 
+    public static void addNewPlant(String type, MapPosition mpos) {
+        if(Constants.isServerNPlants)
+            SocketServer.send(type + "__" + mpos.row + "__" + mpos.column + "__Plant");
+        switch(type) {
+            case "Peashooter":
+                GlobalControl.addPlants(new Peashooter(mpos.row, mpos.column));
+                break;
+            case "Sunflower":
+                GlobalControl.addPlants(new Sunflower(mpos.row, mpos.column));
+                break;
+            case "PepPeaShooter":
+                GlobalControl.addPlants(new PepPeaShooter(mpos.row, mpos.column));
+                break;
+            case "SnowPeashooter":
+                GlobalControl.addPlants(new SnowPeashooter(mpos.row, mpos.column));
+                break;
+            case "Chomper":
+                GlobalControl.addPlants(new Chomper(mpos.row, mpos.column));
+                break;
+            case "Squash":
+                GlobalControl.addPlants(new Squash(mpos.row, mpos.column));
+                break;
+
+        }
+    }
+
+    public static void addNewZombine(String type, MapPosition mpos) {
+        if(!Constants.isServerNPlants)
+        SocketClient.send(type + "__" + mpos.row + "__" + mpos.column + "__Zombine");
+        switch(type) {
+            case "NormalZombine":
+                GlobalControl.addZombine(new NormalZombine(mpos.row, mpos.column));
+                break;
+            case "ConeheadZomine":
+                GlobalControl.addZombine(new ConeheadZomine(mpos.row, mpos.column));
+                break;
+            case "FlagZombine":
+                GlobalControl.addZombine(new FlagZombine(mpos.row, mpos.column));
+                break;
+            case "NewspaperZombine":
+                GlobalControl.addZombine(new NewspaperZombine(mpos.row, mpos.column));
+                break;
+            case "BucketHeadZombine":
+                GlobalControl.addZombine(new BucketHeadZombine(mpos.row, mpos.column));
+                break;
+        }
+    }
+
     public static void initializeCardSelectedApply() {
         GlobalControl.rootPane.setOnMouseClicked(event -> {
             System.err.println("selectedPlantsType = " + selectedPlantsType);
             if(selectedPlantsType != null) {
                 MapPosition mpos = Plants.getMapPosition(event.getX(), event.getY());
-                switch(selectedPlantsType) {
-                    case "Peashooter":
-                        GlobalControl.addPlants(new Peashooter(mpos.row, mpos.column));
-                        break;
-                    case "Sunflower":
-                        GlobalControl.addPlants(new Sunflower(mpos.row, mpos.column));
-                        break;
-                    case "PepPeaShooter":
-                        GlobalControl.addPlants(new PepPeaShooter(mpos.row, mpos.column));
-                        break;
-                    case "SnowPeashooter":
-                        GlobalControl.addPlants(new SnowPeashooter(mpos.row, mpos.column));
-                        break;
-                    case "Chomper":
-                        GlobalControl.addPlants(new Chomper(mpos.row, mpos.column));
-                        break;
-                    case "Squash":
-                        GlobalControl.addPlants(new Squash(mpos.row, mpos.column));
-                        break;
-
-                }
+                addNewPlant(selectedPlantsType, mpos);
             }
 
             if(selectedZombineImageView != null) {
                 MapPosition mpos = Zombine.getMapPosition(event.getX(), event.getY());
-                switch(selectedZombineType) {
-                    case "NormalZombine":
-                        GlobalControl.addZombine(new NormalZombine(mpos.row, mpos.column));
-                        break;
-                    case "ConeheadZomine":
-                        GlobalControl.addZombine(new ConeheadZomine(mpos.row, mpos.column));
-                        break;
-                    case "FlagZombine":
-                        GlobalControl.addZombine(new FlagZombine(mpos.row, mpos.column));
-                        break;
-                    case "NewspaperZombine":
-                        GlobalControl.addZombine(new NewspaperZombine(mpos.row, mpos.column));
-                        break;
-                    case "BucketHeadZombine":
-                        GlobalControl.addZombine(new BucketHeadZombine(mpos.row, mpos.column));
-                        break;
-                }
+                addNewZombine(selectedZombineType, mpos);
             }
 
             selectedPlantsType = null;
@@ -363,6 +378,28 @@ public class GlobalControl {
             lock.unlock();
         }));
     }
+    public static void initializeProcessMessageQueue() {
+        processMessageQueue = new Timeline();
+        processMessageQueue.setCycleCount(Timeline.INDEFINITE);
+        processMessageQueue.getKeyFrames().add(new KeyFrame(Duration.millis(1000 / Constants.ProcessMessageFPS), e -> {
+            lock.lock();
+            for(String message : MessageQueue) {
+                String[] args = message.split("__");
+                System.err.println("Processing message: " + message);
+                if(args.length == 4 && args[3].equals("Plant")) {
+                    GlobalControl.addNewPlant(args[0],
+                        new MapPosition(Integer.parseInt(args[1]), Integer.parseInt(args[2])));
+                }
+                if(args.length == 4 && args[3].equals("Zombine")) {
+                    GlobalControl.addNewZombine(args[0],
+                        new MapPosition(Integer.parseInt(args[1]), Integer.parseInt(args[2])));
+                }
+            }
+            MessageQueue.clear();
+            lock.unlock();
+        }));
+        processMessageQueue.play();
+    }
 
     public static void initializeDieObjectCleanUp(){
         dieObjectCleanUper = new Timeline();
@@ -488,6 +525,7 @@ public class GlobalControl {
         initializePlantsCardImageView();
         initializeZombineCardImageView();
         initializeCardSelectedApply();
+        initializeProcessMessageQueue();
         startMoveStep();
     }
 

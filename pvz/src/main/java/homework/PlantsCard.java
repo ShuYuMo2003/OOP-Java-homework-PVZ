@@ -15,6 +15,9 @@ public class PlantsCard extends Card{
 
     protected void processOnMouseClicked(MouseEvent e) {
         System.err.println("Processing Cilick on " + name);
+        if(!Constants.isServerNPlants) {
+            return;
+        }
         switch (name) {
             case "Peashooter":
                 GlobalControl.setSelectedPlants(name, new ImageView(Peashooter.staticImage){{setX(e.getSceneX()); setY(e.getSceneY());}});

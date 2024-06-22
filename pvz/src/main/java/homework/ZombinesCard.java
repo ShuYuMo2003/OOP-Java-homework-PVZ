@@ -13,6 +13,9 @@ public class ZombinesCard extends Card{
     }
 
     protected void processOnMouseClicked(MouseEvent e) {
+        if(Constants.isServerNPlants) {
+            return;
+        }
         System.err.println("Processing Cilick on " + name);
         switch (name) {
             case "NormalZombine":

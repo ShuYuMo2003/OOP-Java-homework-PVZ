@@ -1,26 +1,80 @@
 
 package homework;
 
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 import java.util.Map.Entry;
 import java.util.AbstractMap.SimpleEntry;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 
 public class Constants {
+    final public static int BroadcastSocketPort = 10086;
+    final public static int SocketPort = 10087;
+    final public static int SendBroadcastIntervalMillis = 500;
+    final public static String BroadcastMessagePrefix = "PVZ0912";
+    public static String ServerIP = null;
+    public static boolean isServerNPlants = false;
+
+    public static class Player{
+        private final String username;
+        private final String ip;
+        private final double lastUpdate;
+        Player(String username, String ip, double lastUpdate) {
+            this.username = username;
+            this.lastUpdate = lastUpdate;
+            this.ip = ip;
+        }
+        public String getUsername() {
+            return username;
+        }
+        public String getIp() {
+            return ip;
+        }
+        public double getLastUpdate() {
+            return lastUpdate;
+        }
+    }
+
+    final public static HashMap<String, Player> OnlineUser = new HashMap<>();
+    public static ObservableList<Player> player = FXCollections.observableArrayList();
+
+    static public void addOrUpdateUser(String username, String ip) {
+        OnlineUser.put(ip, new Player(username, ip, System.currentTimeMillis()));
+        // delete outdated users
+        // System.out.println("Online Users: " + OnlineUser.size());
+        for (String key : OnlineUser.keySet()) {
+            if (System.currentTimeMillis() - OnlineUser.get(key).lastUpdate > 3000) {
+                OnlineUser.remove(key);
+            }
+        }
+        player.clear();
+        for(String key : OnlineUser.keySet()) {
+            player.add(OnlineUser.get(key));
+            // System.err.println("pushed " + OnlineUser.get(key).username + " " + OnlineUser.get(key).ip);
+        }
+    }
+
     final public static boolean Debug = true;
-    final public static int WindowWidth = 1300;
-    final public static int WindowHeight = 640;
-    final public static String MainStageTitle = "Plants Vs. Zombies";
+
+    public static String username = "default";
+    public static void setUsername(String name) {
+        System.err.println("Set username to " + name);
+        username = name;
+    }
+
+    final public static int WindowWidth             = 1300;
+    final public static int WindowHeight            = 640;
+    final public static String MainStageTitle       = "Plants Vs. Zombies";
     // MapStage2XPos 0 : Normal Stage; 1 : die.
-    final public static double PlayingStageMapXPos = -180d;
-    final public static double cleanUpFPS = 60;
-    final public static double GlobalFPS = 30;
+    final public static double PlayingStageMapXPos  = -180d;
+    final public static double cleanUpFPS           = 60;
+    final public static double GlobalFPS            = 30;
+    final public static double ProcessMessageFPS    = 60;
 
     // Sun
     final public static double SunFPS = 10;
