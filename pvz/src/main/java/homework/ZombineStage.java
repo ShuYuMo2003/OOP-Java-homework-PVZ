@@ -1,5 +1,4 @@
 package homework;
-
 class ImagesAndFrameId {
     public String[] imagesPaths;
     public int frameId;

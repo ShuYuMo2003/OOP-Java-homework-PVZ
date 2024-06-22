@@ -10,14 +10,30 @@ import java.util.concurrent.locks.ReentrantLock;
 import javafx.util.Duration;
 import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.animation.KeyFrame;
 import javafx.scene.image.ImageView;
 import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.animation.TranslateTransition;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
+import javafx.application.Platform;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+
+import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 
 
 public class GlobalControl {
@@ -38,59 +54,132 @@ public class GlobalControl {
 
     static String selectedZombineType = null;
     static ImageView selectedZombineImageView = null;
-
-    static int sunCount = 0;
-    static int brainCount = 0;
-
     static int haveResult = -1;
 
     static PlantsCard[] plantsCards = new PlantsCard[Constants.PlantsCardCount];
     static ZombinesCard[] zombineCards = new ZombinesCard[Constants.ZombineCardCount];
+    
 
     private static ImageView backgroundImageView;
     private static ImageView cardsChooserImageView;
     private static Zombine winZombine = null;
 
-    private static MediaPlayer mainBgmPlayer = null;
+    private static MediaPlayer mainBgmPlayer;
+    
+    
+    private static int sunCount = 0;
+    private static int brainCount = 0;
+    private static Label sunLabel = new Label();
+    private static Label brainLabel = new Label();
+
+    public static void initializeSunNBrainLabel() {
+        sunLabel.setText("0000000000000000000000000000000");
+        brainLabel.setText("0000000000000000000000000000000");
+        sunLabel.setLayoutX(70);
+        sunLabel.setLayoutY(70);
+        sunLabel.setFont(Font.font("Arial", FontWeight.BOLD, 40));
+
+        rootPane.getChildren().addAll(sunLabel, brainLabel);
+    }
+
+   
 
     public static void setSunCount(int count) {
-        sunCount = count;
+        lock.lock();
+        try {
+            sunCount = count;
+            updateSunLabel();
+        } finally {
+            lock.unlock();
+        }
     }
+
     public static void modifySunCount(int delta) {
-        sunCount += delta;
+        lock.lock();
+        try {
+            sunCount += delta;
+            updateSunLabel();
+        } finally {
+            lock.unlock();
+        }
     }
 
     public static void addSun(Sun sun) {
         lock.lock();
-        AllSuns.add(sun);
-        lock.unlock();
-    }
-
-
-
-
-    public static void setBrainCount(int count) {
-        brainCount = count;
-        modifyBrainCount(0);
-    }
-    public static void modifyBrainCount(int delta) {
-        brainCount += delta;
-        int nowId = 0;
-        for(Map.Entry<String, URL> card : Constants.ZombineCardImage) {
-            if(Constants.ZombineBrainCost.get(card.getKey()) <= brainCount) {
-                zombineCards[nowId].getCardImageView().setEffect(new ColorAdjust(){{
-                    setBrightness(0.5);
-                }});
-            }
-            nowId += 1;
+        try {
+            AllSuns.add(sun);
+            modifySunCount(25);
+        } finally {
+            lock.unlock();
         }
     }
-    public static void addBrain(Brain brain) {
+
+    public static void spendSun(int cost) {
         lock.lock();
-        AllBrains.add(brain);
-        lock.unlock();
+        try {
+            sunCount -= cost;
+            updateSunLabel();
+        } finally {
+            lock.unlock();
+        }
     }
 
+    private static void updateSunLabel() {
+        Platform.runLater(() -> sunLabel.setText("Sun: " + sunCount));
+    }
+
+    public static void setBrainCount(int count) {
+        lock.lock();
+        try {
+            brainCount = count;
+            modifyBrainCount(0);
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public static void modifyBrainCount(int delta) {
+        lock.lock();
+        try {
+            brainCount += delta;
+            updateBrainLabel();
+            int nowId = 0;
+            for (Map.Entry<String, URL> card : Constants.ZombineCardImage) {
+                if (Constants.ZombineBrainCost.get(card.getKey()) <= brainCount) {
+                    zombineCards[nowId].getCardImageView().setEffect(new ColorAdjust() {{
+                        setBrightness(0.5);
+                    }});
+                }
+                nowId += 1;
+            }
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public static void addBrain(Brain brain) {
+        lock.lock();
+        try {
+            AllBrains.add(brain);
+            modifyBrainCount(25);
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public static void spendBrain(int cost) {
+        lock.lock();
+        try {
+            brainCount -= cost;
+            updateBrainLabel();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    private static void updateBrainLabel() {
+        Platform.runLater(() -> brainLabel.setText("Brain: " + brainCount));
+    }
 
     private static void refreshBG() {
         try {
@@ -561,6 +650,7 @@ public class GlobalControl {
 
 
     public static void initializeEverything() {
+        initializeSunNBrainLabel();
         initializeMoveStep();
         initializeBackgroudImage();
         initializePlantCardsChooser();
