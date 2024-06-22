@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 import javafx.util.Duration;
 
 public class Sunflower extends Plants {
-    public static Image staticImage = new Image(
+    public static Image staticImage = Constants.getCachedImage(
         ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/Sunflower")[0]
     );
 

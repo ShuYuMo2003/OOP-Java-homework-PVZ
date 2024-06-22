@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 import javafx.util.Duration;
 
 public class Squash extends Plants {
-    public static Image staticImage = new Image(
+    public static Image staticImage = Constants.getCachedImage(
         ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/Squash/Squash")[0]
     );
     private static final String[] squashFrames = ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/Squash/Squash");
@@ -71,7 +71,7 @@ public class Squash extends Plants {
             if(this.timeline != null) this.timeline.stop();
             this.timeline = new Timeline(
                 new KeyFrame(Duration.millis(1000 / Constants.SquashAttackFPS), e -> {
-                    this.imageview.setImage(new Image(this.frames[currentFrameId]));
+                    this.imageview.setImage(Constants.getCachedImage(this.frames[currentFrameId]));
                     // System.err.println("set image as " + this.frames[currentFrameId]);
                     if(currentFrameId == this.frames.length - 1) {
                         this.timeline.stop();

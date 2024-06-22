@@ -15,7 +15,7 @@ public class Brain {
     int producedPassedFrames = 0;
     int currentFrameId = 0;
     Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000 / Constants.BrainFPS), e -> {
-        imageView.setImage(new Image(framesPath[currentFrameId]));
+        imageView.setImage(Constants.getCachedImage(framesPath[currentFrameId]));
         currentFrameId = (currentFrameId + 1) % framesPath.length;
         producedPassedFrames += 1;
 
@@ -35,7 +35,7 @@ public class Brain {
     public Brain(double x, double y) {
         this.x = x;
         this.y = y;
-        imageView = new ImageView(new Image(framesPath[0]));
+        imageView = new ImageView(Constants.getCachedImage(framesPath[0]));
         imageView.setX(x);
         imageView.setY(y);
         imageView.setOnMouseClicked(event -> {

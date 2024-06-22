@@ -5,7 +5,7 @@ import java.io.UnsupportedEncodingException;
 import javafx.scene.image.Image;
 
 public class FlagZombine extends Zombine {
-    public static Image staticImage = new Image(
+    public static Image staticImage = Constants.getCachedImage(
         ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/FlagZombie/FlagZombie")[0]
     );
     public FlagZombine(int row, int column) {

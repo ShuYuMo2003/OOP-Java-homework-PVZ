@@ -11,6 +11,7 @@ import java.util.AbstractMap.SimpleEntry;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
 
 public class Constants {
     final public static boolean GameModeSingle = true;
@@ -76,11 +77,11 @@ public class Constants {
     // MapStage2XPos 0 : Normal Stage; 1 : die.
     final public static double PlayingStageMapXPos  = -180d;
     final public static double cleanUpFPS           = 5;
-    final public static double GlobalFPS            = 15;
-    final public static double ProcessMessageFPS    = 10;
+    final public static double GlobalFPS            = 20;
+    final public static double ProcessMessageFPS    = 20;
 
     // Sun
-    final public static double SunFPS = 50;
+    final public static double SunFPS = 20;
 
     final public static double BulletNZombineCollisionDistance_2 = Math.pow(100, 2);
 
@@ -96,24 +97,24 @@ public class Constants {
     final public static double ZombineDieFPS = 11;
 
     // Normal Zombine
-    final public static double NormalZombineSpeed = 2;
+    final public static double NormalZombineSpeed = 0.5;
     final public static double NormalZombineFPS = 11;
     final public static double NormalZombineAttackValue = 1;
 
     //Conehead Zombine
-    final public static double ConeheadZombineSpeed = 2;
+    final public static double ConeheadZombineSpeed = 0.5;
     final public static double ConeheadZombineAttackValue = 10;
     final public static double ConeheadZombineFPS = 11;
     // Buckethead Zombine constants
-    final public static double BucketheadZombineSpeed = 2;
+    final public static double BucketheadZombineSpeed = 0.5;
     final public static double BucketheadZombineAttackValue = 10;
     final public static double BucketheadZombineFPS = 11;
     // Flag Zombine constants
-    final public static double FlagZombineSpeed = 2;
+    final public static double FlagZombineSpeed = 0.6;
     final public static double FlagZombineAttackValue = 10;
     final public static double FlagZombineFPS = 11;
     // Newspaper Zombine constants
-    final public static double NewspaperZombineSpeed = 2;
+    final public static double NewspaperZombineSpeed = 0.5;
     final public static double NewspaperZombineAttackValue = 10;
     final public static double NewspaperZombineFPS = 11;
 
@@ -123,9 +124,10 @@ public class Constants {
     final public static double PeashooterFPS = 11;
     final public static double PeashooterShootFPS = 1;
     final public static double PeashooterHealth = 400;
+
     // PepPeaShooter
-    final public static double PepPeaShooterFPS = 20;
-    final public static double PepPeaShooterShootFPS = 3;
+    final public static double PepPeaShooterFPS = 15;
+    final public static double PepPeaShooterShootFPS = 1;
     final public static double PepPeaShooterHealth = 500;
 
     //SonwPeashooter
@@ -134,15 +136,15 @@ public class Constants {
     final public static double SnowPeashooterHealth = 100;
 
     // Bullets
-    final public static double BulletFPS = 5;
+    final public static double BulletFPS = 4;
 
     // Normal Pea
     final public static double NormalPeaDamage = 10;
-    final public static double NormalPeaSpeed = 32;
+    final public static double NormalPeaSpeed = 10;
 
     //Sonw Pea
     final public static double SnowPeaDamage = 40;
-    final public static double SnowPeaSpeed = 40;
+    final public static double SnowPeaSpeed = 10;
 
     //SunFlower
     final public static double SunflowerHealth = 200;
@@ -186,16 +188,16 @@ public class Constants {
         }
     }
 
-    private static String[] NecessaryImagePathPreCached = {
-        "file:/D:/Codes_and_Projects/PlantsVsZombines/pvz/target/classes/images/Bullets/PeaNormal/PeaNormal_0.png",
-        "file:/D:/Codes_and_Projects/PlantsVsZombines/pvz/target/classes/images/Bullets/PeaNormalExplode/PeaNormalExplode_0.png",
-    };
-    public static void preCacheImages() {
-        for(int pid = 0; pid < NecessaryImagePathPreCached.length; pid++) {
-            getCachedImage(NecessaryImagePathPreCached[pid]);
-            System.err.println("Cached (" + (pid + 1) + " / " + NecessaryImagePathPreCached.length + ")" + NecessaryImagePathPreCached[pid]);
-        }
-    }
+    // private static String[] NecessaryImagePathPreCached = {
+    //     "file:/D:/Codes_and_Projects/PlantsVsZombines/pvz/target/classes/images/Bullets/PeaNormal/PeaNormal_0.png",
+    //     "file:/D:/Codes_and_Projects/PlantsVsZombines/pvz/target/classes/images/Bullets/PeaNormalExplode/PeaNormalExplode_0.png",
+    // };
+    // public static void preCacheImages() {
+    //     for(int pid = 0; pid < NecessaryImagePathPreCached.length; pid++) {
+    //         getCachedImage(NecessaryImagePathPreCached[pid]);
+    //         System.err.println("Cached (" + (pid + 1) + " / " + NecessaryImagePathPreCached.length + ")" + NecessaryImagePathPreCached[pid]);
+    //     }
+    // }
 
 
     public static double[] getZombinePos(int row, int column) {
@@ -228,26 +230,33 @@ public class Constants {
     }
 
     // Music
-    public static URL getMainBgmMusic() {
-        return Constants.class.getResource("/voices/mainBgm.mp3");
+    final static Media mainBgmMusic = new Media(Constants.class.getResource("/voices/mainBgm.mp3").toString());
+    public static Media getMainBgmMusic() {
+        return mainBgmMusic;
     }
-    public static URL getZombineHittedMusic() {
-        return Constants.class.getResource("/voices/zombineHitted.mp3");
+    final static Media zombineHitted = new Media(Constants.class.getResource("/voices/zombineHitted.mp3").toString());
+    public static Media getZombineHittedMusic() {
+        return zombineHitted;
     }
-    public static URL getZombineVictoryMusic() {
-        return Constants.class.getResource("/voices/zombineVictory.mp3");
+    final static Media zombineVictory = new Media(Constants.class.getResource("/voices/zombineVictory.mp3").toString());
+    public static Media getZombineVictoryMusic() {
+        return zombineVictory;
     }
-    public static URL getZombineAttackMusic() {
-        return Constants.class.getResource("/voices/zombineAttack.mp3");
+    final static Media zombineAttack = new Media(Constants.class.getResource("/voices/zombineAttack.mp3").toString());
+    public static Media getZombineAttackMusic() {
+        return zombineAttack;
     }
-    public static URL getCollectSunMusic() {
-        return Constants.class.getResource("/voices/collectSun.mp3");
+    final static Media collectSun = new Media(Constants.class.getResource("/voices/collectSun.mp3").toString());
+    public static Media getCollectSunMusic() {
+        return collectSun;
     }
-    public static URL getAddNewObjectMusic() {
-        return Constants.class.getResource("/voices/addNewObject.mp3");
+    final static Media addNewObject = new Media(Constants.class.getResource("/voices/addNewObject.mp3").toString());
+    public static Media getAddNewObjectMusic() {
+        return addNewObject;
     }
-    public static URL getPlantVictoryMusic() {
-        return Constants.class.getResource("/voices/plantVictory.mp3");
+    final static Media plantVictory = new Media(Constants.class.getResource("/voices/plantVictory.mp3").toString());
+    public static Media getPlantVictoryMusic() {
+        return plantVictory;
     }
 
 

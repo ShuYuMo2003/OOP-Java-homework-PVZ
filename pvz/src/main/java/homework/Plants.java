@@ -53,7 +53,7 @@ public abstract class Plants extends MoveableElement{
         if(this.timeline != null) this.timeline.stop();
         this.timeline = new Timeline(
             new KeyFrame(Duration.millis(1000 / fps), e -> {
-                this.imageview.setImage(new Image(frames[currentFrameId]));
+                this.imageview.setImage(Constants.getCachedImage(frames[currentFrameId]));
                 // System.err.println("set image as " + frames[currentFrameId]);
                 if(!infinte) {
                     if(currentFrameId == frames.length - 1) {

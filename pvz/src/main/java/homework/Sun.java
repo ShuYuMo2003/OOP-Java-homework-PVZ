@@ -19,7 +19,7 @@ public class Sun {
     int productedPassedFrames = 0;
     int currentFrameId = 0;
     Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000 / Constants.SunFPS), e -> {
-        imageView.setImage(new Image(framesPath[currentFrameId]));
+        imageView.setImage(Constants.getCachedImage(framesPath[currentFrameId]));
         currentFrameId = (currentFrameId + 1) % framesPath.length;
         productedPassedFrames += 1;
 
@@ -39,7 +39,7 @@ public class Sun {
     public Sun(double x, double y) {
         this.x = x;
         this.y = y;
-        imageView = new ImageView(new Image(framesPath[0]));
+        imageView = new ImageView(Constants.getCachedImage(framesPath[0]));
         imageView.setX(x);
         imageView.setY(y);
         imageView.setOnMouseClicked(event -> {

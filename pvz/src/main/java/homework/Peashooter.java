@@ -4,9 +4,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.image.Image;
 
 public class Peashooter extends Plants {
-    public static Image staticImage = new Image(
+    public static Image staticImage = Constants.getCachedImage(
         ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/Peashooter")[0]
     );
+
+    protected int row;
 
     Peashooter() {}
     Peashooter(int row, int column) {
@@ -17,12 +19,13 @@ public class Peashooter extends Plants {
               Constants.PeashooterHealth,
               Constants.PeashooterShootFPS
         );
+        this.row = row;
 
         initialTimeline(Constants.PeashooterFPS, true, e->{});
         initializeShooter();
         play();
     }
     protected Bullets getNewBullets() {
-        return new NormalBullets(this.x, this.y);
+        return new NormalBullets(row, this.x, this.y);
     }
 }

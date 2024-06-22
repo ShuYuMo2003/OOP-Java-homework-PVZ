@@ -26,7 +26,7 @@ public abstract class Zombine extends MoveableElement {
 
     static private double xOffset = -150;
     static private double yOffset = -130;
-    static MediaPlayer mediaPlayer = new MediaPlayer(new Media(Constants.getZombineAttackMusic().toString()));
+    static MediaPlayer mediaPlayer = new MediaPlayer(Constants.getZombineAttackMusic());
 
 
 
@@ -64,7 +64,7 @@ public abstract class Zombine extends MoveableElement {
                     timeline.stop();
                     return;
                 }
-                imageview.setImage(new Image(curFramePath));
+                imageview.setImage(Constants.getCachedImage(curFramePath));
             })
         );
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -173,7 +173,7 @@ public abstract class Zombine extends MoveableElement {
         timeline.stop();
         dieTimeline = new Timeline(
             new KeyFrame(Duration.millis(1000 / this.dieFramesFPS), e -> {
-                this.imageview.setImage(new Image(dieFramesPath[dieCurrentFrameId]));
+                this.imageview.setImage(Constants.getCachedImage(dieFramesPath[dieCurrentFrameId]));
                 if (dieCurrentFrameId == dieFramesPath.length - 1) {
                     dieTimeline.stop();
                     removeImageView();

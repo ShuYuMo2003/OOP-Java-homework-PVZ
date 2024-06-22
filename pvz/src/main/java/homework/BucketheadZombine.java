@@ -5,7 +5,7 @@ import java.io.UnsupportedEncodingException;
 import javafx.scene.image.Image;
 
 public class BucketHeadZombine extends Zombine {
-    public static Image staticImage = new Image(
+    public static Image staticImage = Constants.getCachedImage(
         ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/BucketheadZombie/BucketheadZombie")[0]
     );
     public BucketHeadZombine(int row, int column) {

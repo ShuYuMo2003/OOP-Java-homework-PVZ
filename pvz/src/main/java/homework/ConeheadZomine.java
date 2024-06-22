@@ -5,7 +5,7 @@ import java.io.UnsupportedEncodingException;
 import javafx.scene.image.Image;
 
 public class ConeheadZomine extends Zombine{
-    public static Image staticImage = new Image(
+    public static Image staticImage = Constants.getCachedImage(
         ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/ConeheadZombie/ConeheadZombie")[0]
     );
     public ConeheadZomine(int row, int column) {

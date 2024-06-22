@@ -53,8 +53,8 @@ public class GlobalControl {
     private static MediaPlayer mainBgmPlayer;
 
 
-    private static int sunCount = 100;
-    private static int brainCount = 100;
+    private static int sunCount = 1000;
+    private static int brainCount = 1000;
     private static Label sunLabel = new Label();
     private static Label brainLabel = new Label();
 
@@ -81,19 +81,19 @@ public class GlobalControl {
     }
 
     public static void addSun(Sun sun) {
-        lock.lock();
+
         AllSuns.add(sun);
-        lock.unlock();
+
     }
 
     public static void addBrain(Brain brain) {
-        lock.lock();
+
         AllBrains.add(brain);
-        lock.unlock();
+
     }
 
     public static void setSunCount(int count) {
-        lock.lock();
+
         try {
             sunCount = count;
             updateSunLabel();
@@ -101,21 +101,21 @@ public class GlobalControl {
                 card.checkCanSelected();
             }
         } finally {
-            lock.unlock();
+
         }
     }
 
     public static void modifySunCount(int delta) {
-        lock.lock();
+
         try {
             setSunCount(sunCount + delta);
         } finally {
-            lock.unlock();
+
         }
     }
 
     public static void setBrainCount(int count) {
-        lock.lock();
+
         try {
             brainCount = count;
             updateBrainLabel();
@@ -123,16 +123,16 @@ public class GlobalControl {
                 card.checkCanSelected();
             }
         } finally {
-            lock.unlock();
+
         }
     }
 
     public static void modifyBrainCount(int delta) {
-        lock.lock();
+
         try {
             setBrainCount(brainCount + delta);
         } finally {
-            lock.unlock();
+
         }
     }
 
@@ -156,7 +156,7 @@ public class GlobalControl {
         } catch (Exception e) {
             System.err.println("Error: " + e);
         }
-        Image backgroundImage = new Image(Constants.getBackgroudImage().toString());
+        Image backgroundImage = Constants.getCachedImage(Constants.getBackgroudImage().toString());
         backgroundImageView = new ImageView(backgroundImage);
         backgroundImageView.setFitHeight(Constants.WindowHeight);
         backgroundImageView.setPreserveRatio(true);
@@ -165,7 +165,7 @@ public class GlobalControl {
     }
 
     private static void initializeBackgroudImage() {
-        Image backgroundImage = new Image(Constants.getBackgroudImage().toString());
+        Image backgroundImage = Constants.getCachedImage(Constants.getBackgroudImage().toString());
         backgroundImageView = new ImageView(backgroundImage);
         backgroundImageView.setFitHeight(Constants.WindowHeight);
         backgroundImageView.setPreserveRatio(true);
@@ -174,7 +174,7 @@ public class GlobalControl {
     }
 
     private static void initializePlantCardsChooser() {
-        Image cardsChooserImage = new Image(Constants.getPlantsChooserImage().toString());
+        Image cardsChooserImage = Constants.getCachedImage(Constants.getPlantsChooserImage().toString());
         cardsChooserImageView = new ImageView(cardsChooserImage);
         cardsChooserImageView.setFitWidth(Constants.WindowWidth * 0.45);
         cardsChooserImageView.setPreserveRatio(true);
@@ -184,7 +184,7 @@ public class GlobalControl {
     }
 
     private static void initializeZombineCardsChooser() {
-        Image cardsChooserImage = new Image(Constants.getZombineChooserImage().toString());
+        Image cardsChooserImage = Constants.getCachedImage(Constants.getZombineChooserImage().toString());
         cardsChooserImageView = new ImageView(cardsChooserImage);
         cardsChooserImageView.setFitWidth(Constants.WindowWidth * 0.45);
         cardsChooserImageView.setPreserveRatio(true);
@@ -342,7 +342,7 @@ public class GlobalControl {
         double currentPosY = Constants.PlantsCardYPos;
         for(Map.Entry<String, URL> card : Constants.PlantsCardImage) {
             plantsCards[nowId] = new PlantsCard(
-                new Image(card.getValue().toString()),
+                Constants.getCachedImage(card.getValue().toString()),
                 card.getKey(),
                 currentPosX,
                 currentPosY,
@@ -362,7 +362,7 @@ public class GlobalControl {
         for(Map.Entry<String, URL> card : Constants.ZombineCardImage) {
             System.err.println("Adding card " + card.getKey() + " at " + currentPosX + " " + currentPosY);
             zombineCards[nowId] = new ZombinesCard(
-                new Image(card.getValue().toString()),
+                Constants.getCachedImage(card.getValue().toString()),
                 card.getKey(),
                 currentPosX,
                 currentPosY,
@@ -376,22 +376,22 @@ public class GlobalControl {
     }
 
     public static void addBullets(Bullets b) {
-        lock.lock();
+
         AllBullets.add(b);
-        lock.unlock();
+
     }
 
     public static void addZombine(Zombine z) {
-        lock.lock();
+
         AllZombines.add(z);
-        lock.unlock();
+
     }
 
 
     public static void addPlants(Plants p) {
-        lock.lock();
+
         AllPlants.add(p);
-        lock.unlock();
+
     }
 
 
@@ -406,8 +406,8 @@ public class GlobalControl {
 
     public static void plantsWin() {
         haveResult = 0;
-        lock.unlock();
-        lock.lock();
+
+
         System.err.println("Plants win!");
         for(Zombine z : AllZombines) {
             z.setDie();
@@ -434,36 +434,35 @@ public class GlobalControl {
         moveStep.setCycleCount(Timeline.INDEFINITE);
         moveStep.getKeyFrames().add(new KeyFrame(Duration.millis(1000 / Constants.GlobalFPS), e -> {
             if(haveResult != -1) return ;
-            lock.lock();
 
-            refreshBG();
+            Platform.runLater(() -> {
+                refreshBG();
 
-            for(Zombine z : AllZombines) {
-                if(z.canMove())
-                    z.nextStep();
-            }
-            for(Plants p : AllPlants) {
-                p.nextStep();
-            }
-            for(Bullets b : AllBullets) {
-                b.nextStep();
-            }
-            for(Zombine z : AllZombines) {
-                if(z.getX() < 0) {
-                    winZombine = z;
-                    zombineWin();
-                    break;
+                for(Zombine z : AllZombines) {
+                    if(z.canMove())
+                        z.nextStep();
                 }
-            }
-
-            lock.unlock();
+                for(Plants p : AllPlants) {
+                    p.nextStep();
+                }
+                for(Bullets b : AllBullets) {
+                    b.nextStep();
+                }
+                for(Zombine z : AllZombines) {
+                    if(z.getX() < 0) {
+                        winZombine = z;
+                        zombineWin();
+                        break;
+                    }
+                }
+            });
         }));
     }
     public static void initializeProcessMessageQueue() {
         processMessageQueue = new Timeline();
         processMessageQueue.setCycleCount(Timeline.INDEFINITE);
         processMessageQueue.getKeyFrames().add(new KeyFrame(Duration.millis(1000 / Constants.ProcessMessageFPS), e -> {
-            lock.lock();
+
             for(String message : MessageQueue) {
                 String[] args = message.split("__");
                 System.err.println("Processing message: " + message);
@@ -477,7 +476,7 @@ public class GlobalControl {
                 }
             }
             MessageQueue.clear();
-            lock.unlock();
+
         }));
         processMessageQueue.play();
     }
@@ -486,44 +485,45 @@ public class GlobalControl {
         dieObjectCleanUper = new Timeline();
         dieObjectCleanUper.setCycleCount(Timeline.INDEFINITE);
         dieObjectCleanUper.getKeyFrames().add(new KeyFrame(Duration.millis(1000 / Constants.cleanUpFPS), e -> {
-            lock.lock();
-            for(int i = 0; i < AllZombines.size(); i++) {
-                if(AllZombines.get(i).getDeprecated()) {
-                    AllZombines.get(i).removeImageView();
-                    AllZombines.remove(i);
+            Platform.runLater(() -> {
+                for(int i = 0; i < AllZombines.size(); i++) {
+                    if(AllZombines.get(i).getDeprecated()) {
+                        AllZombines.get(i).removeImageView();
+                        AllZombines.remove(i);
+                    }
                 }
-            }
-            for(int i = 0; i < AllPlants.size(); i++) {
-                if(AllPlants.get(i).isDie()) {
-                    AllPlants.get(i).removeImageView();
-                    AllPlants.remove(i);
+                for(int i = 0; i < AllPlants.size(); i++) {
+                    if(AllPlants.get(i).isDie()) {
+                        AllPlants.get(i).removeImageView();
+                        AllPlants.remove(i);
+                    }
                 }
-            }
-            for(int i = 0; i < AllBullets.size(); i++) {
-                if(AllBullets.get(i).isBoomed()) {
-                    AllBullets.get(i).removeImageView();
-                    AllBullets.remove(i);
+                for(int i = 0; i < AllBullets.size(); i++) {
+                    if(AllBullets.get(i).isBoomed()) {
+                        AllBullets.get(i).removeImageView();
+                        AllBullets.remove(i);
+                    }
                 }
-            }
-            for(int i = 0; i < AllSuns.size(); i++) {
-                if(AllSuns.get(i).deprecated) {
-                    AllSuns.remove(i);
+                for(int i = 0; i < AllSuns.size(); i++) {
+                    if(AllSuns.get(i).deprecated) {
+                        AllSuns.remove(i);
+                    }
                 }
-            }
-            for(int i = 0; i < AllBrains.size(); i++) {
-                if(AllBrains.get(i).deprecated) {
-                    AllBrains.remove(i);
+                for(int i = 0; i < AllBrains.size(); i++) {
+                    if(AllBrains.get(i).deprecated) {
+                        AllBrains.remove(i);
+                    }
                 }
-            }
-            verboxPutput += 1;
-            if(verboxPutput % 10 == 0) {
-                System.err.println("AllZombines.size() = " + AllZombines.size());
-                System.err.println("AllPlants.size() = " + AllPlants.size());
-                System.err.println("AllBullets.size() = " + AllBullets.size());
-                System.err.println("AllSuns.size() = " + AllSuns.size());
-                System.err.println("AllBrains.size() = " + AllBrains.size());
-            }
-            lock.unlock();
+                verboxPutput += 1;
+                if(verboxPutput % 100 == 0) {
+                    System.err.println("AllZombines.size() = " + AllZombines.size());
+                    System.err.println("AllPlants.size() = " + AllPlants.size());
+                    System.err.println("AllBullets.size() = " + AllBullets.size());
+                    System.err.println("AllSuns.size() = " + AllSuns.size());
+                    System.err.println("AllBrains.size() = " + AllBrains.size());
+                }
+
+            });
         }));
         dieObjectCleanUper.play();
     }
@@ -532,33 +532,33 @@ public class GlobalControl {
         attackListerner = new Timeline();
         attackListerner.setCycleCount(Timeline.INDEFINITE);
         attackListerner.getKeyFrames().add(new KeyFrame(Duration.millis(1000 / Constants.ZombineAttackingFPS), e -> {
-            lock.lock();
-            zombinesPos.clear();
-            for(Zombine z : AllZombines) {
-                zombinesPos.add(z.getMapPosition());
-            }
-            plantsPos.clear();
-            for(Plants p : AllPlants) {
-                plantsPos.add(p.getMapPosition());
-            }
-            // zombine attack to the plants
-            boolean[] attackingHappend = new boolean[AllZombines.size()];
-            for(int pid = 0; pid < plantsPos.size(); pid++) {
-                for(int zid = 0; zid < zombinesPos.size(); zid++) {
-                    if(zombinesPos.get(zid).equals(plantsPos.get(pid))) {
-                        AllZombines.get(zid).setAttack(true);
-                        attackingHappend[zid] = true;
-                        AllPlants.get(pid).getDamage(AllZombines.get(zid).getDamage());
+            Platform.runLater(()->{
+                zombinesPos.clear();
+                for(Zombine z : AllZombines) {
+                    zombinesPos.add(z.getMapPosition());
+                }
+                plantsPos.clear();
+                for(Plants p : AllPlants) {
+                    plantsPos.add(p.getMapPosition());
+                }
+                // zombine attack to the plants
+                boolean[] attackingHappend = new boolean[AllZombines.size()];
+                for(int pid = 0; pid < plantsPos.size(); pid++) {
+                    for(int zid = 0; zid < zombinesPos.size(); zid++) {
+                        if(zombinesPos.get(zid).equals(plantsPos.get(pid))) {
+                            AllZombines.get(zid).setAttack(true);
+                            attackingHappend[zid] = true;
+                            AllPlants.get(pid).getDamage(AllZombines.get(zid).getDamage());
+                        }
                     }
                 }
-            }
-            for(int zid = 0; zid < zombinesPos.size(); zid++) {
-                if(!attackingHappend[zid]) {
-                    AllZombines.get(zid).setAttack(false);
+                for(int zid = 0; zid < zombinesPos.size(); zid++) {
+                    if(!attackingHappend[zid]) {
+                        AllZombines.get(zid).setAttack(false);
+                    }
                 }
-            }
 
-            lock.unlock();
+            });
         }));
         attackListerner.play();
     }
@@ -585,27 +585,40 @@ public class GlobalControl {
         bulletsListerner = new Timeline();
         bulletsListerner.setCycleCount(Timeline.INDEFINITE);
         bulletsListerner.getKeyFrames().add(new KeyFrame(Duration.millis(1000 / Constants.BulletFPS), e->{
-            lock.lock();
-            for(Zombine z : AllZombines) {
-                for(Bullets b : AllBullets) {
-                    // double distance2 = Math.pow(z.getX() - b.getX(), 2) + Math.pow(z.getY() - b.getY(), 2);
-                    // double distance2 = Math.pow(z.getCenterX() - b.getCenterX(), 2)
-                                    //  + Math.pow(z.getCenterY() - b.getCenterY(), 2);
-                    // System.err.println("distance2 = " + distance2 + " " + Constants.BulletNZombineCollisionDistance_2);
-                    // if(distance2 < Constants.BulletNZombineCollisionDistance_2 && z.getMapPosition().row == b.getMapPosition().row) {
-                    if(isCollision(z.getImageView(), b.getImageView())) {
-                        z.applyAttack(b.getDamage());
-                        playOnce(Constants.getZombineHittedMusic(), 0.8);
-                        b.boom();
-                    }
-                    // else if (z.getMapPosition().row != b.getMapPosition().row) {
-                    //     System.err.println("row z = " + z.getMapPosition().row);
-                    //     System.err.println("row b = " + b.getMapPosition().row);
-                    // }
+            Platform.runLater(()->{
+                ArrayList<Zombine>[] zbsByRow = new ArrayList[Constants.MaxRow];
+                for(int i = 0; i < Constants.MaxRow; i++) {
+                    zbsByRow[i] = new ArrayList<Zombine>();
                 }
-            }
 
-            lock.unlock();
+                ArrayList<Bullets>[] bsByRow = new ArrayList[Constants.MaxRow];
+                for(int i = 0; i < Constants.MaxRow; i++) {
+                    bsByRow[i] = new ArrayList<Bullets>();
+                }
+
+                for(Zombine z : AllZombines) {
+                    zbsByRow[z.getMapPosition().row].add(z);
+                }
+
+                for(Bullets b : AllBullets) {
+                    bsByRow[b.getMapPosition().row].add(b);
+                }
+
+                for(int i = 0; i < Constants.MaxRow; i++) {
+                    for(int aa = 0; aa < zbsByRow[i].size(); aa++) {
+                        for(int bb = 0; bb < Math.min(aa, bsByRow[i].size()); bb++) {
+                            Zombine z = zbsByRow[i].get(aa);
+                            Bullets b = bsByRow[i].get(bb);
+                            if(isCollision(z.getImageView(), b.getImageView())) {
+                                z.applyAttack(b.getDamage());
+                                playOnce(Constants.getZombineHittedMusic(), 0.8);
+                                b.boom();
+                            }
+                        }
+                    }
+                }
+
+            });
         }));
         bulletsListerner.play();
     }
@@ -618,7 +631,7 @@ public class GlobalControl {
 
 
     public static void initializeMainBGM() {
-        Media sound = new Media(Constants.getMainBgmMusic().toString());
+        Media sound = Constants.getMainBgmMusic();
         mainBgmPlayer = new MediaPlayer(sound);
         System.err.println("Playing " + Constants.getMainBgmMusic().toString());
         mainBgmPlayer.setCycleCount(MediaPlayer.INDEFINITE);
@@ -626,8 +639,7 @@ public class GlobalControl {
     }
 
     static MediaPlayer player;
-    public static void playOnce(URL music, double volumn) {
-        Media sound = new Media(music.toString());
+    public static void playOnce(Media sound, double volumn) {
         player = new MediaPlayer(sound);
         player.setVolume(volumn);
         player.play();

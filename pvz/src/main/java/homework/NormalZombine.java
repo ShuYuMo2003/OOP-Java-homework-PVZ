@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
 public class NormalZombine extends Zombine{
-    public static Image staticImage = new Image(
+    public static Image staticImage = Constants.getCachedImage(
         ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/NormalZombie/Zombie")[0]
     );
     public NormalZombine(int row, int column) {

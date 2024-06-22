@@ -4,7 +4,7 @@ package homework;
 import javafx.scene.image.Image;
 
 public class NewspaperZombine extends Zombine {
-    public static Image staticImage = new Image(
+    public static Image staticImage = Constants.getCachedImage(
         ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/NewspaperZombie/NewspaperZombie")[0]
     );
     public NewspaperZombine(int row, int column) {

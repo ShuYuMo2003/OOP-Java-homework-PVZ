@@ -15,17 +15,19 @@ public abstract class Bullets extends MoveableElement {
 
     static double xOffset = 15;
     static double yOffset = 0;
+    static int row = 0;
 
     protected boolean boomed = false;
 
     Bullets() {}
 
-    Bullets(double x, double y,
+    Bullets(int row, double x, double y,
         String normalFramePath,
         String boomedFramePath,
         double damage, double speed) {
 
         super(x + xOffset, y + yOffset, speed, 0);
+        this.row = row;
 
         this.damage = damage;
 
