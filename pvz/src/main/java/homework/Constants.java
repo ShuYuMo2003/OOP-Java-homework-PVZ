@@ -98,7 +98,7 @@ public class Constants {
     // Normal Zombine
     final public static double NormalZombineSpeed = 0.5;
     final public static double NormalZombineFPS = 11;
-    final public static double NormalZombineAttackValue = 1;
+    final public static double NormalZombineAttackValue = 10;
 
     //Conehead Zombine
     final public static double ConeheadZombineSpeed = 0.5;
@@ -113,8 +113,8 @@ public class Constants {
     final public static double FlagZombineAttackValue = 10;
     final public static double FlagZombineFPS = 11;
     // Newspaper Zombine constants
-    final public static double NewspaperZombineSpeed = 0.5;
-    final public static double NewspaperZombineAttackValue = 10;
+    final public static double NewspaperZombineSpeed = 0.4;
+    final public static double NewspaperZombineAttackValue = 15;
     final public static double NewspaperZombineFPS = 11;
 
 
@@ -122,11 +122,11 @@ public class Constants {
     // Peashooter
     final public static double PeashooterFPS = 11;
     final public static double PeashooterShootFPS = 1;
-    final public static double PeashooterHealth = 400;
+    final public static double PeashooterHealth = 100;
     // PepPeaShooter
-    final public static double PepPeaShooterFPS = 20;
-    final public static double PepPeaShooterShootFPS = 3;
-    final public static double PepPeaShooterHealth = 500;
+    final public static double PepPeaShooterFPS = 11;
+    final public static double PepPeaShooterShootFPS = 2;
+    final public static double PepPeaShooterHealth = 100;
 
     //SonwPeashooter
     final public static int SnowPeashooterFPS = 11;
@@ -140,21 +140,21 @@ public class Constants {
     final public static double NormalPeaDamage = 10;
     final public static double NormalPeaSpeed = 8;
 
-    //Sonw Pea
-    final public static double SnowPeaDamage = 40;
-    final public static double SnowPeaSpeed = 10;
+    // Sonw Pea
+    final public static double SnowPeaDamage = 20;
+    final public static double SnowPeaSpeed = 7;
 
-    //SunFlower
-    final public static double SunflowerHealth = 200;
+    // SunFlower
+    final public static double SunflowerHealth = 100;
     final public static double SunflowerSunProductionFPS = 1;
     final public static double SunflowerFPS = 11;
 
     // Chomper
-    final public static double ChomperHealth = 300;
-    final public static double ChomperFPS = 11;
+    final public static double ChomperHealth = 200;
+    final public static double ChomperFPS = 8;
     final public static double ChomperAttackFPS = 0.5;
     final public static double ChomperRange = 100;
-    final public static double ChomperDigestionTime = 5000;
+    final public static double ChomperDigestionTime = 8000;
 
     //Squash
     final public static double SquashHealth = 100.0;
