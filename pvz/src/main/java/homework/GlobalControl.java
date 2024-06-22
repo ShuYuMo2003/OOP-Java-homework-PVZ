@@ -16,11 +16,11 @@ import javafx.scene.Node;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.animation.TranslateTransition;
-
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 
 public class GlobalControl {
-
     static Lock lock = new ReentrantLock();
     static ArrayList<Zombine> AllZombines = new ArrayList<>();
     static ArrayList<Plants> AllPlants = new ArrayList<>();
@@ -46,6 +46,15 @@ public class GlobalControl {
     private static ImageView backgroundImageView;
     private static ImageView cardsChooserImageView;
     private static Zombine winZombine = null;
+
+    private static MediaPlayer mediaPlayer; 
+    public static void initializeAndPlayThemeMusic() {
+        String musicFile = "voices/ThemeSong.mp3";
+        Media sound = new Media(GlobalControl.class.getResource(musicFile).toString());
+        mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); 
+        mediaPlayer.play();
+    }
 
     public static void setSunCount(int count) {
         sunCount = count;

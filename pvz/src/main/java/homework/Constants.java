@@ -80,7 +80,7 @@ public class Constants {
     final public static double BulletFPS = 5;
 
     // Normal Pea
-    final public static double NormalPeaDamage = 20;
+    final public static double NormalPeaDamage = 10;
     final public static double NormalPeaSpeed = 8;
 
     //Sonw Pea
