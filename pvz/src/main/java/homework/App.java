@@ -6,6 +6,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import javafx.scene.media.*;
+
 /**
  * JavaFX App
  */
@@ -27,9 +29,9 @@ public class App extends Application {
 
 
         // 第一列 5 个豌豆射手
-         //for(int i = 0; i < 5; i++) {
-            //GlobalControl.addPlants(new Chomper(i, 0));
-        // }
+         for(int i = 0; i < 5; i++) {
+            GlobalControl.addPlants(new Gravestone(i, 0));
+        }
         // for(int i = 0; i < 5; i++) {
         //     GlobalControl.addPlants(new Chomper(2, 0));
         // }

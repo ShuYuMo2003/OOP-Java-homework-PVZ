@@ -17,6 +17,8 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.animation.TranslateTransition;
 
+
+
 public class GlobalControl {
 
     static Lock lock = new ReentrantLock();
@@ -24,6 +26,7 @@ public class GlobalControl {
     static ArrayList<Plants> AllPlants = new ArrayList<>();
     static ArrayList<Bullets> AllBullets = new ArrayList<>();
     static ArrayList<Sun> AllSuns = new ArrayList<>();
+    static ArrayList<Brain> AllBrains = new ArrayList<>();
 
     static ArrayList<MapPosition> zombinesPos = new ArrayList<>();
     static ArrayList<MapPosition> plantsPos = new ArrayList<>();
@@ -57,6 +60,9 @@ public class GlobalControl {
         lock.unlock();
     }
 
+    
+
+
     public static void setBrainCount(int count) {
         brainCount = count;
         modifyBrainCount(0);
@@ -73,7 +79,13 @@ public class GlobalControl {
             nowId += 1;
         }
     }
+    public static void addBrain(Brain brain) {
+        lock.lock();
+        AllBrains.add(brain);
+        lock.unlock();
+    }
 
+    
     private static void refreshBG() {
         try {
             rootPane.getChildren().remove(backgroundImageView);

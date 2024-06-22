@@ -27,6 +27,13 @@ public class Constants {
 
     final public static double BulletNZombineCollisionDistance_2 = Math.pow(100, 2);
 
+    //Gravestone
+    final public static double GravestoneHealth = 100; 
+    final public static double GravestoneBrainProductionFPS = 1; 
+    final public static double GravestoneFPS = 10; 
+
+    final public static double BrainFPS = 30; 
+
     // Zombines
     final public static double ZombineAttackingFPS = 10;
     final public static double ZombineDieFPS = 11;
