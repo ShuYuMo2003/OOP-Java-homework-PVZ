@@ -2,7 +2,6 @@ package homework;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -10,29 +9,16 @@ import java.util.concurrent.locks.ReentrantLock;
 import javafx.util.Duration;
 import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.animation.KeyFrame;
 import javafx.scene.image.ImageView;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
-import javafx.animation.TranslateTransition;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.stage.Stage;
 import javafx.application.Platform;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
-import javafx.scene.control.Label;
-import javafx.scene.effect.ColorAdjust;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 
 
@@ -58,37 +44,62 @@ public class GlobalControl {
 
     static PlantsCard[] plantsCards = new PlantsCard[Constants.PlantsCardCount];
     static ZombinesCard[] zombineCards = new ZombinesCard[Constants.ZombineCardCount];
-    
+
 
     private static ImageView backgroundImageView;
     private static ImageView cardsChooserImageView;
     private static Zombine winZombine = null;
 
     private static MediaPlayer mainBgmPlayer;
-    
-    
-    private static int sunCount = 0;
-    private static int brainCount = 0;
+
+
+    private static int sunCount = 100;
+    private static int brainCount = 100;
     private static Label sunLabel = new Label();
     private static Label brainLabel = new Label();
 
-    public static void initializeSunNBrainLabel() {
-        sunLabel.setText("0000000000000000000000000000000");
-        brainLabel.setText("0000000000000000000000000000000");
-        sunLabel.setLayoutX(70);
-        sunLabel.setLayoutY(70);
-        sunLabel.setFont(Font.font("Arial", FontWeight.BOLD, 40));
+    private static void updateSunBrainLabelPosition() {
+        sunLabel.setLayoutX(40);
+        sunLabel.setLayoutY(76);
+        brainLabel.setLayoutX(1234);
+        brainLabel.setLayoutY(76);
+    }
 
+    public static void initializeSunNBrainLabel() {
+        sunLabel.setFont(Font.font("Colonna MT", FontWeight.BOLD, 20));
+        brainLabel.setFont(Font.font("Colonna MT", FontWeight.BOLD, 20));
+        updateSunLabel();
+        updateBrainLabel();
         rootPane.getChildren().addAll(sunLabel, brainLabel);
     }
 
-   
+    public static int getSunCount() {
+        return sunCount;
+    }
+    public static int getBrainCount() {
+        return brainCount;
+    }
+
+    public static void addSun(Sun sun) {
+        lock.lock();
+        AllSuns.add(sun);
+        lock.unlock();
+    }
+
+    public static void addBrain(Brain brain) {
+        lock.lock();
+        AllBrains.add(brain);
+        lock.unlock();
+    }
 
     public static void setSunCount(int count) {
         lock.lock();
         try {
             sunCount = count;
             updateSunLabel();
+            for(PlantsCard card : plantsCards) {
+                card.checkCanSelected();
+            }
         } finally {
             lock.unlock();
         }
@@ -97,42 +108,20 @@ public class GlobalControl {
     public static void modifySunCount(int delta) {
         lock.lock();
         try {
-            sunCount += delta;
-            updateSunLabel();
+            setSunCount(sunCount + delta);
         } finally {
             lock.unlock();
         }
-    }
-
-    public static void addSun(Sun sun) {
-        lock.lock();
-        try {
-            AllSuns.add(sun);
-            modifySunCount(25);
-        } finally {
-            lock.unlock();
-        }
-    }
-
-    public static void spendSun(int cost) {
-        lock.lock();
-        try {
-            sunCount -= cost;
-            updateSunLabel();
-        } finally {
-            lock.unlock();
-        }
-    }
-
-    private static void updateSunLabel() {
-        Platform.runLater(() -> sunLabel.setText("Sun: " + sunCount));
     }
 
     public static void setBrainCount(int count) {
         lock.lock();
         try {
             brainCount = count;
-            modifyBrainCount(0);
+            updateBrainLabel();
+            for(ZombinesCard card : zombineCards) {
+                card.checkCanSelected();
+            }
         } finally {
             lock.unlock();
         }
@@ -141,44 +130,24 @@ public class GlobalControl {
     public static void modifyBrainCount(int delta) {
         lock.lock();
         try {
-            brainCount += delta;
-            updateBrainLabel();
-            int nowId = 0;
-            for (Map.Entry<String, URL> card : Constants.ZombineCardImage) {
-                if (Constants.ZombineBrainCost.get(card.getKey()) <= brainCount) {
-                    zombineCards[nowId].getCardImageView().setEffect(new ColorAdjust() {{
-                        setBrightness(0.5);
-                    }});
-                }
-                nowId += 1;
-            }
+            setBrainCount(brainCount + delta);
         } finally {
             lock.unlock();
         }
     }
 
-    public static void addBrain(Brain brain) {
-        lock.lock();
-        try {
-            AllBrains.add(brain);
-            modifyBrainCount(25);
-        } finally {
-            lock.unlock();
-        }
-    }
-
-    public static void spendBrain(int cost) {
-        lock.lock();
-        try {
-            brainCount -= cost;
-            updateBrainLabel();
-        } finally {
-            lock.unlock();
-        }
+    private static void updateSunLabel() {
+        // Platform.runLater(() -> {
+            sunLabel.setText("" + sunCount);
+            updateSunBrainLabelPosition();
+        // });
     }
 
     private static void updateBrainLabel() {
-        Platform.runLater(() -> brainLabel.setText("Brain: " + brainCount));
+        // Platform.runLater(() -> {
+            brainLabel.setText("" + brainCount);
+            updateSunBrainLabelPosition();
+        // });
     }
 
     private static void refreshBG() {
@@ -338,12 +307,14 @@ public class GlobalControl {
                 MapPosition mpos = Plants.getMapPosition(event.getX(), event.getY());
                 playOnce(Constants.getAddNewObjectMusic(), 0.9);
                 addNewPlant(selectedPlantsType, mpos);
+                modifySunCount(-Constants.PlantsSunCost.get(selectedPlantsType));
             }
 
             if(selectedZombineImageView != null) {
                 MapPosition mpos = Zombine.getMapPosition(event.getX(), event.getY());
                 playOnce(Constants.getAddNewObjectMusic(), 0.9);
                 addNewZombine(selectedZombineType, mpos);
+                modifyBrainCount(-Constants.ZombineBrainCost.get(selectedZombineType));
             }
 
             selectedPlantsType = null;
@@ -402,10 +373,6 @@ public class GlobalControl {
             System.err.println("Added card " + card.getKey() + " at " + currentPosX + " " + currentPosY);
             nowId += 1;
         }
-    }
-
-    public static void setSelectedCard(Plants img) {
-
     }
 
     public static void addBullets(Bullets b) {
@@ -514,7 +481,7 @@ public class GlobalControl {
         }));
         processMessageQueue.play();
     }
-
+    static int verboxPutput = 0;
     public static void initializeDieObjectCleanUp(){
         dieObjectCleanUper = new Timeline();
         dieObjectCleanUper.setCycleCount(Timeline.INDEFINITE);
@@ -537,6 +504,24 @@ public class GlobalControl {
                     AllBullets.get(i).removeImageView();
                     AllBullets.remove(i);
                 }
+            }
+            for(int i = 0; i < AllSuns.size(); i++) {
+                if(AllSuns.get(i).deprecated) {
+                    AllSuns.remove(i);
+                }
+            }
+            for(int i = 0; i < AllBrains.size(); i++) {
+                if(AllBrains.get(i).deprecated) {
+                    AllBrains.remove(i);
+                }
+            }
+            verboxPutput += 1;
+            if(verboxPutput % 10 == 0) {
+                System.err.println("AllZombines.size() = " + AllZombines.size());
+                System.err.println("AllPlants.size() = " + AllPlants.size());
+                System.err.println("AllBullets.size() = " + AllBullets.size());
+                System.err.println("AllSuns.size() = " + AllSuns.size());
+                System.err.println("AllBrains.size() = " + AllBrains.size());
             }
             lock.unlock();
         }));
@@ -640,16 +625,16 @@ public class GlobalControl {
         mainBgmPlayer.play();
     }
 
+    static MediaPlayer player;
     public static void playOnce(URL music, double volumn) {
         Media sound = new Media(music.toString());
-        MediaPlayer player = new MediaPlayer(sound);
+        player = new MediaPlayer(sound);
         player.setVolume(volumn);
         player.play();
     }
 
 
     public static void initializeEverything() {
-        initializeSunNBrainLabel();
         initializeMoveStep();
         initializeBackgroudImage();
         initializePlantCardsChooser();
@@ -662,6 +647,7 @@ public class GlobalControl {
         initializeCardSelectedApply();
         initializeProcessMessageQueue();
         initializeMainBGM();
+        initializeSunNBrainLabel();
         startMoveStep();
     }
 

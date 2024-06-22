@@ -7,10 +7,12 @@ import javafx.scene.input.MouseEvent;
 
 public class PlantsCard extends Card{
     String name;
+
     PlantsCard() {}
     PlantsCard(Image img, String name, double x, double y, double width, double height) {
         super(img, x, y, width, height);
         this.name = name;
+        checkCanSelected();
     }
 
     protected void processOnMouseClicked(MouseEvent e) {
@@ -39,6 +41,14 @@ public class PlantsCard extends Card{
                 break;
 
         }
-
     }
+    protected boolean checkCanSelected() {
+        if(GlobalControl.getSunCount() < Constants.PlantsSunCost.get(name) || (!Constants.isServerNPlants && !Constants.GameModeSingle)) {
+            getCardImageView().setEffect(darker);
+            return false;
+        }
+        getCardImageView().setEffect(null);
+        return true;
+    }
+
 }

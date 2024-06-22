@@ -10,6 +10,7 @@ public class ZombinesCard extends Card{
     ZombinesCard(Image img, String name, double x, double y, double width, double height) {
         super(img, x, y, width, height);
         this.name = name;
+        checkCanSelected();
     }
 
     protected void processOnMouseClicked(MouseEvent e) {
@@ -36,6 +37,13 @@ public class ZombinesCard extends Card{
             default:
                 throw new RuntimeException("Unknown Zombine name: " + name);
         }
-
+    }
+    protected boolean checkCanSelected() {
+        if(GlobalControl.getBrainCount() < Constants.ZombineBrainCost.get(name) || (Constants.isServerNPlants && !Constants.GameModeSingle)) {
+            getCardImageView().setEffect(darker);
+            return false;
+        }
+        getCardImageView().setEffect(null);
+        return true;
     }
 }

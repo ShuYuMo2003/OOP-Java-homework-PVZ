@@ -14,6 +14,8 @@ public class Sun {
     private ImageView imageView;
     String[] framesPath = ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/Sun");
 
+    public boolean deprecated = false;
+
     int productedPassedFrames = 0;
     int currentFrameId = 0;
     Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000 / Constants.SunFPS), e -> {
@@ -27,9 +29,11 @@ public class Sun {
             dy = 0;
             dx = -5;
         }
-        // System.out.println(dy);
-        imageView.setY(imageView.getY() - 0.4 * dy);
-        imageView.setX(imageView.getX() - 0.4 * dx);
+        imageView.setY(this.y = imageView.getY() - 0.4 * dy);
+        imageView.setX(this.x = imageView.getX() - 0.4 * dx);
+        if(imageView.getX() < 0 || imageView.getY() < 0 || imageView.getX() > Constants.WindowWidth || imageView.getY() > Constants.WindowHeight) {
+            deprecated = true;
+        }
     }));
 
     public Sun(double x, double y) {
@@ -50,6 +54,8 @@ public class Sun {
     private void collectSun() {
         GlobalControl.modifySunCount(25);  // Collecting a sun increases the sun count by 25
         GlobalControl.rootPane.getChildren().remove(imageView);
+        deprecated = true;
+        GlobalControl.playOnce(Constants.getCollectSunMusic(), 1.3);
     }
 
     public double getX() {

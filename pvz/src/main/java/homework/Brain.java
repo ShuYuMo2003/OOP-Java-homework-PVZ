@@ -11,7 +11,7 @@ public class Brain {
     private double y;
     private ImageView imageView;
     String[] framesPath = ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/Brain");
-
+    public boolean deprecated;
     int producedPassedFrames = 0;
     int currentFrameId = 0;
     Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000 / Constants.BrainFPS), e -> {
@@ -25,8 +25,11 @@ public class Brain {
             dy = 0;
             dx = -5;
         }
-        imageView.setY(imageView.getY() - 0.4 * dy);
-        imageView.setX(imageView.getX() - 0.4 * dx);
+        imageView.setY(this.y = imageView.getY() - 0.4 * dy);
+        imageView.setX(this.x = imageView.getX() - 0.4 * dx);
+        if(imageView.getX() < 0 || imageView.getY() < 0 || imageView.getX() > Constants.WindowWidth || imageView.getY() > Constants.WindowHeight) {
+            deprecated = true;
+        }
     }));
 
     public Brain(double x, double y) {
@@ -46,6 +49,7 @@ public class Brain {
 
     private void collectBrain() {
         GlobalControl.modifyBrainCount(25);  // Collecting a brain increases the brain count by 25
+        deprecated = true;
         GlobalControl.rootPane.getChildren().remove(imageView);
     }
 
