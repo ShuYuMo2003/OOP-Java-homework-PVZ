@@ -23,7 +23,7 @@ public class Constants {
     final public static double GlobalFPS = 30;
 
     // Sun
-    final public static double SunFPS = 10;
+    final public static double SunFPS = 50;
 
     final public static double BulletNZombineCollisionDistance_2 = Math.pow(100, 2);
 
