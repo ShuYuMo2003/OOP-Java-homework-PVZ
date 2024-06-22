@@ -2,6 +2,8 @@ package homework;
 
 import java.util.ArrayList;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 import javafx.util.Duration;
@@ -18,11 +20,13 @@ public abstract class Zombine extends MoveableElement {
     protected double dieFramesFPS;
     protected int dieCurrentFrameId = 0;
     protected Timeline dieTimeline;
+    protected Timeline attackMusicPlay;
 
     protected boolean hadShowHeadAnimation = true;
 
     static private double xOffset = -150;
     static private double yOffset = -130;
+    static MediaPlayer mediaPlayer = new MediaPlayer(new Media(Constants.getZombineAttackMusic().toString()));
 
 
 
@@ -34,6 +38,7 @@ public abstract class Zombine extends MoveableElement {
         this.damage = damage;
         this.dieFramesPath = dieFramesPath;
         this.dieFramesFPS = dieFramesFPS;
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
     }
 
     protected void clearStage() { stageStatus.clear(); }
@@ -139,6 +144,15 @@ public abstract class Zombine extends MoveableElement {
 
     public void setAttack(boolean isAttacking) {
         this.isAttacking = isAttacking;
+        if(isAttacking) {
+            if(mediaPlayer.getStatus() != MediaPlayer.Status.PLAYING) {
+                mediaPlayer.play();
+            }
+        } else {
+            if(mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                mediaPlayer.stop();
+            }
+        }
         // System.err.println("set zombines attacking!");
     }
     protected void handleStageTransition() {
