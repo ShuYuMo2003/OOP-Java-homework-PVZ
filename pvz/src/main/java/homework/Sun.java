@@ -50,6 +50,7 @@ public class Sun {
     private void collectSun() {
         GlobalControl.modifySunCount(25);  // Collecting a sun increases the sun count by 25
         GlobalControl.rootPane.getChildren().remove(imageView);
+        GlobalControl.playOnce(Constants.getCollectSunMusic(), 1.3);
     }
 
     public double getX() {

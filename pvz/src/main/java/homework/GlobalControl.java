@@ -551,9 +551,10 @@ public class GlobalControl {
         mainBgmPlayer.play();
     }
 
+    static MediaPlayer player;
     public static void playOnce(URL music, double volumn) {
         Media sound = new Media(music.toString());
-        MediaPlayer player = new MediaPlayer(sound);
+        player = new MediaPlayer(sound);
         player.setVolume(volumn);
         player.play();
     }
