@@ -54,10 +54,6 @@ public class GlobalControl {
 
     static String selectedZombineType = null;
     static ImageView selectedZombineImageView = null;
-
-    static int sunCount = 0;
-    static int brainCount = 0;
-
     static int haveResult = -1;
 
     static PlantsCard[] plantsCards = new PlantsCard[Constants.PlantsCardCount];
@@ -68,19 +64,13 @@ public class GlobalControl {
     private static ImageView cardsChooserImageView;
     private static Zombine winZombine = null;
 
-    private static MediaPlayer mediaPlayer;
+    private static MediaPlayer mainBgmPlayer;
+    
     
     private static int sunCount = 0;
     private static int brainCount = 0;
     private static Label sunLabel = new Label();
     private static Label brainLabel = new Label();
-    public static void initializeAndPlayThemeMusic() {
-        String musicFile = "voices/ThemeSong.mp3";
-        Media sound = new Media(GlobalControl.class.getResource(musicFile).toString());
-        mediaPlayer = new MediaPlayer(sound);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.play();
-    }
 
     public static void initializeSunNBrainLabel() {
         sunLabel.setText("0000000000000000000000000000000");
