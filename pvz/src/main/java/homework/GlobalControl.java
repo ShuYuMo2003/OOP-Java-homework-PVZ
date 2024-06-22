@@ -49,12 +49,12 @@ public class GlobalControl {
     private static ImageView cardsChooserImageView;
     private static Zombine winZombine = null;
 
-    private static MediaPlayer mediaPlayer; 
+    private static MediaPlayer mediaPlayer;
     public static void initializeAndPlayThemeMusic() {
         String musicFile = "voices/ThemeSong.mp3";
         Media sound = new Media(GlobalControl.class.getResource(musicFile).toString());
         mediaPlayer = new MediaPlayer(sound);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); 
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play();
     }
 
@@ -71,7 +71,7 @@ public class GlobalControl {
         lock.unlock();
     }
 
-    
+
 
 
     public static void setBrainCount(int count) {
@@ -96,7 +96,7 @@ public class GlobalControl {
         lock.unlock();
     }
 
-    
+
     private static void refreshBG() {
         try {
             rootPane.getChildren().remove(backgroundImageView);
@@ -199,7 +199,7 @@ public class GlobalControl {
     }
 
     public static void addNewPlant(String type, MapPosition mpos) {
-        if(Constants.isServerNPlants)
+        if(Constants.isServerNPlants && !Constants.GameModeSingle)
             SocketServer.send(type + "__" + mpos.row + "__" + mpos.column + "__Plant");
         switch(type) {
             case "Peashooter":
@@ -225,8 +225,8 @@ public class GlobalControl {
     }
 
     public static void addNewZombine(String type, MapPosition mpos) {
-        if(!Constants.isServerNPlants)
-        SocketClient.send(type + "__" + mpos.row + "__" + mpos.column + "__Zombine");
+        if(!Constants.isServerNPlants && !Constants.GameModeSingle)
+            SocketClient.send(type + "__" + mpos.row + "__" + mpos.column + "__Zombine");
         switch(type) {
             case "NormalZombine":
                 GlobalControl.addZombine(new NormalZombine(mpos.row, mpos.column));

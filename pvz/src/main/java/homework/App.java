@@ -46,6 +46,16 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        if (Constants.GameModeSingle) {
+            GlobalControl.initializeEverything();
+            Scene mainScene = new Scene(GlobalControl.rootPane,
+                    Constants.WindowWidth,
+                    Constants.WindowHeight);
+            stage.setScene(mainScene);
+            stage.show();
+            stage.setTitle(Constants.MainStageTitle);
+            return;
+        }
         VBox root = new VBox();   root.setAlignment(javafx.geometry.Pos.TOP_CENTER);
         HBox row1 = new HBox(15); row1.setAlignment(javafx.geometry.Pos.TOP_CENTER);
         HBox row2 = new HBox(20); row2.setAlignment(javafx.geometry.Pos.TOP_CENTER);

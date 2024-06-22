@@ -13,12 +13,18 @@ import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 
 public class Constants {
+    final public static boolean GameModeSingle = true;
+    final public static boolean Debug = true;
+
+
     final public static int BroadcastSocketPort = 10086;
     final public static int SocketPort = 10087;
     final public static int SendBroadcastIntervalMillis = 500;
     final public static String BroadcastMessagePrefix = "PVZ0912";
     public static String ServerIP = null;
     public static boolean isServerNPlants = false;
+
+
 
     public static class Player{
         private final String username;
@@ -45,8 +51,6 @@ public class Constants {
 
     static public void addOrUpdateUser(String username, String ip) {
         OnlineUser.put(ip, new Player(username, ip, System.currentTimeMillis()));
-        // delete outdated users
-        // System.out.println("Online Users: " + OnlineUser.size());
         for (String key : OnlineUser.keySet()) {
             if (System.currentTimeMillis() - OnlineUser.get(key).lastUpdate > 3000) {
                 OnlineUser.remove(key);
@@ -55,11 +59,10 @@ public class Constants {
         player.clear();
         for(String key : OnlineUser.keySet()) {
             player.add(OnlineUser.get(key));
-            // System.err.println("pushed " + OnlineUser.get(key).username + " " + OnlineUser.get(key).ip);
         }
     }
 
-    final public static boolean Debug = true;
+
 
     public static String username = "default";
     public static void setUsername(String name) {
@@ -82,11 +85,11 @@ public class Constants {
     final public static double BulletNZombineCollisionDistance_2 = Math.pow(100, 2);
 
     //Gravestone
-    final public static double GravestoneHealth = 100; 
-    final public static double GravestoneBrainProductionFPS = 1; 
-    final public static double GravestoneFPS = 10; 
+    final public static double GravestoneHealth = 100;
+    final public static double GravestoneBrainProductionFPS = 1;
+    final public static double GravestoneFPS = 10;
 
-    final public static double BrainFPS = 30; 
+    final public static double BrainFPS = 30;
 
     // Zombines
     final public static double ZombineAttackingFPS = 10;

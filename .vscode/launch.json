@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "test",
+            "request": "launch",
+            "mainClass": "homework/homework.test",
+            "projectName": "pvz"
+        },
+        {
+            "type": "java",
             "name": "TableViewExample",
             "request": "launch",
             "mainClass": "homework/homework.TableViewExample",

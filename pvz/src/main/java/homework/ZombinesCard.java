@@ -13,7 +13,7 @@ public class ZombinesCard extends Card{
     }
 
     protected void processOnMouseClicked(MouseEvent e) {
-        if(Constants.isServerNPlants) {
+        if(Constants.isServerNPlants && !Constants.GameModeSingle) {
             return;
         }
         System.err.println("Processing Cilick on " + name);

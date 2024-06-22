@@ -15,7 +15,7 @@ public class PlantsCard extends Card{
 
     protected void processOnMouseClicked(MouseEvent e) {
         System.err.println("Processing Cilick on " + name);
-        if(!Constants.isServerNPlants) {
+        if(!Constants.isServerNPlants && !Constants.GameModeSingle) {
             return;
         }
         switch (name) {
