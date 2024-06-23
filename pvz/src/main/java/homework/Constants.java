@@ -14,12 +14,12 @@ import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 
 public class Constants {
-    final public static boolean GameModeSingle = true;
+    final public static boolean GameModeSingle = false;
     final public static boolean Debug = true;
 
 
     final public static int BroadcastSocketPort = 10086;
-    final public static int SocketPort = 10087;
+    final public static int SocketPort = 10088;
     final public static int SendBroadcastIntervalMillis = 500;
     final public static String BroadcastMessagePrefix = "PVZ0912";
     public static String ServerIP = null;
@@ -135,7 +135,7 @@ public class Constants {
     final public static double SnowPeashooterHealth = 100;
 
     // Bullets
-    final public static double BulletFPS = 4;
+    final public static double BulletFPS = 5;
 
     // Normal Pea
     final public static double NormalPeaDamage = 10;

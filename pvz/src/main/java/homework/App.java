@@ -143,7 +143,7 @@ public class App extends Application {
                     );
                     connectBtn.setOnMouseClicked(e -> {
                         String ip = serverName.getText();
-                        if(Constants.OnlineUser.containsKey(ip)){
+                        if(true || Constants.OnlineUser.containsKey(ip)){
                             Constants.ServerIP = ip;
                             if(SocketClient.initialize()){
                                 GlobalControl.initializeEverything();

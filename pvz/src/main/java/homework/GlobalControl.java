@@ -606,7 +606,7 @@ public class GlobalControl {
 
                 for(int i = 0; i < Constants.MaxRow; i++) {
                     for(int aa = 0; aa < zbsByRow[i].size(); aa++) {
-                        for(int bb = 0; bb < Math.min(aa, bsByRow[i].size()); bb++) {
+                        for(int bb = 0; bb < bsByRow[i].size(); bb++) {
                             Zombine z = zbsByRow[i].get(aa);
                             Bullets b = bsByRow[i].get(bb);
                             if(isCollision(z.getImageView(), b.getImageView())) {
