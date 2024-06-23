@@ -10,14 +10,19 @@ import javafx.util.Duration;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.animation.KeyFrame;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
+import javafx.geometry.Pos;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
@@ -30,6 +35,7 @@ public class GlobalControl {
     static ArrayList<Bullets> AllBullets = new ArrayList<>();
     static ArrayList<Sun> AllSuns = new ArrayList<>();
     static ArrayList<Brain> AllBrains = new ArrayList<>();
+    static ProgressBar progressBar = new ProgressBar(0);
 
     static ArrayList<String> MessageQueue = new ArrayList<>();
 
@@ -313,9 +319,11 @@ public class GlobalControl {
 
             if(selectedZombineImageView != null) {
                 MapPosition mpos = Zombine.getMapPosition(event.getX(), event.getY());
-                playOnce(Constants.getAddNewObjectMusic(), 0.9);
-                addNewZombine(selectedZombineType, mpos);
-                modifyBrainCount(-Constants.ZombineBrainCost.get(selectedZombineType));
+                if(mpos.column >= Constants.MaxColumn - 2) {
+                    playOnce(Constants.getAddNewObjectMusic(), 0.9);
+                    addNewZombine(selectedZombineType, mpos);
+                    modifyBrainCount(-Constants.ZombineBrainCost.get(selectedZombineType));
+                }
             }
 
             selectedPlantsType = null;
@@ -377,22 +385,15 @@ public class GlobalControl {
     }
 
     public static void addBullets(Bullets b) {
-
         AllBullets.add(b);
-
     }
 
     public static void addZombine(Zombine z) {
-
         AllZombines.add(z);
-
     }
 
-
     public static void addPlants(Plants p) {
-
         AllPlants.add(p);
-
     }
 
 
@@ -669,6 +670,39 @@ public class GlobalControl {
         player.setVolume(volumn);
         player.play();
     }
+    static private void initializeTimeCountdown() {
+        Label timeLabel = new Label("! START !");
+        timeLabel.setFont(Font.font("Arial", FontWeight.BOLD, 15));
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                for (int i = 0; i <= 1000; i++) {
+                    // Simulate work
+                    Thread.sleep(1000 * Constants.LongestTimeForZombine / 1000);
+                    // Update progress
+                    updateProgress(i, 1000);
+                    final String msg = "Rest Time for Zombine: " + String.format("%.2f", Constants.LongestTimeForZombine * (1 - (double)i / 1000))+ " Seconds";
+                    Platform.runLater(()->{ timeLabel.setText(msg); });
+                }
+                return null;
+            }
+        };
+        progressBar.progressProperty().bind(task.progressProperty());
+
+        progressBar.setPrefWidth(Constants.WindowWidth);
+        progressBar.setPrefHeight(20);
+
+        new Thread(task).start();
+
+        StackPane stackPane = new StackPane();
+        stackPane.getChildren().addAll(progressBar, timeLabel);
+
+        VBox root = new VBox(stackPane);
+        root.setAlignment(Pos.CENTER);
+        root.setLayoutY(Constants.WindowHeight - 20);
+
+        rootPane.getChildren().add(root);
+    }
 
 
     public static void initializeEverything() {
@@ -690,6 +724,7 @@ public class GlobalControl {
             plantsWin();
         }));
         tt.setCycleCount(1);
+        initializeTimeCountdown();
         tt.play();
         startMoveStep();
     }

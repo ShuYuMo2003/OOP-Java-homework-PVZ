@@ -10,7 +10,7 @@ import javafx.util.Duration;
  * It extends the Plants class and includes specific functionalities for sun production.
  */
 public class Sunflower extends Plants {
-    
+
     // Static image for the Sunflower, loaded from cached images.
     public static Image staticImage = Constants.getCachedImage(
         ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Plants/Sunflower")[0]
@@ -23,7 +23,7 @@ public class Sunflower extends Plants {
 
     /**
      * Parameterized constructor for Sunflower.
-     * 
+     *
      * @param row The row position of the Sunflower.
      * @param column The column position of the Sunflower.
      */
@@ -44,12 +44,12 @@ public class Sunflower extends Plants {
     }
 
     /**
-     * Initializes the timeline for sun production. 
+     * Initializes the timeline for sun production.
      * The Sunflower produces sun at regular intervals defined by the FPS rate.
      */
     private void initializeSunProducer() {
         Timeline sunProductionTimeline = new Timeline(new KeyFrame(
-            Duration.millis(7000 / Constants.SunflowerSunProductionFPS),
+            Duration.millis(1000 / (Constants.SunflowerSunProductionFPS + Math.random() * (Constants.SunflowerSunProductionFPS / 2))),
             event -> {
                 if (isDie()) {
                     // If the Sunflower is dead, do nothing.
@@ -78,7 +78,7 @@ public class Sunflower extends Plants {
 
     /**
      * Override method from the Plants class. Sunflowers do not produce bullets, so this returns null.
-     * 
+     *
      * @return null as Sunflowers do not have attacking capabilities.
      */
     @Override

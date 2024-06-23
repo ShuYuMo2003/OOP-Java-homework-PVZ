@@ -27,7 +27,7 @@ public class Gravestone extends Plants {
 
     private void initializeBrainProducer() {
         Timeline brainProductionTimeline = new Timeline(new KeyFrame(
-            Duration.millis(4000 / (Constants.GravestoneBrainProductionFPS + 0.1 * Math.random())),
+            Duration.millis(1000 / (Constants.GravestoneBrainProductionFPS + 0.03 * Math.random())),
             event -> produceBrain()
         ));
         brainProductionTimeline.setCycleCount(Timeline.INDEFINITE);
