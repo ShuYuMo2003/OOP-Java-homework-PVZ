@@ -49,7 +49,7 @@ public class Sunflower extends Plants {
      */
     private void initializeSunProducer() {
         Timeline sunProductionTimeline = new Timeline(new KeyFrame(
-            Duration.millis(10000 / Constants.SunflowerSunProductionFPS),
+            Duration.millis(7000 / Constants.SunflowerSunProductionFPS),
             event -> {
                 if (isDie()) {
                     // If the Sunflower is dead, do nothing.

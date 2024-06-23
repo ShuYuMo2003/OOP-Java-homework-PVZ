@@ -13,8 +13,9 @@ import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 
+
 public class Constants {
-    final public static boolean GameModeSingle = false;
+    final public static boolean GameModeSingle = true;
     final public static boolean Debug = true;
 
 
@@ -82,7 +83,7 @@ public class Constants {
     final public static double ProcessMessageFPS    = 20;
 
     // Sun
-    final public static double SunFPS = 20;
+    final public static double SunFPS = 30;
 
     final public static double BulletNZombineCollisionDistance_2 = Math.pow(100, 2);
 

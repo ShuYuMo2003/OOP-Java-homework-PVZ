@@ -56,8 +56,8 @@ public class GlobalControl {
     private static MediaPlayer mainBgmPlayer;
 
 
-    private static int sunCount = 800;
-    private static int brainCount = 800;
+    private static int sunCount = 150;
+    private static int brainCount = 50;
     private static Label sunLabel = new Label();
     private static Label brainLabel = new Label();
 
