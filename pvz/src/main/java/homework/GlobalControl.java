@@ -8,6 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javafx.util.Duration;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.scene.layout.Pane;
 import javafx.animation.KeyFrame;
 import javafx.scene.image.ImageView;
@@ -45,6 +46,8 @@ public class GlobalControl {
     static PlantsCard[] plantsCards = new PlantsCard[Constants.PlantsCardCount];
     static ZombinesCard[] zombineCards = new ZombinesCard[Constants.ZombineCardCount];
 
+    static int[] zombineCountOnEachRow = new int[Constants.MaxRow];
+
 
     private static ImageView backgroundImageView;
     private static ImageView cardsChooserImageView;
@@ -53,8 +56,8 @@ public class GlobalControl {
     private static MediaPlayer mainBgmPlayer;
 
 
-    private static int sunCount = 1000;
-    private static int brainCount = 1000;
+    private static int sunCount = 800;
+    private static int brainCount = 800;
     private static Label sunLabel = new Label();
     private static Label brainLabel = new Label();
 
@@ -93,7 +96,6 @@ public class GlobalControl {
     }
 
     public static void setSunCount(int count) {
-
         try {
             sunCount = count;
             updateSunLabel();
@@ -101,21 +103,17 @@ public class GlobalControl {
                 card.checkCanSelected();
             }
         } finally {
-
         }
     }
 
     public static void modifySunCount(int delta) {
-
         try {
             setSunCount(sunCount + delta);
         } finally {
-
         }
     }
 
     public static void setBrainCount(int count) {
-
         try {
             brainCount = count;
             updateBrainLabel();
@@ -123,29 +121,32 @@ public class GlobalControl {
                 card.checkCanSelected();
             }
         } finally {
-
         }
     }
 
     public static void modifyBrainCount(int delta) {
-
         try {
             setBrainCount(brainCount + delta);
         } finally {
-
         }
     }
 
     private static void updateSunLabel() {
         // Platform.runLater(() -> {
-            sunLabel.setText("" + sunCount);
+            if(!Constants.isServerNPlants && !Constants.GameModeSingle)
+                sunLabel.setText("");
+            else
+                sunLabel.setText("" + sunCount);
             updateSunBrainLabelPosition();
         // });
     }
 
     private static void updateBrainLabel() {
         // Platform.runLater(() -> {
-            brainLabel.setText("" + brainCount);
+            if(Constants.isServerNPlants && !Constants.GameModeSingle)
+                brainLabel.setText("");
+            else
+                brainLabel.setText("" + brainCount);
             updateSunBrainLabelPosition();
         // });
     }
@@ -405,25 +406,47 @@ public class GlobalControl {
     // }
 
     public static void plantsWin() {
+        if(haveResult != -1) return;
         haveResult = 0;
-
 
         System.err.println("Plants win!");
         for(Zombine z : AllZombines) {
             z.setDie();
         }
+        ImageView imageview = new ImageView(Constants.getCachedImage(Constants.getPlantWinImage().toString()));
+        imageview.setFitHeight(Constants.WindowHeight * 0.6);
+        imageview.setPreserveRatio(true);
+        rootPane.getChildren().add(imageview);
+
+        imageview.setTranslateY(-Constants.WindowHeight);
+        TranslateTransition tt = new TranslateTransition(Duration.seconds(2), imageview);
+        tt.setToY(0); // 移动到中心位置
+        tt.play();
+
+
         playOnce(Constants.getPlantVictoryMusic(), 0.9);
         moveStep.stop();
         mainBgmPlayer.stop();
     }
 
     public static void zombineWin() {
+        if(haveResult != -1) return;
         haveResult = 1;
 
         System.err.println("Zombine win!");
         for(Plants p : AllPlants) {
             p.setDie();
         }
+        ImageView imageview = new ImageView(Constants.getCachedImage(Constants.getZombineWinImage().toString()));
+        imageview.setFitHeight(Constants.WindowHeight * 0.6);
+        imageview.setPreserveRatio(true);
+        rootPane.getChildren().add(imageview);
+
+        imageview.setTranslateY(-Constants.WindowHeight);
+        TranslateTransition tt = new TranslateTransition(Duration.seconds(2), imageview);
+        tt.setToY(0); // 移动到中心位置
+        tt.play();
+
         playOnce(Constants.getZombineVictoryMusic(), 0.9);
         moveStep.stop();
         mainBgmPlayer.stop();
@@ -436,11 +459,13 @@ public class GlobalControl {
             if(haveResult != -1) return ;
 
             Platform.runLater(() -> {
+                for(int i = 0; i < Constants.MaxRow; i++) zombineCountOnEachRow[i] = 0;
                 refreshBG();
 
                 for(Zombine z : AllZombines) {
                     if(z.canMove())
                         z.nextStep();
+                    zombineCountOnEachRow[z.getRow()] += 1;
                 }
                 for(Plants p : AllPlants) {
                     p.nextStep();
@@ -586,29 +611,29 @@ public class GlobalControl {
         bulletsListerner.setCycleCount(Timeline.INDEFINITE);
         bulletsListerner.getKeyFrames().add(new KeyFrame(Duration.millis(1000 / Constants.BulletFPS), e->{
             Platform.runLater(()->{
-                ArrayList<Zombine>[] zbsByRow = new ArrayList[Constants.MaxRow];
-                for(int i = 0; i < Constants.MaxRow; i++) {
-                    zbsByRow[i] = new ArrayList<Zombine>();
-                }
+                // ArrayList<Zombine>[] zbsByRow = new ArrayList[Constants.MaxRow];
+                // for(int i = 0; i < Constants.MaxRow; i++) {
+                //     zbsByRow[i] = new ArrayList<Zombine>();
+                // }
 
-                ArrayList<Bullets>[] bsByRow = new ArrayList[Constants.MaxRow];
-                for(int i = 0; i < Constants.MaxRow; i++) {
-                    bsByRow[i] = new ArrayList<Bullets>();
-                }
+                // ArrayList<Bullets>[] bsByRow = new ArrayList[Constants.MaxRow];
+                // for(int i = 0; i < Constants.MaxRow; i++) {
+                //     bsByRow[i] = new ArrayList<Bullets>();
+                // }
 
-                for(Zombine z : AllZombines) {
-                    zbsByRow[z.getMapPosition().row].add(z);
-                }
+                // for(Zombine z : AllZombines) {
+                //     zbsByRow[z.getMapPosition().row].add(z);
+                // }
 
-                for(Bullets b : AllBullets) {
-                    bsByRow[b.getMapPosition().row].add(b);
-                }
+                // for(Bullets b : AllBullets) {
+                //     bsByRow[b.getMapPosition().row].add(b);
+                // }
 
-                for(int i = 0; i < Constants.MaxRow; i++) {
-                    for(int aa = 0; aa < zbsByRow[i].size(); aa++) {
-                        for(int bb = 0; bb < bsByRow[i].size(); bb++) {
-                            Zombine z = zbsByRow[i].get(aa);
-                            Bullets b = bsByRow[i].get(bb);
+                // for(int i = 0; i < Constants.MaxRow; i++) {
+                    for(int aa = 0; aa < AllZombines.size(); aa++) {
+                        for(int bb = 0; bb < AllBullets.size(); bb++) {
+                            Zombine z = AllZombines.get(aa);
+                            Bullets b = AllBullets.get(bb);
                             if(isCollision(z.getImageView(), b.getImageView())) {
                                 z.applyAttack(b.getDamage());
                                 playOnce(Constants.getZombineHittedMusic(), 0.8);
@@ -616,7 +641,7 @@ public class GlobalControl {
                             }
                         }
                     }
-                }
+                // }
 
             });
         }));
@@ -660,6 +685,12 @@ public class GlobalControl {
         initializeProcessMessageQueue();
         initializeMainBGM();
         initializeSunNBrainLabel();
+        Timeline tt = new Timeline();
+        tt.getKeyFrames().add(new KeyFrame(Duration.seconds(Constants.LongestTimeForZombine), e->{
+            plantsWin();
+        }));
+        tt.setCycleCount(1);
+        tt.play();
         startMoveStep();
     }
 

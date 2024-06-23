@@ -8,6 +8,8 @@ public class BucketHeadZombine extends Zombine {
     public static Image staticImage = Constants.getCachedImage(
         ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/BucketheadZombie/BucketheadZombie")[0]
     );
+    private int row;
+    public int getRow() { return row; }
     public BucketHeadZombine(int row, int column) {
         super(Constants.getZombinePos(row, column)[0],
               Constants.getZombinePos(row, column)[1],
@@ -15,7 +17,7 @@ public class BucketHeadZombine extends Zombine {
               Constants.BucketheadZombineAttackValue,
               ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/NormalZombie/ZombieDie"),
               Constants.ZombineDieFPS);
-
+        this.row = row;
         addStage(new ZombineStage(
             "With Bucket Stage",
             ListFiles.listAllFiles(Constants.getImagesPath().getPath() + "Zombies/BucketheadZombie/BucketheadZombie"),

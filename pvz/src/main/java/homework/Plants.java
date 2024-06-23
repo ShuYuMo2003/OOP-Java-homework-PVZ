@@ -130,7 +130,8 @@ public abstract class Plants extends MoveableElement{
         shooter = new Timeline(
             new KeyFrame(Duration.millis(1000 / this.attackFPS), e -> {
                 // System.err.println("Add new bullets!");
-                GlobalControl.addBullets(getNewBullets());
+                if(GlobalControl.zombineCountOnEachRow[row] != 0)
+                    GlobalControl.addBullets(getNewBullets());
             })
         );
         shooter.setCycleCount(Timeline.INDEFINITE);

@@ -28,6 +28,7 @@ public abstract class Zombine extends MoveableElement {
     static private double yOffset = -130;
     static MediaPlayer mediaPlayer = new MediaPlayer(Constants.getZombineAttackMusic());
 
+    public abstract int getRow();
 
 
     Zombine() { }

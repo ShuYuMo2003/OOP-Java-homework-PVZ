@@ -26,7 +26,7 @@ public class Brain {
             dx = -5;
         }
         imageView.setY(this.y = imageView.getY() - 0.4 * dy);
-        imageView.setX(this.x = imageView.getX() - 0.4 * dx);
+        imageView.setX(this.x = imageView.getX() + 0.4 * dx);
         if(imageView.getX() < 0 || imageView.getY() < 0 || imageView.getX() > Constants.WindowWidth || imageView.getY() > Constants.WindowHeight) {
             deprecated = true;
         }

@@ -69,10 +69,11 @@ public class Sunflower extends Plants {
      * Produces a sun and adds it to the global control for collection by the player.
      */
     private void produceSun() {
-        // Create a new Sun object at the Sunflower's position with some offset.
-        Sun sun = new Sun(this.getX() - 70, this.getY() - 100);
-        // Add the newly created sun to the global control.
-        GlobalControl.addSun(sun);
+        if(!Constants.isServerNPlants && !Constants.GameModeSingle) {}
+        else {
+            Sun sun = new Sun(this.getX() - 70, this.getY() - 100);
+            GlobalControl.addSun(sun);
+        }
     }
 
     /**
