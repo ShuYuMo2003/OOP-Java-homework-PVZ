@@ -18,6 +18,7 @@ public class SocketClient {
     static boolean initialize() {
         try{
             socket = new Socket(Constants.ServerIP, Constants.SocketPort);
+            System.err.println("try to connect to " + Constants.ServerIP + ":" + Constants.SocketPort);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
             clientThread = new Thread(new Runnable() {
