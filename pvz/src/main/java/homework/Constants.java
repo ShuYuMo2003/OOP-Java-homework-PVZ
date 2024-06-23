@@ -14,7 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 
 public class Constants {
-    final public static boolean GameModeSingle = false;
+    final public static boolean GameModeSingle = true;
     final public static boolean Debug = true;
 
 
@@ -74,7 +74,7 @@ public class Constants {
     final public static int WindowWidth             = 1300;
     final public static int WindowHeight            = 640;
     final public static String MainStageTitle       = "Plants Vs. Zombies";
-    final public static int LongestTimeForZombine   = 10 * 60; // 10 min
+    final public static int LongestTimeForZombine   = 5 * 60; // 5 min
     // MapStage2XPos 0 : Normal Stage; 1 : die.
     final public static double PlayingStageMapXPos  = -180d;
     final public static double cleanUpFPS           = 5;
@@ -88,7 +88,7 @@ public class Constants {
 
     //Gravestone
     final public static double GravestoneHealth = 1000000000;
-    final public static double GravestoneBrainProductionFPS = 0.1;
+    final public static double GravestoneBrainProductionFPS = 0.02;
     final public static double GravestoneFPS = 10;
 
     final public static double BrainFPS = 30;
@@ -148,7 +148,7 @@ public class Constants {
 
     // SunFlower
     final public static double SunflowerHealth = 100;
-    final public static double SunflowerSunProductionFPS = 1;
+    final public static double SunflowerSunProductionFPS = 0.08;
     final public static double SunflowerFPS = 11;
 
     // Chomper
