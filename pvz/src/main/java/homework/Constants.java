@@ -4,7 +4,6 @@ package homework;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import java.util.Map.Entry;
 import java.util.AbstractMap.SimpleEntry;
 
@@ -13,12 +12,12 @@ import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 
-
 public class Constants {
-    final public static boolean GameModeSingle = true;
+    // Game Mode Flags
+    final public static boolean GameModeSingle =true;
     final public static boolean Debug = true;
 
-
+    // Network Configuration
     final public static int BroadcastSocketPort = 10086;
     final public static int SocketPort = 10088;
     final public static int SendBroadcastIntervalMillis = 500;
@@ -26,23 +25,26 @@ public class Constants {
     public static String ServerIP = null;
     public static boolean isServerNPlants = false;
 
-
-
-    public static class Player{
+    // Player Information
+    public static class Player {
         private final String username;
         private final String ip;
         private final double lastUpdate;
+
         Player(String username, String ip, double lastUpdate) {
             this.username = username;
             this.lastUpdate = lastUpdate;
             this.ip = ip;
         }
+
         public String getUsername() {
             return username;
         }
+
         public String getIp() {
             return ip;
         }
+
         public double getLastUpdate() {
             return lastUpdate;
         }
@@ -59,79 +61,86 @@ public class Constants {
             }
         }
         player.clear();
-        for(String key : OnlineUser.keySet()) {
+        for (String key : OnlineUser.keySet()) {
             player.add(OnlineUser.get(key));
         }
     }
 
-
-
     public static String username = "default";
+
     public static void setUsername(String name) {
         System.err.println("Set username to " + name);
         username = name;
     }
 
-    final public static int WindowWidth             = 1300;
-    final public static int WindowHeight            = 640;
-    final public static String MainStageTitle       = "Plants Vs. Zombies";
-    final public static int LongestTimeForZombine   = 5 * 60; // 5 min
-    // MapStage2XPos 0 : Normal Stage; 1 : die.
-    final public static double PlayingStageMapXPos  = -180d;
-    final public static double cleanUpFPS           = 5;
-    final public static double GlobalFPS            = 20;
-    final public static double ProcessMessageFPS    = 20;
+    // Window Configuration
+    final public static int WindowWidth = 1300;
+    final public static int WindowHeight = 640;
+    final public static String MainStageTitle = "Plants Vs. Zombies";
+
+    // Game Timing
+    final public static int LongestTimeForZombine = 3 * 60; // 3 minutes
+    final public static double PlayingStageMapXPos = -180d;
+    final public static double cleanUpFPS = 5;
+    final public static double GlobalFPS = 20;
+    final public static double ProcessMessageFPS = 20;
 
     // Sun
     final public static double SunFPS = 30;
 
+    // Collision
     final public static double BulletNZombineCollisionDistance_2 = Math.pow(100, 2);
 
-    //Gravestone
+    // Gravestone
     final public static double GravestoneHealth = 1000000000;
-    final public static double GravestoneBrainProductionFPS = 0.02;
+    final public static double GravestoneBrainProductionFPS = 0.055;
     final public static double GravestoneFPS = 10;
 
+    // Brain
     final public static double BrainFPS = 30;
 
     // Zombines
     final public static double ZombineAttackingFPS = 10;
     final public static double ZombineDieFPS = 11;
 
+    // Specific Zombine Types
     // Normal Zombine
     final public static double NormalZombineSpeed = 0.5;
     final public static double NormalZombineFPS = 11;
     final public static double NormalZombineAttackValue = 10;
 
-    //Conehead Zombine
+    // Conehead Zombine
     final public static double ConeheadZombineSpeed = 0.5;
     final public static double ConeheadZombineAttackValue = 10;
     final public static double ConeheadZombineFPS = 11;
-    // Buckethead Zombine constants
+
+    // Buckethead Zombine
     final public static double BucketheadZombineSpeed = 0.5;
     final public static double BucketheadZombineAttackValue = 10;
     final public static double BucketheadZombineFPS = 11;
-    // Flag Zombine constants
+
+    // Flag Zombine
     final public static double FlagZombineSpeed = 0.6;
     final public static double FlagZombineAttackValue = 10;
     final public static double FlagZombineFPS = 11;
-    // Newspaper Zombine constants
+
+    // Newspaper Zombine
     final public static double NewspaperZombineSpeed = 0.4;
     final public static double NewspaperZombineAttackValue = 15;
     final public static double NewspaperZombineFPS = 11;
-
 
     // Plants
     // Peashooter
     final public static double PeashooterFPS = 11;
     final public static double PeashooterShootFPS = 0.5;
     final public static double PeashooterHealth = 100;
+
     // PepPeaShooter
     final public static double PepPeaShooterFPS = 11;
     final public static double PepPeaShooterShootFPS = 1;
     final public static double PepPeaShooterHealth = 100;
 
-    //SonwPeashooter
+    // SnowPeashooter
     final public static int SnowPeashooterFPS = 11;
     final public static int SnowPeashooterShootFPS = 1;
     final public static double SnowPeashooterHealth = 100;
@@ -143,11 +152,11 @@ public class Constants {
     final public static double NormalPeaDamage = 10;
     final public static double NormalPeaSpeed = 7;
 
-    // Sonw Pea
+    // Snow Pea
     final public static double SnowPeaDamage = 20;
     final public static double SnowPeaSpeed = 6;
 
-    // SunFlower
+    // Sunflower
     final public static double SunflowerHealth = 100;
     final public static double SunflowerSunProductionFPS = 0.08;
     final public static double SunflowerFPS = 11;
@@ -159,28 +168,30 @@ public class Constants {
     final public static double ChomperRange = 100;
     final public static double ChomperDigestionTime = 8000;
 
-    //Squash
+    // Squash
     final public static double SquashHealth = 100.0;
     final public static double SquashAttackFPS = 4;
     final public static double SquashAimFPS = 2;
     final public static double SquashFPS = 11;
 
-
-    final public static double[] ZombineRowYPos    = { 170, 275, 384, 484, 590 };
+    // Positioning
+    final public static double[] ZombineRowYPos = { 170, 275, 384, 484, 590 };
     final public static double[] ZombineColumnXPos = { 170, 255, 350, 435, 520, 600, 690, 765, 870 };
-    final public static double[] PlantsRowYPos     = { 170, 275, 384, 484, 590 };
-    final public static double[] PlantsColumnXPos  = { 170, 255, 350, 435, 520, 600, 690, 765, 870 };
+    final public static double[] PlantsRowYPos = { 170, 275, 384, 484, 590 };
+    final public static double[] PlantsColumnXPos = { 170, 255, 350, 435, 520, 600, 690, 765, 870 };
+
+    // Constants for calculations
     final public static double INF = 1e40;
     final public static double EPS = 1e-5;
 
     final public static int MaxRow = 5;
     final public static int MaxColumn = 9;
 
-
+    // Image Caching
     private static HashMap<String, Image> imageCache = new HashMap<>();
 
     static public synchronized Image getCachedImage(String imagePath) {
-        if(imageCache.containsKey(imagePath)) {
+        if (imageCache.containsKey(imagePath)) {
             return imageCache.get(imagePath);
         } else {
             Image image = new Image(imagePath);
@@ -189,32 +200,12 @@ public class Constants {
         }
     }
 
-    // private static String[] NecessaryImagePathPreCached = {
-    //     "file:/D:/Codes_and_Projects/PlantsVsZombines/pvz/target/classes/images/Bullets/PeaNormal/PeaNormal_0.png",
-    //     "file:/D:/Codes_and_Projects/PlantsVsZombines/pvz/target/classes/images/Bullets/PeaNormalExplode/PeaNormalExplode_0.png",
-    // };
-    // public static void preCacheImages() {
-    //     for(int pid = 0; pid < NecessaryImagePathPreCached.length; pid++) {
-    //         getCachedImage(NecessaryImagePathPreCached[pid]);
-    //         System.err.println("Cached (" + (pid + 1) + " / " + NecessaryImagePathPreCached.length + ")" + NecessaryImagePathPreCached[pid]);
-    //     }
-    // }
-
-
     public static double[] getZombinePos(int row, int column) {
-        double[] res = {ZombineColumnXPos[column], ZombineRowYPos[row]};
+        double[] res = { ZombineColumnXPos[column], ZombineRowYPos[row] };
         return res;
     }
 
     public static URL getImagesPath() {
-        // System.out.println("QAQ" + Constants.class.getClassLoader().getResource("").getPath());
-
-        // String directoryPath = Constants.class.getClassLoader().getResource("images/").getPath();
-        // System.out.println("directoryPath = " + directoryPath);
-        // java.io.File directory = new java.io.File(directoryPath);
-        // java.io.File[] files = directory.listFiles();
-
-        // System.out.println(directoryPath);
         return Constants.class.getResource("/images/");
     }
 
@@ -237,7 +228,6 @@ public class Constants {
     public static URL getPlantWinImage() {
         return Constants.class.getResource("/images/Screen/plantswin.jpg");
     }
-
 
     // Music
     final static Media mainBgmMusic = new Media(Constants.class.getResource("/voices/mainBgm.mp3").toString());
@@ -269,11 +259,7 @@ public class Constants {
         return plantVictory;
     }
 
-
     // Cards
-
-
-
     // Plants Cards
     final public static double PlantCardGap = 1.65;
     final public static double PlantCardWidth = 60;
@@ -282,17 +268,19 @@ public class Constants {
     final public static double PlantsCardXPos = 94;
     final public static double PlantsCardYPos = 18;
     final public static ArrayList<Entry<String, URL>> PlantsCardImage = new ArrayList<>() {{
+        // Initializing list of plant card images with associated names
         add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
         add(new SimpleEntry<String, URL>("Sunflower",  getSunflowerCardImage()));
         add(new SimpleEntry<String, URL>("PepPeaShooter", getPepPeaShooterCardImage()));
         add(new SimpleEntry<String, URL>("SnowPeashooter", getSnowPeashooterCardImage()));
         add(new SimpleEntry<String, URL>("Chomper", getChomperCardImage()));
         add(new SimpleEntry<String, URL>("Squash", getSquashCardImage()));
-        add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
-        add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));
+        add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));// Duplicate entry for demonstration
+        add(new SimpleEntry<String, URL>("Peashooter", getPeaShooterCardImage()));// Duplicate entry for demonstration
     }};
 
     final public static HashMap<String, Integer> PlantsSunCost = new HashMap<>() {{
+        // Mapping of plant names to their respective sun costs
         put("Peashooter", 100);
         put("Sunflower", 50);
         put("PepPeaShooter", 200);
@@ -301,7 +289,7 @@ public class Constants {
         put("Squash", 50);
     }};
 
-
+    // Retrieving URLs for plant card images
     public static URL getPeaShooterCardImage() {
         return Constants.class.getResource("/images/Cards/card_peashooter.png");
     }
@@ -330,6 +318,7 @@ public class Constants {
     final public static double ZombineCardXPos = 717;
     final public static double ZombineCardYPos = 18;
     final public static ArrayList<Entry<String, URL>> ZombineCardImage = new ArrayList<>() {{
+        // Initializing list of zombine card images with associated names
         add(new SimpleEntry<String, URL>("NormalZombine", getNormalZombineCardImage()));
         add(new SimpleEntry<String, URL>("BucketHeadZombine", getBucketHeadZombineCardImage()));
         add(new SimpleEntry<String, URL>("FlagZombine", getFlagZombineCardImage()));
@@ -340,6 +329,7 @@ public class Constants {
         add(new SimpleEntry<String, URL>("NormalZombine", getNormalZombineCardImage()));
     }};
     final public static HashMap<String, Integer> ZombineBrainCost = new HashMap<>() {{
+        // Mapping of zombine names to their respective brain costs
         put("NormalZombine", 25);
         put("BucketHeadZombine", 100);
         put("FlagZombine", 30);
@@ -347,6 +337,7 @@ public class Constants {
         put("NewspaperZombine", 50);
     }};
 
+    // Retrieving URLs for zombine card images
     public static URL getNormalZombineCardImage() {
         return Constants.class.getResource("/images/Cards/card_NormalZombie.png");
     }

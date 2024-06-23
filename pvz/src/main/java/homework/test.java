@@ -8,40 +8,39 @@ import javafx.stage.Stage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import java.io.BufferedInputStream;
-
-import java.io.File;
-
 public class test extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        // 创建播放按钮
-        Button playButton = new Button("播放声音");
+        // Create a play button
+        Button playButton = new Button("Play Sound");
 
-        // 设置按钮点击事件
+        // Set the button click event
         playButton.setOnAction(e -> playSound());
 
-        // 创建布局并添加按钮
+        // Create a layout and add the button
         StackPane root = new StackPane();
         root.getChildren().add(playButton);
 
-        // 创建场景并设置到舞台
+        // Create a scene and set it to the stage
         Scene scene = new Scene(root, 300, 200);
-        primaryStage.setTitle("JavaFX 播放声音示例");
+        primaryStage.setTitle("JavaFX Sound Player Example");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
     private void playSound() {
-        // 获取声音文件的URL
+        // Path to the sound file
         String soundFile = "file:/D:/Codes_and_Projects/PlantsVsZombines/pvz/target/classes/ThemeSong2.mp3";
+
+        // Create a Media object with the sound file path
         Media sound = new Media(soundFile);
         System.err.println("Playing sound: " + soundFile);
+
+        // Create a MediaPlayer to play the sound
         MediaPlayer mediaPlayer = new MediaPlayer(sound);
+
+        // Play the sound
         mediaPlayer.play();
     }
 

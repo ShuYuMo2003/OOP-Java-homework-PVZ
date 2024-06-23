@@ -14,10 +14,10 @@ public class TableViewExample extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        // 创建TableView
+        // Create a TableView
         TableView<Person> table = new TableView<>();
 
-        // 定义列
+        // Define columns for the TableView
         TableColumn<Person, String> firstNameCol = new TableColumn<>("First Name");
         firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
 
@@ -27,20 +27,21 @@ public class TableViewExample extends Application {
         TableColumn<Person, Integer> ageCol = new TableColumn<>("Age");
         ageCol.setCellValueFactory(new PropertyValueFactory<>("age"));
 
-        // 添加列到表格
+        // Add columns to the TableView
         table.getColumns().addAll(firstNameCol, lastNameCol, ageCol);
 
-        // 添加数据
+        // Add data to the TableView using an ObservableList
         ObservableList<Person> data = FXCollections.observableArrayList(
                 new Person("John", "Doe", 30),
                 new Person("Jane", "Doe", 25)
         );
         table.setItems(data);
 
-        // 将TableView添加到界面
+        // Create a VBox to hold the TableView
         VBox vbox = new VBox(table);
         Scene scene = new Scene(vbox);
 
+        // Set the scene and show the stage
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -49,6 +50,7 @@ public class TableViewExample extends Application {
         launch(args);
     }
 
+    // Person class representing the data model
     public static class Person {
         private final String firstName;
         private final String lastName;
